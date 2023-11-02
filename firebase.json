@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "TPFinalLab4",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

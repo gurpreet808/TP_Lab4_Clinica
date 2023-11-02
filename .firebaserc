@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tpfinal-lab4-singh": {
+      "hosting": {
+        "TPFinalLab4": [
+          "tpfinal-lab4-singh"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tpfinal-lab4-singh"
+  }
+}
