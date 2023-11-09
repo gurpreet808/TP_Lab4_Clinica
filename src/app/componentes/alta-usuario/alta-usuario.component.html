@@ -1,0 +1,71 @@
+<div class="container">
+    <h1>Registro</h1>
+
+    <div>
+        <label for="tipoUsuario">Tipo de Usuario</label>
+        <select [(ngModel)]="tipo_usuario">
+            <option value="">Seleccione un tipo de usuario</option>
+            <option *ngFor="let tipo_usuario_option of tiposUsuario" [value]="tipo_usuario_option">
+                {{tipo_usuario_option}}</option>
+        </select>
+    </div>
+
+    <div *ngIf="tipo_usuario">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="edad">Edad</label>
+            <input type="number" />
+        </div>
+
+        <div class="form-group">
+            <label for="dni">DNI</label>
+            <input type="number" />
+        </div>
+
+        <div class="form-group" *ngIf="tipo_usuario == 'paciente'">
+            <label for="obraSocial">Obra Social</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="mail">Correo electrónico</label>
+            <input type="email" />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" />
+        </div>
+
+        <div class="form-group">
+            <label for="imagenPerfil1">Imagen de perfil 1</label>
+            <input type="file" />
+        </div>
+
+        <div class="form-group" *ngIf="tipo_usuario == 'paciente'">
+            <label for="imagenPerfil2">Imagen de perfil 2</label>
+            <input type="file" />
+        </div>
+
+        <div class="form-group" *ngIf="tipo_usuario == 'especialista'">
+            <label for="especialidad">Especialidad</label>
+            <select [(ngModel)]="especialidad">
+                <option value="">Seleccione una especialidad</option>
+                <option [value]="especialidad_option" *ngFor="let especialidad_option of especialidades">
+                    {{especialidad_option}}
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </div>
+</div>
