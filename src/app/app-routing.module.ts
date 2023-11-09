@@ -10,11 +10,13 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
   { path: 'registrarse', loadChildren: () => import('./pages/registrarse/registrarse.module').then(m => m.RegistrarseModule) },
-  { path: 'usuarios', component: ListaUsuariosComponent },
-  { path: 'pacientes', component: ListaPacientesComponent },
-  { path: 'especialistas', component: ListaEspecialistasComponent },
-  { path: 'obras-sociales', component: ListaObrasSocialesComponent },
-  { path: 'especialidades', component: ListaEspecialidadesComponent },
+  //{ path: 'pacientes', component: ListaPacientesComponent },
+  //{ path: 'especialidades', component: ListaEspecialidadesComponent },
+  { path: 'usuarios', loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosModule) },
+  { path: 'obras-sociales', loadChildren: () => import('./pages/obras-sociales/obras-sociales.module').then(m => m.ObrasSocialesModule) },
+  { path: 'usuarios', loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosModule) },
+  { path: 'obras-sociales', loadChildren: () => import('./pages/obras-sociales/obras-sociales.module').then(m => m.ObrasSocialesModule) },
+  { path: 'especialidades', loadChildren: () => import('./pages/especialidades/especialidades.module').then(m => m.EspecialidadesModule) },
 ];
 
 @NgModule({

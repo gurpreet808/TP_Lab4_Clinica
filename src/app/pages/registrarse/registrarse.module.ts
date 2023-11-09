@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { RegistrarseRoutingModule } from './registrarse-routing.module';
 import { RegistrarseComponent } from './registrarse.component';
+import { SharedModule } from 'src/app/modulos/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { RegistrarseComponent } from './registrarse.component';
   ],
   imports: [
     CommonModule,
-    RegistrarseRoutingModule
+    RegistrarseRoutingModule,
+    SharedModule
   ]
 })
 export class RegistrarseModule { }

@@ -1,0 +1,13 @@
+<button (click)="AgregarAdmin()">Agregar Admin</button>
+<button (click)="AgregarPaciente()">Agregar Paciente</button>
+<button (click)="AgregarEspecialista()">Agregar Especialista</button>
+
+<div style="border: 1px solid black;" *ngFor="let usuario of this.servUsuario.usuarios.value" name="especialista_card">
+    <div>
+        {{ usuario | json}}
+    </div>
+    <div>
+        <button (click)="Borrar(usuario.id)">Borrar</button>
+        <button (click)="HabilitarEspecialista(usuario)" *ngIf="usuario.tipo == 'especialista'">Habilitar</button>
+    </div>
+</div>
