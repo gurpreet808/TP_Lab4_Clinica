@@ -14,7 +14,8 @@ export class UsuarioService {
   pacientes: BehaviorSubject<Paciente[]> = new BehaviorSubject<Paciente[]>([]);
   especialistas: BehaviorSubject<Especialista[]> = new BehaviorSubject<Especialista[]>([]);
 
-  dataRef: CollectionReference<DocumentData, DocumentData> = collection(this.firestore, 'usuarios');
+  pathUrl: string = 'usuarios';
+  dataRef: CollectionReference<DocumentData, DocumentData> = collection(this.firestore, this.pathUrl);
 
   constructor(private firestore: Firestore) {
     this.TraerUsuarios();
@@ -47,15 +48,15 @@ export class UsuarioService {
 
   AgregarUsuario(usuario: Usuario) {
     if (usuario === null) {
-      throw new Error('Usuario nulo');
+      return Promise.reject('Usuario nulo');
     };
 
     if (this.usuarios.value.find((user: Usuario) => user.email === usuario.email)) {
-      throw new Error('Mail en uso');
+      return Promise.reject('Mail en uso');
     };
 
     if (this.usuarios.value.find((user: Usuario) => user.dni === usuario.dni)) {
-      throw new Error('DNI en uso');
+      return Promise.reject('DNI en uso');
     };
 
     let docRef = doc(this.dataRef);
@@ -65,15 +66,15 @@ export class UsuarioService {
 
   ModificarUsuario(usuario: Usuario) {
     if (usuario === null) {
-      throw new Error('Usuario nulo');
+      return Promise.reject('Usuario nulo');
     };
 
     if (this.usuarios.value.find((user: Usuario) => user.email === usuario.email && user.id !== usuario.id)) {
-      throw new Error('Mail en uso');
+      return Promise.reject('Mail en uso');
     };
 
     if (this.usuarios.value.find((user: Usuario) => user.dni === usuario.dni && user.id !== usuario.id)) {
-      throw new Error('DNI en uso');
+      return Promise.reject('DNI en uso');
     };
 
     let docRef = doc(this.dataRef, usuario.id);
@@ -82,7 +83,7 @@ export class UsuarioService {
 
   BorrarUsuario(id: string) {
     if (id === null) {
-      throw new Error('ID nulo');
+      return Promise.reject('ID nulo');
     };
 
     let docRef = doc(this.dataRef, id);
