@@ -17,27 +17,27 @@ export class NavBarComponent implements OnInit {
     },
     {
       label: 'Usuarios',
-      icon: 'fa-regular fa-lightbulb',
+      icon: 'fa-solid fa-users-gear',
       routerLink: '/usuarios'
     },
     {
       label: 'Especialistas',
-      icon: 'fa-regular fa-lightbulb',
+      icon: 'fa-solid fa-user-doctor',
       routerLink: '/especialistas'
     },
     {
       label: 'Pacientes',
-      icon: 'fa-regular fa-lightbulb',
+      icon: 'fa-solid fa-users',
       routerLink: '/pacientes'
     },
     {
       label: 'Especialidades',
-      icon: 'fa-regular fa-lightbulb',
+      icon: 'fa-solid fa-stethoscope',
       routerLink: '/especialidades'
     },
     {
       label: 'Obras sociales',
-      icon: 'fa-regular fa-lightbulb',
+      icon: 'fa-solid fa-briefcase-medical',
       routerLink: '/obras-sociales'
     }
   ];
