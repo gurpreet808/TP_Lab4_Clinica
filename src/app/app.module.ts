@@ -27,7 +27,6 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { ListaObrasSocialesComponent } from './componentes/lista-obras-sociales/lista-obras-sociales.component';
 import { ListaEspecialidadesComponent } from './componentes/lista-especialidades/lista-especialidades.component';
 import { NavBarComponent } from './componentes/nav-bar/nav-bar.component';
-import { HomeComponent } from './componentes/home/home.component';
 
 @NgModule({
   declarations: [
@@ -39,14 +38,13 @@ import { HomeComponent } from './componentes/home/home.component';
     SpinnerComponent,
     ListaObrasSocialesComponent,
     ListaEspecialidadesComponent,
-    NavBarComponent,
-    HomeComponent
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     provideFirebaseApp(
       () => initializeApp(
