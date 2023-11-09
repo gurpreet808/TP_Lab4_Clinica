@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { PrimeNGModule } from './modulos/prime-ng/prime-ng.module';
+import { ConfirmationService, MessageService } from 'primeng/api';
+
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
@@ -13,13 +19,35 @@ import { getPerformance, providePerformance } from '@angular/fire/performance';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-config';
 
+import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuarios.component';
+import { ListaPacientesComponent } from './componentes/lista-pacientes/lista-pacientes.component';
+import { ListaEspecialistasComponent } from './componentes/lista-especialistas/lista-especialistas.component';
+import { AltaUsuarioComponent } from './componentes/alta-usuario/alta-usuario.component';
+import { SpinnerComponent } from './componentes/spinner/spinner.component';
+import { ListaObrasSocialesComponent } from './componentes/lista-obras-sociales/lista-obras-sociales.component';
+import { ListaEspecialidadesComponent } from './componentes/lista-especialidades/lista-especialidades.component';
+import { NavBarComponent } from './componentes/nav-bar/nav-bar.component';
+import { HomeComponent } from './componentes/home/home.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListaUsuariosComponent,
+    ListaPacientesComponent,
+    ListaEspecialistasComponent,
+    AltaUsuarioComponent,
+    SpinnerComponent,
+    ListaObrasSocialesComponent,
+    ListaEspecialidadesComponent,
+    NavBarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,    
+    BrowserAnimationsModule,
     provideFirebaseApp(
       () => initializeApp(
         {
@@ -40,9 +68,13 @@ import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-confi
     provideMessaging(() => getMessaging()),
     providePerformance(() => getPerformance()),
     provideStorage(() => getStorage()),
-    provideRemoteConfig(() => getRemoteConfig())
+    provideRemoteConfig(() => getRemoteConfig()),
+    PrimeNGModule
   ],
-  providers: [],
+  providers: [
+    MessageService,
+    ConfirmationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
