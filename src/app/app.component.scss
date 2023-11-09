@@ -1,0 +1,21 @@
+div#main_container {
+    height: 100dvh;
+    width: 100dvw;
+    background-color: aqua;
+
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+div#navbar_container {
+    background-color: rgba(255, 0, 0, 0.616);
+    position: sticky;
+    top: 0;
+    z-index: 9000;
+}
+
+div#sub_container {
+    background-color: green;
+}
