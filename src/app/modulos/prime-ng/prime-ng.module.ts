@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PanelModule } from 'primeng/panel';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
@@ -30,7 +29,6 @@ import { TableModule } from 'primeng/table';
   imports: [
     CommonModule,
     PanelModule,
-    ButtonModule,
     InputTextModule,
     MenubarModule,
     ToastModule,
@@ -54,7 +52,6 @@ import { TableModule } from 'primeng/table';
     TableModule
   ], exports: [
     PanelModule,
-    ButtonModule,
     InputTextModule,
     MenubarModule,
     ToastModule,

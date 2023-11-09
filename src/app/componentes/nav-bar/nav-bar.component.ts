@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -41,12 +42,13 @@ export class NavBarComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) {
-  }
-
   ngOnInit(): void {
   }
 
+  constructor(public servAuth: AuthService, private router: Router) { }
+
   Desloguear() {
+    this.servAuth.LogOut();
+    this.router.navigateByUrl('/login');
   }
 }

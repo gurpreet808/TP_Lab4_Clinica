@@ -5,11 +5,13 @@
             <img src="assets/logos/main_logo.png" alt="Clínica Online" height="100">
             <div id="home_title_text">Clínica Online</div>
         </div>
+        
         <p>
             Clínica Online es la forma más fácil y rápida de sacar turnos con especialistas en salud. 
             Con Clínica Online, puedes encontrar el especialista que necesitas, programar tu cita, todo desde tu teléfono o computadora.
         </p>
-        <div id="botonera_auth">
+
+        <div id="botonera_auth" *ngIf="servAuth.logueado.value == false && servAuth.firstRun == false">
             <div>
                 <p-button label="Iniciar sesión" severity="primary" routerLink="/login"></p-button>
             </div>

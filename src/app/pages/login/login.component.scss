@@ -1,0 +1,49 @@
+div#login_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div[name="form_card"]{
+    background-color: rgb(255 255 255 / 20%);
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 25rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#login_form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+div[name="form_card_title"] {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+div[name="login_form_input"]>label {
+    font-weight: 500;
+}
+
+div#login_buttons_container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+div#login_mockbuttons_container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}

@@ -1,1 +1,42 @@
-<p>login works!</p>
+<div id="login_container">
+    <div id="login_form_container" name="form_card">
+        <div id="login_title_container" name="form_card_title">
+            Ingresar
+        </div>
+
+        <div id="login_email_container" name="login_form_input">
+            <label for="email">E-Mail</label>
+            <input id="email" [(ngModel)]="email" type="text" pInputText class="w-full">
+        </div>
+
+        <div id="login_password_container" name="login_form_input">
+            <label for="clave">Contraseña</label>
+            <p-password id="clave" [(ngModel)]="clave" inputStyleClass="w-full" styleClass="w-full mb-1"
+                [feedback]="false" [toggleMask]="true"></p-password>
+            <a class="font-medium no-underline ml-2 text-blue-400 text-right cursor-pointer"
+                (click)="OlvideClave()">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <div id="login_buttons_container">
+            <button pButton pRipple label="Iniciar sesión" icon="fas fa-sign-in-alt" class="p-button-primary w-full"
+                (click)="Login()"></button>
+
+            <div class="mt-2">¿No estás registrado?</div>
+
+            <button pButton pRipple label="Registrarme" icon="fa-solid fa-user-plus" class="p-button-secondary w-full"
+                (click)="Registrarme()"></button>
+        </div>
+
+    </div>
+
+    <div id="login_mockbuttons_container" name="form_card">
+        <div name="form_card_title">
+            Usuarios Test
+        </div>
+
+        <div *ngFor="let jugador of jugadoresMock">
+            <button pButton pRipple label="{{jugador.mail}}" class="p-button-help w-full"
+                (click)="LoginMock(jugador.mail, jugador.clave)"></button>
+        </div>
+    </div>
+</div>
