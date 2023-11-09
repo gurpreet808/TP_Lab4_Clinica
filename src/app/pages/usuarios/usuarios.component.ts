@@ -81,7 +81,7 @@ export class UsuariosComponent {
 
   HabilitarEspecialista(usuario: Usuario) {
     let especialista = usuario as Especialista;
-    especialista.habilitado = true;
+    especialista.habilitado = !especialista.habilitado;
     this.servUsuario.ModificarUsuario(usuario);
   }
 }
