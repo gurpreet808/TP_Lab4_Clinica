@@ -47,9 +47,11 @@ export class EspecialidadService {
       return Promise.reject('Especialidad nula');
     };
 
-    //if name is already in use
-    if (this.especialidades.value.find((os: Especialidad) => os.nombre === especialidad.nombre)) {
-      return Promise.reject('Ya se agregó esa especialidad');
+    let ya_existe = this.especialidades.value.find((es: Especialidad) => es.nombre === especialidad.nombre)
+    console.log(ya_existe);
+
+    if (ya_existe && ya_existe.id !== especialidad.id) {
+      return Promise.reject('Ya se agregó esa obra social');
     };
 
     let docRef = doc(this.dataRef, especialidad.id);

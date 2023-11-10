@@ -13,8 +13,9 @@
         [tableStyle]="{'max-width': '100%'}">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="nombre" style="width:50%">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
-                <th style="width:50%">Acciones</th>
+                <th pSortableColumn="nombre">Nombre<p-sortIcon field="nombre"></p-sortIcon></th>
+                <th pSortableColumn="nombre">Válida<p-sortIcon field="nombre"></p-sortIcon></th>
+                <th>Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-especialidad let-editing="editing" let-ri="rowIndex">
@@ -30,25 +31,28 @@
                     </p-cellEditor>
                 </td>
                 <td>
-                    <div class="flex align-items-center justify-content-center gap-2">
+                    {{especialidad.valida ? 'Si' : 'No'}}
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-1">
                         <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                            (click)="onRowEditInit(especialidad)" class="p-button-rounded p-button-text"></button>
+                            (click)="onRowEditInit(especialidad)" class="p-button-rounded p-button-outlined"></button>
 
                         <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                             (click)="onRowEditSave(especialidad)"
-                            class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                            class="p-button-rounded p-button-text p-button-success"></button>
 
                         <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
                             (click)="onRowEditCancel(especialidad, ri)"
                             class="p-button-rounded p-button-text p-button-danger"></button>
 
-                        <button pButton pRipple type="button" icon="pi pi-check"
-                            (click)="ValidarEspecialidad(especialidad)" *ngIf="!especialidad.valido"
-                            class="p-button-rounded p-button-text p-button-warning"></button>
+                        <button pButton pRipple type="button" icon="fa-regular fa-square-check"
+                            (click)="ValidarEspecialidad(especialidad)" *ngIf="especialidad.valida == false"
+                            class="p-button-rounded p-button-outlined p-button-help"></button>
 
                         <button pButton pRipple type="button" icon="pi pi-trash"
                             (click)="BorrarEspecialidad(especialidad.id)"
-                            class="p-button-rounded p-button-text p-button-danger"></button>
+                            class="p-button-rounded p-button-outlined p-button-danger"></button>
                     </div>
                 </td>
             </tr>
