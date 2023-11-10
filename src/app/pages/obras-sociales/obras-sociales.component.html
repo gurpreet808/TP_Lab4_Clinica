@@ -32,7 +32,7 @@
                 <td>
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                            (click)="onRowEditInit(obras_social)" class="p-button-rounded p-button-text"></button>
+                            (click)="onRowEditInit(obras_social)" class="p-button-rounded p-button-outlined"></button>
 
                         <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                             (click)="onRowEditSave(obras_social)"
@@ -44,7 +44,7 @@
 
                         <button pButton pRipple type="button" icon="pi pi-trash"
                             (click)="BorrarObraSocial(obras_social.id)"
-                            class="p-button-rounded p-button-text p-button-danger"></button>
+                            class="p-button-rounded p-button-outlined p-button-danger"></button>
                     </div>
                 </td>
             </tr>
