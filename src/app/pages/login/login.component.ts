@@ -42,7 +42,7 @@ export class LoginComponent {
   }
 
   Registrarme() {
-    this.router.navigate(['/registro']);
+    this.router.navigate(['/registrarse']);
   }
 
   OlvideClave() {
