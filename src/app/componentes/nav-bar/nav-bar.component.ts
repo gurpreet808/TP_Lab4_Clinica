@@ -51,4 +51,64 @@ export class NavBarComponent implements OnInit {
     this.servAuth.LogOut();
     this.router.navigateByUrl('/login');
   }
+
+  AdminItems() {
+    this.items = [
+      {
+        label: 'Home',
+        icon: 'fa-solid fa-house',
+        routerLink: '/'
+      },
+      {
+        label: 'Usuarios',
+        icon: 'fa-solid fa-users-gear',
+        routerLink: '/usuarios'
+      },
+      {
+        label: 'Especialistas',
+        icon: 'fa-solid fa-user-doctor',
+        routerLink: '/especialistas'
+      },
+      {
+        label: 'Pacientes',
+        icon: 'fa-solid fa-users',
+        routerLink: '/pacientes'
+      },
+      {
+        label: 'Especialidades',
+        icon: 'fa-solid fa-stethoscope',
+        routerLink: '/especialidades'
+      },
+      {
+        label: 'Obras sociales',
+        icon: 'fa-solid fa-briefcase-medical',
+        routerLink: '/obras-sociales'
+      }
+    ];
+  }
+
+  PacientesItems() {
+    this.items = [
+      {
+        label: 'Home',
+        icon: 'fa-solid fa-house',
+        routerLink: '/'
+      },
+      {
+        label: 'Mis turnos',
+        icon: 'fa-solid fa-users-gear',
+        routerLink: '/usuarios'
+      },
+      {
+        label: 'Histora clínica',
+        icon: 'fa-solid fa-user-doctor',
+        routerLink: '/especialistas'
+      },
+      {
+        label: 'Mis datos',
+        icon: 'fa-solid fa-users',
+        routerLink: '/pacientes'
+      }
+    ];
+  }
 }
