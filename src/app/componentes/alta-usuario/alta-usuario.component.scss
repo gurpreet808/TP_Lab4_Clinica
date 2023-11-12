@@ -1,28 +1,19 @@
-.container {
-    width: 500px;
-    margin: 0 auto;
+div#registro_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-form {
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #fff;
+div[name="registro_form_input"]>label {
+    font-weight: 500;
 }
 
-.form-group {
-    margin-bottom: 10px;
-}
-
-label {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-input,
-select {
+div[name="registro_form_input"]>input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+}
+
+div[name="registro_form_input"]>select {
+    width: 100%;
 }
 
 input[type="submit"] {

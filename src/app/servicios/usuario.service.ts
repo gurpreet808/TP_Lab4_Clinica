@@ -26,7 +26,6 @@ export class UsuarioService {
     let pacientes: Paciente[] = [];
 
     let query: Query<Usuario, DocumentData> = this.dataRef as Query<Usuario, DocumentData>;
-
     collectionData<Usuario>(query, { idField: 'id' }).subscribe(
       (usuarios: Usuario[]) => {
         usuarios.forEach(
