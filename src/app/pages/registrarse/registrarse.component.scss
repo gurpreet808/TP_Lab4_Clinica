@@ -6,7 +6,15 @@ div#registrarse_container {
     justify-content: center;
 }
 
-div[name="form_card"]{
+div#select_tipousuario_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+div[name="form_card"] {
     background-color: rgb(255 255 255 / 20%);
     border: 1px solid #ccc;
     padding: 20px;
@@ -29,4 +37,9 @@ div[name="form_card_title"] {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }

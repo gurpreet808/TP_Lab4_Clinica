@@ -1,11 +1,23 @@
 <div id="registrarse_container">
     <div id="registrarse_card_container" name="form_card">
-        <div id="registrarse_title" name="form_card_title">
-            Registrarse
+        <div id="registrarse_title_container" name="form_card_title">
+            <div id="registrarse_back_container" *ngIf="tipo_usuario" (click)='SeleccionarTipo("")'>
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <div id="registrarse_title">
+                Registrarse
+            </div>
         </div>
-    
+
         <div id="registrarse_content">
-            <app-alta-usuario></app-alta-usuario>
+            <div id="select_tipousuario_container" *ngIf="!tipo_usuario">
+                <div (click)='SeleccionarTipo("paciente")'>Paciente</div>
+                <div (click)='SeleccionarTipo("especialista")'>Especialista</div>
+            </div>
+
+            <div id="registrarse_form_container" *ngIf="tipo_usuario">
+                <app-alta-usuario [tipo_usuario]="tipo_usuario"></app-alta-usuario>
+            </div>
         </div>
     </div>
 </div>
