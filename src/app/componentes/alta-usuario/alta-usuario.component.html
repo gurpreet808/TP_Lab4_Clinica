@@ -1,53 +1,58 @@
 <div id="registro_container">
-    <div *ngIf="tipo_usuario">
+    <form [formGroup]="userForm">
         <div name="registro_form_input">
             <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" />
+            <input id="nombre" type="text" formControlName="nombre" />
         </div>
 
         <div name="registro_form_input">
             <label for="apellido">Apellido</label>
-            <input id="apellido" type="text" />
+            <input id="apellido" type="text" formControlName="apellido" />
         </div>
 
         <div name="registro_form_input">
             <label for="edad">Edad</label>
-            <input id="edad" type="number" />
+            <input id="edad" type="number" formControlName="edad" />
         </div>
 
         <div name="registro_form_input">
             <label for="dni">DNI</label>
-            <input id="dni" type="number" />
+            <input id="dni" type="number" formControlName="dni" />
         </div>
 
         <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'">
             <label for="obraSocial">Obra Social</label>
-            <input id="obraSocial" type="text" />
+            <input id="obraSocial" type="text" formControlName="obra_social" />
         </div>
 
         <div name="registro_form_input">
             <label for="mail">Correo electrónico</label>
-            <input id="mail" type="email" />
+            <input id="mail" type="email" formControlName="email" />
         </div>
 
         <div name="registro_form_input">
             <label for="clave">Contraseña</label>
-            <input id="clave" type="password" />
+            <input id="clave" type="password" formControlName="clave" />
         </div>
 
         <div name="registro_form_input">
-            <label for="imagenPerfil1">Imagen de perfil 1</label>
-            <input id="imagenPerfil1" type="file" />
+            <label for="clave2">Repita la contraseña</label>
+            <input id="clave2" type="password" formControlName="clave2" />
+        </div>
+
+        <div name="registro_form_input">
+            <label for="url_foto_1">Imagen de perfil 1</label>
+            <input id="url_foto_1" type="text" formControlName="url_foto_1" />
         </div>
 
         <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'">
-            <label for="imagenPerfil2">Imagen de perfil 2</label>
-            <input id="imagenPerfil2" type="file" />
+            <label for="url_foto_2">Imagen de perfil 2</label>
+            <input id="url_foto_2" type="text" formControlName="url_foto_2" />
         </div>
 
         <div name="registro_form_input" *ngIf="tipo_usuario == 'especialista'">
-            <label for="especialidad">Especialidad</label>
-            <select id="especialidad">
+            <label for="especialidad">Especialidades</label>
+            <select id="especialidad" formControlName="especialidades">
                 <option value="">Seleccione una especialidad</option>
                 <option [value]="especialidad_option" *ngFor="let especialidad_option of especialidades">
                     {{especialidad_option}}
@@ -55,6 +60,11 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Registrar</button>
-    </div>
+        <div>
+            <button type="submit" class="btn btn-primary" (click)="logForm()">Registrar</button>
+        </div>
+
+        <div>{{this.userForm.errors | json}}</div>
+        <div>estado {{this.userForm.status}}</div>
+    </form>
 </div>

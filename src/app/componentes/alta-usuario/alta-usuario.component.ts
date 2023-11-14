@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-alta-usuario',
@@ -10,42 +10,64 @@ export class AltaUsuarioComponent implements OnInit {
 
   @Input() tipo_usuario: string = '';
   especialidades: string[] = [];
-
-  adminForm: FormGroup = this.formBuilder.group(
-    {
-      email: ['', [Validators.required, Validators.email]],
-      clave: ['', [Validators.required, Validators.minLength(6)]],
-      clave2: ['', [Validators.required, Validators.minLength(6)]],
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.minLength(2)]],
-      dni: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8)]],
-      edad: ['', [Validators.required, Validators.min(1), Validators.max(99)]],
-      url_foto_1: ['', [Validators.required]]
-    }
-  );
-  pacienteForm: FormGroup = new FormGroup(this.adminForm.controls);
-  especialistaForm: FormGroup = new FormGroup(this.adminForm.controls);
+  userForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
-    this.InicializarFormularios();
+    this.userForm = this.formBuilder.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        clave: ['', [Validators.required, Validators.minLength(6)]],
+        clave2: ['', [Validators.required, Validators.minLength(6)]],
+        nombre: ['', [Validators.required, Validators.minLength(2)]],
+        apellido: ['', [Validators.required, Validators.minLength(2)]],
+        dni: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8)]],
+        edad: ['', [Validators.required, Validators.min(1), Validators.max(99)]],
+        url_foto_1: ['', [Validators.required]],
+        url_foto_2: ['',],
+        obra_social: ['',],
+        especialidades: ['',],
+      }
+    );
   }
 
   ngOnInit(): void {
+    console.log(this.tipo_usuario);
+    this.userForm.get('especialidades')?.setValidators(especialistaRequiredValidator(this.tipo_usuario));
+    this.userForm.get('obra_social')?.setValidators(pacienteRequiredValidator(this.tipo_usuario));
+    this.userForm.get('url_foto_2')?.setValidators(pacienteRequiredValidator(this.tipo_usuario));
+    this.userForm.markAllAsTouched();
   }
 
-  InicializarFormularios() {
-    //const adminFormGroupString = JSON.stringify(this.adminForm);
-    //const adminFormGroupJSON = JSON.parse(adminFormGroupString);
-
-    //this.pacienteForm = new FormGroup(adminFormGroupJSON);
-
-    this.pacienteForm.addControl('url_foto_2', new FormControl('', [Validators.required]));
-    this.pacienteForm.addControl('obra_social', new FormControl('', [Validators.required]));
-
-    //this.especialistaForm = new FormGroup(adminFormGroupJSON);
-
-    this.especialistaForm.addControl('habilitado', new FormControl('', [Validators.required]));
-    this.especialistaForm.addControl('especialidades', new FormControl('', [Validators.required]));
+  getControl(control_name: string) {
+    return this.userForm.get(control_name);
   }
 
+  getControlValue(control_name: string) {
+    return this.userForm.get(control_name)?.value;
+  }
+
+  logForm() {
+    console.log(this.userForm);
+  }
+
+}
+
+export function especialistaRequiredValidator(tipoUsuario: string): ValidatorFn | ValidatorFn[] | null {
+  return (control: AbstractControl) => {
+    if (tipoUsuario === 'especialista' && control.value.length === 0) {
+      return { required: true };
+    }
+
+    return null;
+  };
+}
+
+export function pacienteRequiredValidator(tipoUsuario: string): ValidatorFn | ValidatorFn[] | null {
+  return (control: AbstractControl) => {
+    if (tipoUsuario === 'paciente' && control.value.length === 0) {
+      return { required: true };
+    }
+
+    return null;
+  };
 }
