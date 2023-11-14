@@ -33,6 +33,14 @@ div#registrarse_card_container {
     gap: 1rem;
 }
 
+div#registrarse_title_container {
+    display: flex;
+}
+
+div#registrarse_title {
+    flex-grow: 1;
+}
+
 div[name="form_card_title"] {
     text-align: center;
     font-size: 2rem;
@@ -42,4 +50,13 @@ div[name="form_card_title"] {
     align-items: center;
     justify-content: center;
     gap: 1rem;
+}
+
+div#select_tipousuario_container>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    cursor: pointer;
 }

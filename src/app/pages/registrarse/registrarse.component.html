@@ -11,8 +11,14 @@
 
         <div id="registrarse_content">
             <div id="select_tipousuario_container" *ngIf="!tipo_usuario">
-                <div (click)='SeleccionarTipo("paciente")'>Paciente</div>
-                <div (click)='SeleccionarTipo("especialista")'>Especialista</div>
+                <div id="boton_registrar_paciente" name="form_card" (click)='SeleccionarTipo("paciente")'>
+                    <img src="assets/logos/paciente.jfif" height="100" class="mr-2" />
+                    Paciente
+                </div>
+                <div id="boton_registrar_especialista" name="form_card" (click)='SeleccionarTipo("especialista")'>
+                    <img src="assets/logos/especialista.jfif" height="100" class="mr-2" />
+                    Especialista
+                </div>
             </div>
 
             <div id="registrarse_form_container" *ngIf="tipo_usuario">
