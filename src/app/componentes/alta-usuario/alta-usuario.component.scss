@@ -1,7 +1,16 @@
 div#registro_container {
+    max-height: 100%;
+}
+
+div#registro_container>form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1rem;
+}
+
+div[name="registro_form_input"] {
+    width: 100%;
 }
 
 div[name="registro_form_input"]>label {
@@ -30,7 +39,15 @@ input[type="submit"] {
     color: red;
 }
 
-.invalid-input > input {
-    border-color: red
+.invalid-input>input {
+    border-color: red;
     //color: red;
+}
+
+div#edad_container {
+    width: calc(50% - 1rem);
+}
+
+div#dni_container {
+    width: calc(50% - 1rem);
 }

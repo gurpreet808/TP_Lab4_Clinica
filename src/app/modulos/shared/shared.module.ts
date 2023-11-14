@@ -4,6 +4,7 @@ import { AltaUsuarioComponent } from 'src/app/componentes/alta-usuario/alta-usua
 import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    //InputTextModule
+    DropdownModule,
+    //InputTextModule,
     //PrimeNGModule
   ],
   exports: [AltaUsuarioComponent]

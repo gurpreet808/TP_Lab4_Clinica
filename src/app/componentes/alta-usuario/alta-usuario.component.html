@@ -34,7 +34,7 @@
             </ng-container>
         </div>
 
-        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('edad')}">
+        <div id="edad_container" name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('edad')}">
             <label for="edad">Edad</label>
             <input id="edad" type="number" formControlName="edad" />
 
@@ -45,7 +45,7 @@
             </ng-container>
         </div>
 
-        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('dni')}">
+        <div id="dni_container" name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('dni')}">
             <label for="dni">DNI</label>
             <input id="dni" type="number" formControlName="dni" />
 
@@ -65,7 +65,8 @@
         <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'"
             [ngClass]="{'invalid-input': isValidControl('obra_social')}">
             <label for="obra_social">Obra Social</label>
-            <input id="obra_social" type="text" formControlName="obra_social" />
+            <!-- <input id="obra_social" type="text" formControlName="obra_social" /> -->
+            <p-dropdown formControlName="obra_social" styleClass="w-full" [options]="obras_sociales" optionLabel="nombre"></p-dropdown>
 
             <ng-container *ngIf='getControl("obra_social")?.hasError("required")'>
                 <small class="text-danger">
@@ -139,12 +140,13 @@
         <div name="registro_form_input" *ngIf="tipo_usuario == 'especialista'"
             [ngClass]="{'invalid-input': isValidControl('especialidades')}">
             <label for="especialidades">Especialidades</label>
-            <select id="especialidades" formControlName="especialidades">
+            <!-- <select id="especialidades" formControlName="especialidades">
                 <option value="">Seleccione una especialidad</option>
                 <option [value]="especialidad_option" *ngFor="let especialidad_option of especialidades">
                     {{especialidad_option}}
                 </option>
-            </select>
+            </select> -->
+            <p-dropdown formControlName="especialidades" styleClass="w-full" [options]="especialidades" optionLabel="nombre"></p-dropdown>
 
             <ng-container *ngIf='getControl("especialidades")?.hasError("required")'>
                 <small class="text-danger">
@@ -153,10 +155,16 @@
             </ng-container>
         </div>
 
+        <div name="registro_form_input" *ngIf="tipo_usuario == 'especialista'">
+            <label for="agregar_especialidad">Agregar especialidad</label>
+            <input id="agregar_especialidad" type="text" [(ngModel)]="agregar_especialidad"
+                [ngModelOptions]="{standalone: true}" />
+        </div>
+
         <div>
             <button type="submit" class="btn btn-primary" [disabled]="!this.userForm.valid"
-                (click)="logForm()">Registrar</button>
-            <button type="submit" class="btn btn-primary" (click)="logForm()">Registrar</button>
+                (click)="RegistrarUsuario()">Registrar</button>
+            <button type="submit" class="btn btn-primary" (click)="logForm()">LogForm</button>
         </div>
 
         <div>{{this.userForm.errors | json}}</div>
