@@ -1,70 +1,165 @@
 <div id="registro_container">
-    <form [formGroup]="userForm">
-        <div name="registro_form_input">
+    <form [formGroup]="userForm" class="ng-invalid">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('nombre')}">
             <label for="nombre">Nombre</label>
             <input id="nombre" type="text" formControlName="nombre" />
+
+            <ng-container *ngIf='getControl("nombre")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
+
+            <ng-container *ngIf='getControl("nombre")?.hasError("pattern")'>
+                <small class="text-danger">
+                    Sólo se adminten letras.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('nombre')}">
             <label for="apellido">Apellido</label>
             <input id="apellido" type="text" formControlName="apellido" />
+
+            <ng-container *ngIf='getControl("apellido")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
+
+            <ng-container *ngIf='getControl("apellido")?.hasError("pattern")'>
+                <small class="text-danger">
+                    Sólo se adminten letras.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('edad')}">
             <label for="edad">Edad</label>
             <input id="edad" type="number" formControlName="edad" />
+
+            <ng-container *ngIf='getControl("edad")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('dni')}">
             <label for="dni">DNI</label>
             <input id="dni" type="number" formControlName="dni" />
+
+            <ng-container *ngIf='getControl("dni")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
+
+            <ng-container *ngIf='getControl("dni")?.hasError("pattern")'>
+                <small class="text-danger">
+                    Su DNI deben ser 8 dígitos.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'">
-            <label for="obraSocial">Obra Social</label>
-            <input id="obraSocial" type="text" formControlName="obra_social" />
+        <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'"
+            [ngClass]="{'invalid-input': isValidControl('obra_social')}">
+            <label for="obra_social">Obra Social</label>
+            <input id="obra_social" type="text" formControlName="obra_social" />
+
+            <ng-container *ngIf='getControl("obra_social")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('email')}">
             <label for="mail">Correo electrónico</label>
             <input id="mail" type="email" formControlName="email" />
+
+            <ng-container *ngIf='getControl("email")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
+
+            <ng-container *ngIf='getControl("email")?.hasError("email")'>
+                <small class="text-danger">
+                    Formato inválido.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('clave')}">
             <label for="clave">Contraseña</label>
             <input id="clave" type="password" formControlName="clave" />
+
+            <ng-container *ngIf='getControl("clave")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('clave2')}">
             <label for="clave2">Repita la contraseña</label>
             <input id="clave2" type="password" formControlName="clave2" />
+
+            <ng-container *ngIf='getControl("clave2")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input">
+        <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('url_foto_1')}">
             <label for="url_foto_1">Imagen de perfil 1</label>
             <input id="url_foto_1" type="text" formControlName="url_foto_1" />
+
+            <ng-container *ngIf='getControl("url_foto_1")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'">
+        <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'"
+            [ngClass]="{'invalid-input': isValidControl('url_foto_2')}">
             <label for="url_foto_2">Imagen de perfil 2</label>
             <input id="url_foto_2" type="text" formControlName="url_foto_2" />
+
+            <ng-container *ngIf='getControl("url_foto_2")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
         </div>
 
-        <div name="registro_form_input" *ngIf="tipo_usuario == 'especialista'">
-            <label for="especialidad">Especialidades</label>
-            <select id="especialidad" formControlName="especialidades">
+        <div name="registro_form_input" *ngIf="tipo_usuario == 'especialista'"
+            [ngClass]="{'invalid-input': isValidControl('especialidades')}">
+            <label for="especialidades">Especialidades</label>
+            <select id="especialidades" formControlName="especialidades">
                 <option value="">Seleccione una especialidad</option>
                 <option [value]="especialidad_option" *ngFor="let especialidad_option of especialidades">
                     {{especialidad_option}}
                 </option>
             </select>
+
+            <ng-container *ngIf='getControl("especialidades")?.hasError("required")'>
+                <small class="text-danger">
+                    Debe completar este campo.
+                </small>
+            </ng-container>
         </div>
 
         <div>
+            <button type="submit" class="btn btn-primary" [disabled]="!this.userForm.valid"
+                (click)="logForm()">Registrar</button>
             <button type="submit" class="btn btn-primary" (click)="logForm()">Registrar</button>
         </div>
 
         <div>{{this.userForm.errors | json}}</div>
-        <div>estado {{this.userForm.status}}</div>
+        <div>estado {{this.userForm.valid}}</div>
     </form>
 </div>

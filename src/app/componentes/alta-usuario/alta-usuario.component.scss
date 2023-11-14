@@ -27,4 +27,10 @@ input[type="submit"] {
 
 .invalid-input {
     border-color: red;
+    color: red;
+}
+
+.invalid-input > input {
+    border-color: red
+    //color: red;
 }

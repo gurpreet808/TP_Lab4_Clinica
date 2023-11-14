@@ -18,9 +18,9 @@ export class AltaUsuarioComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         clave: ['', [Validators.required, Validators.minLength(6)]],
         clave2: ['', [Validators.required, Validators.minLength(6)]],
-        nombre: ['', [Validators.required, Validators.minLength(2)]],
-        apellido: ['', [Validators.required, Validators.minLength(2)]],
-        dni: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8)]],
+        nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Záéíóúñ .,]+$')]],
+        apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Záéíóúñ .,]+$')]],
+        dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
         edad: ['', [Validators.required, Validators.min(1), Validators.max(99)]],
         url_foto_1: ['', [Validators.required]],
         url_foto_2: ['',],
@@ -43,7 +43,17 @@ export class AltaUsuarioComponent implements OnInit {
   }
 
   getControlValue(control_name: string) {
-    return this.userForm.get(control_name)?.value;
+    return this.getControl(control_name)?.value;
+  }
+
+  isValidControl(control_name: string) {
+    let control = this.getControl(control_name);
+
+    if (control != null) {
+      return control.invalid;
+    }
+
+    return false;
   }
 
   logForm() {
