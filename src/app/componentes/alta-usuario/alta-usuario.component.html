@@ -91,6 +91,12 @@
                     Formato inválido.
                 </small>
             </ng-container>
+
+            <ng-container *ngIf='getControl("email")?.hasError("existeMail")'>
+                <small class="text-danger">
+                    Ese email ya está registrado.
+                </small>
+            </ng-container>
         </div>
 
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('clave')}">

@@ -12,6 +12,7 @@ import { ObraSocialService } from 'src/app/servicios/obra-social.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { especialistaRequiredValidator } from 'src/app/validators/especialista-required.validator';
+import { ExisteMailValidator } from 'src/app/validators/existe-mail.validator';
 import { pacienteRequiredValidator } from 'src/app/validators/paciente-required.validator';
 import { confirmarCalveValidator } from 'src/app/validators/repetir-clave.validator';
 
@@ -54,7 +55,7 @@ export class AltaUsuarioComponent implements OnInit {
 
     this.userForm = this.formBuilder.group(
       {
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email], [ExisteMailValidator(servUsuario)]],
         clave: ['', [Validators.required, Validators.minLength(6)]],
         clave2: ['', [Validators.required, Validators.minLength(6)]],
         nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Záéíóúñ .,]+$')]],
