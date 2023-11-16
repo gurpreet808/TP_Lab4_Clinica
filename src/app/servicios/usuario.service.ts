@@ -14,6 +14,7 @@ import { FileHandlerService } from './file-handler.service';
 export class UsuarioService {
 
   usuarios: BehaviorSubject<Usuario[]> = new BehaviorSubject<Usuario[]>([]);
+  admins: BehaviorSubject<Usuario[]> = new BehaviorSubject<Usuario[]>([]);
   pacientes: BehaviorSubject<Paciente[]> = new BehaviorSubject<Paciente[]>([]);
   especialistas: BehaviorSubject<Especialista[]> = new BehaviorSubject<Especialista[]>([]);
 
@@ -27,6 +28,7 @@ export class UsuarioService {
   TraerUsuarios() {
     let especialistas: Especialista[] = [];
     let pacientes: Paciente[] = [];
+    let admins: Usuario[] = [];
 
     let query: Query<Usuario, DocumentData> = this.dataRef as Query<Usuario, DocumentData>;
     collectionData<Usuario>(query, { idField: 'id' }).subscribe(
@@ -35,14 +37,22 @@ export class UsuarioService {
           (usuario: Usuario) => {
             if (usuario.tipo == 'especialista') {
               especialistas.push(usuario as Especialista);
-            } else if (usuario.tipo == 'paciente') {
+            }
+
+            if (usuario.tipo == 'paciente') {
               pacientes.push(usuario as Paciente);
+            }
+
+            if (usuario.tipo == 'admin') {
+              admins.push(usuario);
             }
           }
         );
 
         this.especialistas.next(especialistas);
         this.pacientes.next(pacientes);
+        this.admins.next(admins);
+
         this.usuarios.next(usuarios);
       }
     );
@@ -128,4 +138,17 @@ export class UsuarioService {
     return deleteDoc(docRef);
   }
 
+  ExisteMail(mail: string): boolean {
+    let rta: boolean = false;
+    let aux_usuarios: Usuario[] = JSON.parse(JSON.stringify(this.usuarios.value));
+
+    for (let i = 0; i < aux_usuarios.length; i++) {
+      if (aux_usuarios[i].email == mail) {
+        rta = true;
+        break;
+      }
+    }
+
+    return rta;
+  }
 }
