@@ -9,6 +9,7 @@ import { CollectionReference, DocumentData, Firestore, Query, collection, collec
 export class EspecialidadService {
 
   especialidades: BehaviorSubject<Especialidad[]> = new BehaviorSubject<Especialidad[]>([]);
+  firstLoad: boolean = true;
 
   pathUrl: string = 'especialidades';
   dataRef: CollectionReference<DocumentData, DocumentData> = collection(this.firestore, this.pathUrl);
@@ -22,6 +23,7 @@ export class EspecialidadService {
 
     collectionData<Especialidad>(query, { idField: 'id' }).subscribe(
       (especialidades: Especialidad[]) => {
+        this.firstLoad = false;
         this.especialidades.next(especialidades);
       }
     );

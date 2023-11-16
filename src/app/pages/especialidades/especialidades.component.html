@@ -35,22 +35,22 @@
                 </td>
                 <td>
                     <div class="flex align-items-center justify-content-center gap-1">
-                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" label="Editar"
                             (click)="onRowEditInit(especialidad)" class="p-button-rounded p-button-outlined"></button>
 
-                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" label="Guardar"
                             (click)="onRowEditSave(especialidad)"
                             class="p-button-rounded p-button-text p-button-success"></button>
 
-                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" label="Cancelar"
                             (click)="onRowEditCancel(especialidad, ri)"
                             class="p-button-rounded p-button-text p-button-danger"></button>
 
-                        <button pButton pRipple type="button" icon="fa-regular fa-square-check"
+                        <button pButton pRipple type="button" icon="fa-regular fa-square-check" label="Validar"
                             (click)="ValidarEspecialidad(especialidad)" *ngIf="especialidad.valida == false"
-                            class="p-button-rounded p-button-outlined p-button-help"></button>
+                            class="p-button-rounded p-button-outlined p-button-secondary"></button>
 
-                        <button pButton pRipple type="button" icon="pi pi-trash"
+                        <button pButton pRipple type="button" icon="pi pi-trash" label="Borrar"
                             (click)="BorrarEspecialidad(especialidad.id)"
                             class="p-button-rounded p-button-outlined p-button-danger"></button>
                     </div>

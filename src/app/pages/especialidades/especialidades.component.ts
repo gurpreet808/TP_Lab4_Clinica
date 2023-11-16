@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 
 @Component({
   selector: 'app-especialidades',
@@ -12,11 +13,18 @@ export class EspecialidadesComponent {
   especialidad: string = '';
   ClonesEspecialidades: { [s: string]: Especialidad } = {};
 
-  constructor(public servEspecialidades: EspecialidadService, public messageService: MessageService) {
-
+  constructor(public servEspecialidades: EspecialidadService, public messageService: MessageService, public servSpinner: SpinnerService,) {
+    this.servSpinner.showWithMessage('especialidades-init', 'Cargando especialidades...');
   }
-
+  
   ngOnInit(): void {
+    this.servEspecialidades.especialidades.subscribe(
+      (especialidades) => {
+        if (this.servEspecialidades.firstLoad == false) {
+          this.servSpinner.hideWithMessage('especialidades-init');
+        }
+      }
+    );
   }
 
   AgregarEspecialidad() {
@@ -101,7 +109,7 @@ export class EspecialidadesComponent {
 
   ValidarEspecialidad(especialidad: Especialidad) {
     especialidad.valida = true;
-    
+
     this.servEspecialidades.ModificarEspecialidad(especialidad).then(
       (rdo) => {
         console.log('Especialidad validada', rdo);
