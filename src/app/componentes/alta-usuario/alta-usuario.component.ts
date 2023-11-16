@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TaskEvent, UploadTaskSnapshot } from '@angular/fire/storage';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { UploadTaskSnapshot } from '@angular/fire/storage';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
 import { ObraSocial } from 'src/app/clases/obra-social';
@@ -11,6 +11,8 @@ import { FileHandlerService } from 'src/app/servicios/file-handler.service';
 import { ObraSocialService } from 'src/app/servicios/obra-social.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { especialistaRequiredValidator } from 'src/app/validators/especialista-required.validator';
+import { pacienteRequiredValidator } from 'src/app/validators/paciente-required.validator';
 
 @Component({
   selector: 'app-alta-usuario',
@@ -197,24 +199,4 @@ export class AltaUsuarioComponent implements OnInit {
     console.log(this.file_1);
     console.log(this.file_2);
   }
-}
-
-export function especialistaRequiredValidator(tipoUsuario: string): ValidatorFn | ValidatorFn[] | null {
-  return (control: AbstractControl) => {
-    if (tipoUsuario === 'especialista' && control.value.length === 0) {
-      return { required: true };
-    }
-
-    return null;
-  };
-}
-
-export function pacienteRequiredValidator(tipoUsuario: string): ValidatorFn | ValidatorFn[] | null {
-  return (control: AbstractControl) => {
-    if (tipoUsuario === 'paciente' && control.value.length === 0) {
-      return { required: true };
-    }
-
-    return null;
-  };
 }
