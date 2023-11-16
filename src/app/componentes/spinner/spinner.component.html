@@ -1,1 +1,12 @@
-<p>spinner works!</p>
+<div id="spinner" class="fadein" *ngIf="servSpinner.loading">
+    <img class="spinnerimage" [src]="servSpinner.url_logo" alt="" />
+    <div id="loading"></div>
+
+    <div id="messages" *ngIf="servSpinner.messages != {}">
+        <div *ngFor="let message of servSpinner.getMessagesArray">
+            <div class="spinner_message">
+                {{message}}
+            </div>
+        </div>
+    </div>
+</div>
