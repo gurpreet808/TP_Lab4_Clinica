@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TaskEvent, UploadTaskSnapshot } from '@angular/fire/storage';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
@@ -6,7 +7,10 @@ import { ObraSocial } from 'src/app/clases/obra-social';
 import { Paciente } from 'src/app/clases/paciente';
 import { Usuario } from 'src/app/clases/usuario';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
+import { FileHandlerService } from 'src/app/servicios/file-handler.service';
 import { ObraSocialService } from 'src/app/servicios/obra-social.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-alta-usuario',
@@ -20,8 +24,19 @@ export class AltaUsuarioComponent implements OnInit {
   obras_sociales: ObraSocial[] = [];
   agregar_especialidad: string = '';
   userForm: FormGroup;
+  file_1: File | undefined;
+  file_2: File | undefined;
 
-  constructor(private formBuilder: FormBuilder, public servObraSocial: ObraSocialService, public servEspecialidad: EspecialidadService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    public servObraSocial: ObraSocialService,
+    public servEspecialidad: EspecialidadService,
+    public servUsuario: UsuarioService,
+    public servFile: FileHandlerService,
+    public servSpinner: SpinnerService
+  ) {
+    this.servSpinner.showWithMessage('alta-usuario-init', 'Cargando datos...');
+
     this.servObraSocial.obras_sociales.subscribe(
       (obras_sociales) => {
         this.obras_sociales = obras_sociales;
@@ -57,6 +72,7 @@ export class AltaUsuarioComponent implements OnInit {
     this.userForm.get('obra_social')?.setValidators(pacienteRequiredValidator(this.tipo_usuario));
     this.userForm.get('url_foto_2')?.setValidators(pacienteRequiredValidator(this.tipo_usuario));
     this.userForm.markAllAsTouched();
+    this.servSpinner.hideWithMessage('alta-usuario-init');
   }
 
   getControl(control_name: string) {
@@ -81,8 +97,9 @@ export class AltaUsuarioComponent implements OnInit {
     console.log(this.userForm);
   }
 
-  RegistrarUsuario() {
+  async RegistrarUsuario() {
     console.log(this.userForm);
+    this.servSpinner.showWithMessage('registrar-usuario', 'Registrando usuario...');
 
     if (this.userForm.valid) {
       let usuario: Usuario | Especialista | Paciente = {
@@ -108,15 +125,78 @@ export class AltaUsuarioComponent implements OnInit {
 
         case "paciente":
           (usuario as Paciente).url_foto_2 = this.getControlValue('url_foto_2');
-          (usuario as Paciente).obra_social = this.getControlValue('obra_social');
+          (usuario as Paciente).obra_social = this.getControlValue('obra_social').id;
+          break;
+
+        default:
+          break;
+      }
+
+      await this.servUsuario.AgregarUsuario(usuario).then(
+        (user_id: string) => {
+          const images_path = `images/usuarios/${user_id}/`;
+
+          if (this.file_1 != undefined) {
+            this.servSpinner.showWithMessage('registrar-usuario', 'Subiendo imagen 1...');
+            let path_1 = `${images_path}${this.file_1.name}`;
+            let task = this.servFile.uploadFile(this.file_1, path_1);
+
+            task.on(
+              'state_changed',
+              (task_snapshot: UploadTaskSnapshot) => {
+                console.log(task_snapshot.bytesTransferred, task_snapshot.totalBytes);
+                let progress = (task_snapshot.bytesTransferred / task_snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                this.servSpinner.showWithMessage('registrar-usuario-progress', `${progress.toFixed(2)}%`);
+                //await new Promise(resolve => setTimeout(resolve, 0));
+              }, (error) => {
+                console.log(error);
+              }, () => {
+                usuario.url_foto_1 = path_1;
+              }
+            );
+
+            this.servUsuario.ModificarUsuario(usuario).then(
+              () => {
+                console.log('Usuario modificado');
+                this.servSpinner.hideWithMessage('registrar-usuario-progress');
+              }
+            ).catch(
+              (error) => {
+                console.log(error);
+              }
+            );
+          }
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  fileChange(event: any, file_number: number) {
+    let files = event.target.files;
+
+    if (files.length > 0) {
+      switch (file_number) {
+        case 1:
+          this.file_1 = files[0];
+          break;
+
+        case 2:
+          this.file_2 = files[0];
           break;
 
         default:
           break;
       }
     }
-  }
 
+    console.log(this.file_1);
+    console.log(this.file_2);
+  }
 }
 
 export function especialistaRequiredValidator(tipoUsuario: string): ValidatorFn | ValidatorFn[] | null {

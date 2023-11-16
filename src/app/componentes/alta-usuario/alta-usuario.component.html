@@ -66,7 +66,8 @@
             [ngClass]="{'invalid-input': isValidControl('obra_social')}">
             <label for="obra_social">Obra Social</label>
             <!-- <input id="obra_social" type="text" formControlName="obra_social" /> -->
-            <p-dropdown formControlName="obra_social" styleClass="w-full" [options]="obras_sociales" optionLabel="nombre"></p-dropdown>
+            <p-dropdown formControlName="obra_social" styleClass="w-full" [options]="obras_sociales"
+                optionLabel="nombre"></p-dropdown>
 
             <ng-container *ngIf='getControl("obra_social")?.hasError("required")'>
                 <small class="text-danger">
@@ -116,7 +117,7 @@
 
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('url_foto_1')}">
             <label for="url_foto_1">Imagen de perfil 1</label>
-            <input id="url_foto_1" type="text" formControlName="url_foto_1" />
+            <input id="url_foto_1" type="file" formControlName="url_foto_1" (change)="fileChange($event, 1)" />
 
             <ng-container *ngIf='getControl("url_foto_1")?.hasError("required")'>
                 <small class="text-danger">
@@ -128,7 +129,7 @@
         <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'"
             [ngClass]="{'invalid-input': isValidControl('url_foto_2')}">
             <label for="url_foto_2">Imagen de perfil 2</label>
-            <input id="url_foto_2" type="text" formControlName="url_foto_2" />
+            <input id="url_foto_2" type="file" formControlName="url_foto_2" />
 
             <ng-container *ngIf='getControl("url_foto_2")?.hasError("required")'>
                 <small class="text-danger">
@@ -146,7 +147,8 @@
                     {{especialidad_option}}
                 </option>
             </select> -->
-            <p-dropdown formControlName="especialidades" styleClass="w-full" [options]="especialidades" optionLabel="nombre"></p-dropdown>
+            <p-dropdown formControlName="especialidades" styleClass="w-full" [options]="especialidades"
+                optionLabel="nombre"></p-dropdown>
 
             <ng-container *ngIf='getControl("especialidades")?.hasError("required")'>
                 <small class="text-danger">
@@ -167,7 +169,7 @@
             <button type="submit" class="btn btn-primary" (click)="logForm()">LogForm</button>
         </div>
 
-        <div>{{this.userForm.errors | json}}</div>
-        <div>estado {{this.userForm.valid}}</div>
+        <!-- <div>{{this.userForm.errors | json}}</div> -->
+        <div>Form válido: {{this.userForm.valid}}</div>
     </form>
 </div>

@@ -4,6 +4,9 @@ import { Usuario } from '../clases/usuario';
 import { Paciente } from '../clases/paciente';
 import { Especialista } from '../clases/especialista';
 import { CollectionReference, DocumentData, Firestore, QuerySnapshot, collection, onSnapshot, doc, setDoc, collectionData, Query, deleteDoc } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
+import { UserCredential } from '@angular/fire/auth';
+import { FileHandlerService } from './file-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,7 @@ export class UsuarioService {
   pathUrl: string = 'usuarios';
   dataRef: CollectionReference<DocumentData, DocumentData> = collection(this.firestore, this.pathUrl);
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, public servAuth: AuthService, public servFile: FileHandlerService) {
     this.TraerUsuarios();
   }
 
@@ -45,7 +48,7 @@ export class UsuarioService {
     );
   }
 
-  AgregarUsuario(usuario: Usuario) {
+  async AgregarUsuario(usuario: Usuario) {
     if (usuario === null) {
       return Promise.reject('Usuario nulo');
     };
@@ -58,9 +61,45 @@ export class UsuarioService {
       return Promise.reject('DNI en uso');
     };
 
-    let docRef = doc(this.dataRef);
-    usuario.id = docRef.id;
-    return setDoc(docRef, usuario);
+    /* let docRef = doc(this.dataRef);
+      usuario.id = docRef.id;
+      return setDoc(docRef, usuario); */
+
+    let user_id: string = '';
+
+    if (this.servAuth.logueado.value == true) {
+      await this.servAuth.RegistrarOtroConEmail(usuario.email, usuario.clave).then(
+        async (user_id: string) => {
+          user_id = user_id;
+          usuario.id = user_id;
+          console.log("crear otro usuario", usuario);
+          let docRef = doc(this.dataRef, usuario.id);
+          await setDoc(docRef, usuario);
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+          throw new Error(error);
+        }
+      );
+    } else {
+      await this.servAuth.RegistrarConEmail(usuario.email, usuario.clave).then(
+        async (userCredential: UserCredential) => {
+          user_id = userCredential.user.uid;
+          usuario.id = user_id;
+          console.log("crear mi usuario", usuario);
+          let docRef = doc(this.dataRef, usuario.id);
+          await setDoc(docRef, usuario);
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+          throw new Error(error);
+        }
+      );
+    }
+
+    return user_id;
   }
 
   ModificarUsuario(usuario: Usuario) {

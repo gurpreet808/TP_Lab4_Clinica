@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, UserCredential, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, User, UserCredential, browserSessionPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Usuario } from '../clases/usuario';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   logueado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.auth.currentUser ? true : false);
-  usuarioActual: Usuario | undefined;
+  usuarioActual: string = "";
   firstRun: boolean = true;
 
-  constructor(private auth: Auth) {
+  constructor(private auth: Auth, private _http: HttpClient) {
     this.auth.onAuthStateChanged(
       (user: User | null) => {
-        //console.log(user);
+        console.log("authStateChange", user);
         this.firstRun = false;
 
         if (user != null) {
@@ -34,7 +35,8 @@ export class AuthService {
       nombre: datos.displayName || ''
     }; */
 
-    //console.log(this.usuarioActual);
+    this.usuarioActual = datos.uid;
+    //console.log("setCurrentUser", this.usuarioActual);
   }
 
   async LogInEmail(email: string, password: string) {
@@ -56,16 +58,49 @@ export class AuthService {
     return this.auth.signOut();
   }
 
-  async RegistrarEmail(email: string, password: string) {
-    await createUserWithEmailAndPassword(this.auth, email, password).then(
+  async RegistrarConEmail(email: string, password: string): Promise<UserCredential> {
+    return await createUserWithEmailAndPassword(this.auth, email, password).then(
       (datos: UserCredential) => {
         //console.log(datos);
-        return Promise.resolve(datos);
+        return datos;
       }
     ).catch(
       (error) => {
         //console.log(error.code);
-        throw new Error(this.errorParser(error.code));
+        return Promise.reject(this.errorParser(error.code));
+      }
+    );
+
+    //return Promise.reject('Error desconocido');
+  }
+
+  async RegistrarOtroConEmail(email: string, password: string) {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `key=${this.auth.app.options.apiKey}`
+    };
+
+    //let url: string = 'https://www.googleapis.com/identitytoolkit/v3/accounts';
+    let url: string = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + this.auth.app.options.apiKey;
+
+    const body = {
+      email: email,
+      password: password,
+      returnSecureToken: true
+    };
+
+    return firstValueFrom(this._http.post(url, body, { headers })).then(
+      (response: any) => {
+        //console.log(response);
+        const ID_USER: string = response.localId;
+        //console.log(ID_USER);
+        return ID_USER;
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+        //console.log(error.error.error.message);
+        return Promise.reject(this.errorParser(error.code));
       }
     );
   }
@@ -79,36 +114,28 @@ export class AuthService {
     ).catch(
       (error) => {
         //console.log(error.code);
-        throw new Error(this.errorParser(error.code));
+        return Promise.reject(this.errorParser(error.code));
       }
     );
   }
 
-  errorParser(error: string) {
-    switch (error) {
-      case "auth/wrong-password":
-        return "Clave incorrecta";
-      case "auth/user-not-found":
-        return "No se encontró ese mail";
-      case "auth/invalid-email":
-        return "El mail ingresado no es válido";
-      case "auth/email-already-in-use":
-        return "El mail ingresado ya está en uso";
-      case "auth/weak-password":
-        return "La clave debe tener al menos 6 caracteres";
-      case "auth/too-many-requests":
-        return "Demasiados intentos fallidos. Intente más tarde";
-      case "auth/network-request-failed":
-        return "Error de conexión. Intente más tarde";
-      case "auth/invalid-login-credentials":
-        return "Revise si su mail y contraseña son correctos";
-      case "auth/missing-password":
-        return "Debe ingresar una clave";
-      case "auth/missing-email":
-        return "Debe ingresar un mail";
+  errorParser(error: string): string {
+    let errorCodes: { [key: string]: string } = {
+      "auth/wrong-password": "Clave incorrecta",
+      "auth/user-not-found": "No se encontró ese mail",
+      "auth/invalid-email": "El mail ingresado no es válido",
+      "auth/email-already-in-use": "El mail ingresado ya está en uso",
+      "auth/weak-password": "La clave debe tener al menos 6 caracteres",
+      "auth/too-many-requests": "Demasiados intentos fallidos. Intente más tarde",
+      "auth/network-request-failed": "Error de conexión. Intente más tarde",
+      "auth/invalid-login-credentials": "Revise si su mail y contraseña son correctos",
+      "auth/missing-password": "Debe ingresar una clave",
+      "auth/missing-email": "Debe ingresar un mail",
+      "auth/user-disabled": "La cuenta de usuario está deshabilitada",
+      "auth/user-not-authorized": "El usuario no tiene permiso para realizar la acción solicitada",
+      "auth/quota-exceeded": "Se ha superado el límite de solicitudes",
+    };
 
-      default:
-        return `Error desconocido. (${error})`;
-    }
+    return errorCodes[error] || `Error desconocido. (${error})`;
   }
 }
