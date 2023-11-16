@@ -148,33 +148,18 @@ export class AltaUsuarioComponent implements OnInit {
       }
 
       await this.servUsuario.AgregarUsuario(usuario).then(
-        (user_id: string) => {
+        async (user_id: string) => {
           const images_path = `images/usuarios/${user_id}/`;
 
           if (this.file_1 != undefined) {
             this.servSpinner.showWithMessage('registrar-usuario', 'Subiendo imagen 1...');
             let path_1 = `${images_path}${this.file_1.name}`;
-            let task = this.servFile.uploadFile(this.file_1, path_1);
 
-            task.on(
-              'state_changed',
-              (task_snapshot: UploadTaskSnapshot) => {
-                console.log(task_snapshot.bytesTransferred, task_snapshot.totalBytes);
-                let progress = (task_snapshot.bytesTransferred / task_snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                this.servSpinner.showWithMessage('registrar-usuario-progress', `${progress.toFixed(2)}%`);
-                //await new Promise(resolve => setTimeout(resolve, 0));
-              }, (error) => {
-                console.log(error);
-              }, () => {
-                usuario.url_foto_1 = path_1;
-              }
-            );
-
-            this.servUsuario.ModificarUsuario(usuario).then(
-              () => {
-                console.log('Usuario modificado');
-                this.servSpinner.hideWithMessage('registrar-usuario-progress');
+            await this.servFile.uploadFileAndGetURL(this.file_1, path_1).then(
+              (url: string) => {
+                console.log(url);
+                this.servSpinner.showWithMessage('registrar-usuario', 'Guardando datos de usuario...');
+                usuario.url_foto_1 = url;
               }
             ).catch(
               (error) => {
@@ -182,6 +167,36 @@ export class AltaUsuarioComponent implements OnInit {
               }
             );
           }
+
+          if (this.file_2 != undefined) {
+            this.servSpinner.showWithMessage('registrar-usuario', 'Subiendo imagen 1...');
+            let path_1 = `${images_path}${this.file_2.name}`;
+
+            await this.servFile.uploadFileAndGetURL(this.file_2, path_1).then(
+              (url: string) => {
+                console.log(url);
+                this.servSpinner.showWithMessage('registrar-usuario', 'Guardando datos de usuario...');
+                usuario.url_foto_1 = url;
+              }
+            ).catch(
+              (error) => {
+                console.log(error);
+              }
+            );
+          }
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+
+      console.log("pre mod", usuario);
+
+      this.servUsuario.ModificarUsuario(usuario).then(
+        () => {
+          console.log('Usuario modificado');
+          this.servSpinner.hideWithMessage('registrar-usuario');
         }
       ).catch(
         (error) => {

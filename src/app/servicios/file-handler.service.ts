@@ -21,4 +21,10 @@ export class FileHandlerService {
   getDownloadURL(path: string) {
     return getDownloadURL(ref(this.storage, path));
   }
+
+  async uploadFileAndGetURL(file: File, path: string) {
+    let uploadTask = this.uploadFile(file, path);
+    await uploadTask;
+    return this.getDownloadURL(path);
+  }
 }
