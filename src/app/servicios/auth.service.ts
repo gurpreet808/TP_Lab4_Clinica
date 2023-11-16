@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, UserCredential, createUserWithEmailAndPassword, deleteUser, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, User, UserCredential, createUserWithEmailAndPassword, deleteUser, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Usuario } from '../clases/usuario';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -60,8 +60,9 @@ export class AuthService {
 
   async RegistrarConEmail(email: string, password: string): Promise<UserCredential> {
     return await createUserWithEmailAndPassword(this.auth, email, password).then(
-      (datos: UserCredential) => {
+      async (datos: UserCredential) => {
         //console.log(datos);
+        await sendEmailVerification(datos.user);
         return datos;
       }
     ).catch(
@@ -90,8 +91,8 @@ export class AuthService {
     };
 
     return firstValueFrom(this._http.post(url, body, { headers })).then(
-      (response: any) => {
-        //console.log(response);
+      async (response: any) => {
+        console.log(response);
         const ID_USER: string = response.localId;
         //console.log(ID_USER);
         return ID_USER;
