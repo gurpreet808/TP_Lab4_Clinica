@@ -20,17 +20,20 @@ div[name="form_card"] {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 25rem;
-    margin-left: auto;
-    margin-right: auto;
+    //margin-top: 30px;
+    //margin-bottom: 20px;
+    //min-width: 25rem;
+    //margin-left: auto;
+    //margin-right: auto;
 }
 
 div#registrarse_card_container {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    //width: 80%;
+    max-width: 800px;
+    margin: 2rem;
 }
 
 div#registrarse_title_container {
