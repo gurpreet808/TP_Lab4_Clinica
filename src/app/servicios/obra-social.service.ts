@@ -7,7 +7,6 @@ import { CollectionReference, DocumentData, Firestore, Query, collection, collec
   providedIn: 'root'
 })
 export class ObraSocialService {
-
   obras_sociales: BehaviorSubject<ObraSocial[]> = new BehaviorSubject<ObraSocial[]>([]);
 
   pathUrl: string = 'obras_sociales';
@@ -50,7 +49,7 @@ export class ObraSocialService {
       return Promise.reject('Obra Social nula');
     };
 
-    let ya_existe = this.obras_sociales.value.find((os: ObraSocial) => os.nombre === obraSocial.nombre)
+    let ya_existe = this.obras_sociales.value.find((os: ObraSocial) => os.nombre === obraSocial.nombre);
     console.log(ya_existe);
 
     if (ya_existe && ya_existe.id !== obraSocial.id) {

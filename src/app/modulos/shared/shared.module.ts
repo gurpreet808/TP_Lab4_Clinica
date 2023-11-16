@@ -13,13 +13,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardUsuarioComponent } from 'src/app/componentes/card-usuario/card-usuario.component';
 import { CardPacienteComponent } from 'src/app/componentes/card-paciente/card-paciente.component';
 import { CardEspecialistaComponent } from 'src/app/componentes/card-especialista/card-especialista.component';
+import { ObraSocialPipe } from 'src/app/pipes/obra-social.pipe';
 
 @NgModule({
   declarations: [
     AltaUsuarioComponent,
     CardUsuarioComponent,
     CardPacienteComponent,
-    CardEspecialistaComponent
+    CardEspecialistaComponent,
+    ObraSocialPipe
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { CardEspecialistaComponent } from 'src/app/componentes/card-especialista
     AltaUsuarioComponent,
     CardUsuarioComponent,
     CardPacienteComponent,
-    CardEspecialistaComponent
+    CardEspecialistaComponent,
+    ObraSocialPipe
   ]
 })
 export class SharedModule { }
