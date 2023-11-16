@@ -129,10 +129,20 @@ export class UsuarioService {
     return setDoc(docRef, usuario);
   }
 
-  BorrarUsuario(id: string) {
+  async BorrarUsuario(id: string) {
     if (id === null) {
       return Promise.reject('ID nulo');
     };
+
+    /* await this.servAuth.BorraUsuario(id).then(
+      (rta) => {
+        console.log(rta);
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    ); */
 
     let docRef = doc(this.dataRef, id);
     return deleteDoc(docRef);

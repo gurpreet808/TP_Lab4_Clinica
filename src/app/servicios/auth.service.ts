@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, UserCredential, browserSessionPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, User, UserCredential, createUserWithEmailAndPassword, deleteUser, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Usuario } from '../clases/usuario';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -114,6 +114,32 @@ export class AuthService {
     ).catch(
       (error) => {
         //console.log(error.code);
+        return Promise.reject(this.errorParser(error.code));
+      }
+    );
+  }
+
+  async BorraUsuario(id: string) {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `key=${this.auth.app.options.apiKey}`
+    };
+
+    //let url: string = 'https://www.googleapis.com/identitytoolkit/v3/accounts';
+    let url: string = `https://firebase.googleapis.com/v1/projects/${this.auth.app.options.projectId}/users/${id}`;
+
+
+    return firstValueFrom(this._http.delete(url, { headers })).then(
+      (response: any) => {
+        //console.log(response);
+        const ID_USER: string = response.localId;
+        //console.log(ID_USER);
+        return ID_USER;
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+        //console.log(error.error.error.message);
         return Promise.reject(this.errorParser(error.code));
       }
     );
