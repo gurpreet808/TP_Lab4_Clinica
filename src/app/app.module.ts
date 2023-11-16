@@ -20,22 +20,14 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-config';
 
 import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuarios.component';
-import { ListaPacientesComponent } from './componentes/lista-pacientes/lista-pacientes.component';
-import { ListaEspecialistasComponent } from './componentes/lista-especialistas/lista-especialistas.component';
 import { SpinnerComponent } from './componentes/spinner/spinner.component';
-import { ListaObrasSocialesComponent } from './componentes/lista-obras-sociales/lista-obras-sociales.component';
-import { ListaEspecialidadesComponent } from './componentes/lista-especialidades/lista-especialidades.component';
 import { NavBarComponent } from './componentes/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaUsuariosComponent,
-    ListaPacientesComponent,
-    ListaEspecialistasComponent,
     SpinnerComponent,
-    ListaObrasSocialesComponent,
-    ListaEspecialidadesComponent,
     NavBarComponent
   ],
   imports: [
