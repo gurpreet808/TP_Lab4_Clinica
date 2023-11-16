@@ -7,11 +7,19 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { HttpClientModule } from '@angular/common/http';
+import { CardUsuarioComponent } from 'src/app/componentes/card-usuario/card-usuario.component';
+import { CardPacienteComponent } from 'src/app/componentes/card-paciente/card-paciente.component';
+import { CardEspecialistaComponent } from 'src/app/componentes/card-especialista/card-especialista.component';
 
 @NgModule({
   declarations: [
-    AltaUsuarioComponent
+    AltaUsuarioComponent,
+    CardUsuarioComponent,
+    CardPacienteComponent,
+    CardEspecialistaComponent
   ],
   imports: [
     CommonModule,
@@ -21,9 +29,16 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     InputNumberModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    ButtonModule,
+    MultiSelectModule
     //PrimeNGModule
   ],
-  exports: [AltaUsuarioComponent]
+  exports: [
+    AltaUsuarioComponent,
+    CardUsuarioComponent,
+    CardPacienteComponent,
+    CardEspecialistaComponent
+  ]
 })
 export class SharedModule { }

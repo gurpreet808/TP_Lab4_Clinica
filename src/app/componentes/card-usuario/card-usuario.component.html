@@ -1,0 +1,46 @@
+<div id="usuario_card" *ngIf="usuario">
+    <div id="usuario_nombre_container" name="usuario_card_data">
+        <div name="usuario_card_label">Nombre:</div>
+        <div>{{usuario.nombre}}</div>
+    </div>
+
+    <div id="usuario_apellido_container" name="usuario_card_data">
+        <div name="usuario_card_label">apellido:</div>
+        <div>{{usuario.apellido}}</div>
+    </div>
+
+    <div id="usuario_email_container" name="usuario_card_data">
+        <div name="usuario_card_label">email:</div>
+        <div>{{usuario.email}}</div>
+    </div>
+
+    <div id="usuario_tipo_container" name="usuario_card_data">
+        <div name="usuario_card_label">tipo:</div>
+        <div>{{usuario.tipo}}</div>
+    </div>
+
+    <div id="usuario_dni_container" name="usuario_card_data">
+        <div name="usuario_card_label">dni:</div>
+        <div>{{usuario.dni}}</div>
+    </div>
+
+    <div id="usuario_edad_container" name="usuario_card_data">
+        <div name="usuario_card_label">edad:</div>
+        <div>{{usuario.edad}}</div>
+    </div>
+
+    <div id="usuario_email_verificado_container" name="usuario_card_data">
+        <div name="usuario_card_label">email_verificado:</div>
+        <div>{{usuario.email_verificado}}</div>
+    </div>
+
+    <div id="usuario_fecha_alta_container" name="usuario_card_data">
+        <div name="usuario_card_label">fecha_alta:</div>
+        <div>{{usuario.fecha_alta | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
+    </div>
+
+    <div id="usuario_url_foto_1_container" name="usuario_card_data">
+        <div name="usuario_card_label">url_foto_1:</div>
+        <div>{{usuario.url_foto_1}}</div>
+    </div>
+</div>

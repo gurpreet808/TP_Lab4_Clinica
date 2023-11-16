@@ -1,0 +1,56 @@
+<div id="especialista_card" *ngIf="especialista">
+    <div id="especialista_nombre_container" name="especialista_card_data">
+        <div name="especialista_card_label">Nombre:</div>
+        <div>{{especialista.nombre}}</div>
+    </div>
+
+    <div id="especialista_apellido_container" name="especialista_card_data">
+        <div name="especialista_card_label">apellido:</div>
+        <div>{{especialista.apellido}}</div>
+    </div>
+
+    <div id="especialista_email_container" name="especialista_card_data">
+        <div name="especialista_card_label">email:</div>
+        <div>{{especialista.email}}</div>
+    </div>
+
+    <div id="especialista_tipo_container" name="especialista_card_data">
+        <div name="especialista_card_label">tipo:</div>
+        <div>{{especialista.tipo}}</div>
+    </div>
+
+    <div id="especialista_dni_container" name="especialista_card_data">
+        <div name="especialista_card_label">dni:</div>
+        <div>{{especialista.dni}}</div>
+    </div>
+
+    <div id="especialista_edad_container" name="especialista_card_data">
+        <div name="especialista_card_label">edad:</div>
+        <div>{{especialista.edad}}</div>
+    </div>
+
+    <div id="especialista_email_verificado_container" name="especialista_card_data">
+        <div name="especialista_card_label">email_verificado:</div>
+        <div>{{especialista.email_verificado}}</div>
+    </div>
+
+    <div id="especialista_fecha_alta_container" name="especialista_card_data">
+        <div name="especialista_card_label">fecha_alta:</div>
+        <div>{{especialista.fecha_alta | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
+    </div>
+
+    <div id="especialista_url_foto_1_container" name="especialista_card_data">
+        <div name="especialista_card_label">url_foto_1:</div>
+        <div>{{especialista.url_foto_1}}</div>
+    </div>
+
+    <div id="especialista_especialidades_container" name="especialista_card_data">
+        <div name="especialista_card_label">especialidades:</div>
+        <div *ngFor="let especialidad of especialista.especialidades">{{especialista.especialidades}}</div>
+    </div>
+
+    <div id="especialista_habilitado_container" name="especialista_card_data">
+        <div name="especialista_card_label">habilitado:</div>
+        <div>{{especialista.habilitado}}</div>
+    </div>
+</div>

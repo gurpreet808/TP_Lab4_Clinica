@@ -2,11 +2,14 @@
 <button (click)="AgregarPaciente()">Agregar Paciente</button>
 <button (click)="AgregarEspecialista()">Agregar Especialista</button>
 
-<div style="border: 1px solid black;" *ngFor="let usuario of this.servUsuario.usuarios.value" name="especialista_card">
-    <div>
-        {{ usuario | json}}
+<div *ngFor="let usuario of this.servUsuario.usuarios.value" name="usuario_card">
+    <div name="usuario_card_content">
+        <app-card-usuario [usuario]="usuario" *ngIf="usuario.tipo == 'admin'"></app-card-usuario>
+        <app-card-paciente [usuario]="usuario" *ngIf="usuario.tipo == 'paciente'"></app-card-paciente>
+        <app-card-especialista [usuario]="usuario" *ngIf="usuario.tipo == 'especialista'"></app-card-especialista>
     </div>
-    <div>
+
+    <div name="usuario_card_buttons">
         <button (click)="Borrar(usuario.id)">Borrar</button>
         <button (click)="HabilitarEspecialista(usuario)" *ngIf="usuario.tipo == 'especialista'">Habilitar</button>
     </div>

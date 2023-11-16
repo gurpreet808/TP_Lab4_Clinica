@@ -1,0 +1,56 @@
+<div id="paciente_card" *ngIf="paciente">
+    <div id="paciente_nombre_container" name="paciente_card_data">
+        <div name="paciente_card_label">Nombre:</div>
+        <div>{{paciente.nombre}}</div>
+    </div>
+
+    <div id="paciente_apellido_container" name="paciente_card_data">
+        <div name="paciente_card_label">apellido:</div>
+        <div>{{paciente.apellido}}</div>
+    </div>
+
+    <div id="paciente_email_container" name="paciente_card_data">
+        <div name="paciente_card_label">email:</div>
+        <div>{{paciente.email}}</div>
+    </div>
+
+    <div id="paciente_tipo_container" name="paciente_card_data">
+        <div name="paciente_card_label">tipo:</div>
+        <div>{{paciente.tipo}}</div>
+    </div>
+
+    <div id="paciente_dni_container" name="paciente_card_data">
+        <div name="paciente_card_label">dni:</div>
+        <div>{{paciente.dni}}</div>
+    </div>
+
+    <div id="paciente_edad_container" name="paciente_card_data">
+        <div name="paciente_card_label">edad:</div>
+        <div>{{paciente.edad}}</div>
+    </div>
+
+    <div id="paciente_email_verificado_container" name="paciente_card_data">
+        <div name="paciente_card_label">email_verificado:</div>
+        <div>{{paciente.email_verificado}}</div>
+    </div>
+
+    <div id="paciente_fecha_alta_container" name="paciente_card_data">
+        <div name="paciente_card_label">fecha_alta:</div>
+        <div>{{paciente.fecha_alta | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
+    </div>
+
+    <div id="paciente_url_foto_1_container" name="paciente_card_data">
+        <div name="paciente_card_label">url_foto_1:</div>
+        <div>{{paciente.url_foto_1}}</div>
+    </div>
+
+    <div id="paciente_url_foto_2_container" name="paciente_card_data">
+        <div name="paciente_card_label">url_foto_2:</div>
+        <div>{{paciente.url_foto_2}}</div>
+    </div>
+
+    <div id="paciente_obra_social_container" name="paciente_card_data">
+        <div name="paciente_card_label">obra_social:</div>
+        <div>{{paciente.obra_social}}</div>
+    </div>
+</div>

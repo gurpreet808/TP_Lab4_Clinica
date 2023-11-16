@@ -1,4 +1,6 @@
-div[name="especialista_card"]{
+div[name="usuario_card"] {
     display: flex;
     flex-direction: row;
+    border: 1px solid black;
+    margin: 0.25rem;
 }

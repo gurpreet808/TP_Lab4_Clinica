@@ -1,0 +1,23 @@
+div#paciente_card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(0, 0, 255, 0.60)
+}
+
+div[name="paciente_card_data"] {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+}
+
+div[name="paciente_card_label"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
