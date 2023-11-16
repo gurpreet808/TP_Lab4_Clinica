@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UploadTaskSnapshot } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
 import { ObraSocial } from 'src/app/clases/obra-social';
 import { Paciente } from 'src/app/clases/paciente';
 import { Usuario } from 'src/app/clases/usuario';
+import { AuthService } from 'src/app/servicios/auth.service';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
 import { FileHandlerService } from 'src/app/servicios/file-handler.service';
 import { ObraSocialService } from 'src/app/servicios/obra-social.service';
@@ -36,8 +38,10 @@ export class AltaUsuarioComponent implements OnInit {
     public servObraSocial: ObraSocialService,
     public servEspecialidad: EspecialidadService,
     public servUsuario: UsuarioService,
+    public servAuth: AuthService,
     public servFile: FileHandlerService,
-    public servSpinner: SpinnerService
+    public servSpinner: SpinnerService,
+    public messageService: MessageService
   ) {
     this.servSpinner.showWithMessage('alta-usuario-init', 'Cargando datos...');
 
@@ -125,8 +129,13 @@ export class AltaUsuarioComponent implements OnInit {
 
       switch (usuario.tipo) {
         case "especialista":
-          (usuario as Especialista).especialidades = this.getControlValue('especialidades');
           (usuario as Especialista).habilitado = false;
+          let especialidades: Especialidad[] = this.getControlValue('especialidades');
+          (usuario as Especialista).especialidades = [];
+          //(usuario as Especialista).especialidades = this.getControlValue('especialidades').id;
+          for (let e = 0; e < especialidades.length; e++) {
+            (usuario as Especialista).especialidades.push(especialidades[e].id);
+          }
           break;
 
         case "paciente":
@@ -179,6 +188,36 @@ export class AltaUsuarioComponent implements OnInit {
           console.log(error);
         }
       );
+    }
+  }
+
+  async AgregarEspecialidad() {
+    if (this.agregar_especialidad != '') {
+      let especialidad: Especialidad = {
+        id: 'new',
+        nombre: this.agregar_especialidad,
+        valida: false
+      }
+
+      /* if (this.servAuth.usuarioActual && this.servAuth.usuarioActual.tipo == 'admin') {
+        especialidad.valida = true;
+      } */
+
+      this.servSpinner.showWithMessage('agregar-especialidad', 'Agregando especialidad...');
+
+      await this.servEspecialidad.AgregarEspecialidad(especialidad).then(
+        () => {
+          this.agregar_especialidad = '';
+          this.messageService.add({ severity: 'success', life: 10000, summary: 'Bien', detail: 'Se agregó la especialidad' });
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+          this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: error });
+        }
+      );
+
+      this.servSpinner.hideWithMessage('agregar-especialidad');
     }
   }
 
