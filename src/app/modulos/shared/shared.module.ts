@@ -4,7 +4,9 @@ import { AltaUsuarioComponent } from 'src/app/componentes/alta-usuario/alta-usua
 import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import { PasswordModule } from 'primeng/password';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -16,8 +18,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     DropdownModule,
-    HttpClientModule
-    //InputTextModule,
+    HttpClientModule,
+    InputNumberModule,
+    InputTextModule,
+    PasswordModule
     //PrimeNGModule
   ],
   exports: [AltaUsuarioComponent]

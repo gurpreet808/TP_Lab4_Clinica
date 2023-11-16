@@ -2,7 +2,7 @@
     <form [formGroup]="userForm" class="ng-invalid">
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('nombre')}">
             <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" formControlName="nombre" />
+            <input id="nombre" pInputText type="text" formControlName="nombre" />
 
             <ng-container *ngIf='getControl("nombre")?.hasError("required")'>
                 <small class="text-danger">
@@ -19,7 +19,7 @@
 
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('nombre')}">
             <label for="apellido">Apellido</label>
-            <input id="apellido" type="text" formControlName="apellido" />
+            <input id="apellido" pInputText type="text" formControlName="apellido" />
 
             <ng-container *ngIf='getControl("apellido")?.hasError("required")'>
                 <small class="text-danger">
@@ -36,7 +36,9 @@
 
         <div id="edad_container" name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('edad')}">
             <label for="edad">Edad</label>
-            <input id="edad" type="number" formControlName="edad" />
+            <!-- <input id="edad" type="number" formControlName="edad" /> -->
+            <p-inputNumber inputId="edad" inputStyleClass="w-full" formControlName="edad" [min]="1" [max]="200"
+                [maxlength]="3" [useGrouping]="false"></p-inputNumber>
 
             <ng-container *ngIf='getControl("edad")?.hasError("required")'>
                 <small class="text-danger">
@@ -47,7 +49,9 @@
 
         <div id="dni_container" name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('dni')}">
             <label for="dni">DNI</label>
-            <input id="dni" type="number" formControlName="dni" />
+            <!-- <input pInputNumber id="dni" type="number" formControlName="dni" maxlength="8" /> -->
+            <p-inputNumber inputId="dni" inputStyleClass="w-full" formControlName="dni" [min]="10000000"
+                [max]="99999999" [maxlength]="8" [useGrouping]="false"></p-inputNumber>
 
             <ng-container *ngIf='getControl("dni")?.hasError("required")'>
                 <small class="text-danger">
@@ -65,7 +69,7 @@
         <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'"
             [ngClass]="{'invalid-input': isValidControl('obra_social')}">
             <label for="obra_social">Obra Social</label>
-            <!-- <input id="obra_social" type="text" formControlName="obra_social" /> -->
+            <!-- <input id="obra_social" pInputText type="text" formControlName="obra_social" /> -->
             <p-dropdown formControlName="obra_social" styleClass="w-full" [options]="obras_sociales"
                 optionLabel="nombre"></p-dropdown>
 
@@ -78,7 +82,7 @@
 
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('email')}">
             <label for="mail">Correo electrónico</label>
-            <input id="mail" type="email" formControlName="email" />
+            <input id="mail" pInputText type="email" formControlName="email" />
 
             <ng-container *ngIf='getControl("email")?.hasError("required")'>
                 <small class="text-danger">
@@ -101,7 +105,8 @@
 
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('clave')}">
             <label for="clave">Contraseña</label>
-            <input id="clave" type="password" formControlName="clave" />
+            <!-- <input id="clave" type="password" formControlName="clave" /> -->
+            <p-password id="clave" formControlName="clave" inputStyleClass="w-full" styleClass="w-full" [feedback]="false" [toggleMask]="true"></p-password>
 
             <ng-container *ngIf='getControl("clave")?.hasError("required")'>
                 <small class="text-danger">
@@ -112,7 +117,8 @@
 
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('clave2')}">
             <label for="clave2">Repita la contraseña</label>
-            <input id="clave2" type="password" formControlName="clave2" />
+            <!-- <input id="clave2" type="password" formControlName="clave2" /> -->
+            <p-password id="clave2" formControlName="clave2" inputStyleClass="w-full" styleClass="w-full" [feedback]="false" [toggleMask]="true"></p-password>
 
             <ng-container *ngIf='getControl("clave2")?.hasError("required")'>
                 <small class="text-danger">
@@ -171,7 +177,7 @@
 
         <div name="registro_form_input" *ngIf="tipo_usuario == 'especialista'">
             <label for="agregar_especialidad">Agregar especialidad</label>
-            <input id="agregar_especialidad" type="text" [(ngModel)]="agregar_especialidad"
+            <input id="agregar_especialidad" pInputText type="text" [(ngModel)]="agregar_especialidad"
                 [ngModelOptions]="{standalone: true}" />
         </div>
 

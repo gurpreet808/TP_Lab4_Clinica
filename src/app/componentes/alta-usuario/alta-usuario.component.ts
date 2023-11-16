@@ -60,7 +60,7 @@ export class AltaUsuarioComponent implements OnInit {
         clave2: ['', [Validators.required, Validators.minLength(6)]],
         nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Záéíóúñ .,]+$')]],
         apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Záéíóúñ .,]+$')]],
-        dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
+        dni: ['', [Validators.required, Validators.minLength(10000000), Validators.maxLength(99999999), Validators.pattern('^[0-9]{8}$')]],
         edad: ['', [Validators.required, Validators.min(1), Validators.max(99)]],
         url_foto_1: ['', [Validators.required]],
         url_foto_2: ['',],
