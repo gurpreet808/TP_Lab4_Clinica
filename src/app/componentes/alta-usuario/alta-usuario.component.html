@@ -113,6 +113,12 @@
                     Debe completar este campo.
                 </small>
             </ng-container>
+
+            <ng-container *ngIf='getControl("clave2")?.hasError("noCoincide")'>
+                <small class="text-danger">
+                    Las contraseñas no coinciden.
+                </small>
+            </ng-container>
         </div>
 
         <div name="registro_form_input" [ngClass]="{'invalid-input': isValidControl('url_foto_1')}">
