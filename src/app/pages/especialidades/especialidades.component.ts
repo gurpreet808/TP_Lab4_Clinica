@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
@@ -9,7 +9,7 @@ import { SpinnerService } from 'src/app/servicios/spinner.service';
   templateUrl: './especialidades.component.html',
   styleUrls: ['./especialidades.component.scss']
 })
-export class EspecialidadesComponent {
+export class EspecialidadesComponent implements OnInit {
   especialidad: string = '';
   ClonesEspecialidades: { [s: string]: Especialidad } = {};
 

@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, UserCredential, createUserWithEmailAndPassword, deleteUser, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, User, UserCredential, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Usuario } from '../clases/usuario';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   logueado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.auth.currentUser ? true : false);
-  usuarioActual: string = "";
+  usuarioActual: Usuario | undefined;
   firstRun: boolean = true;
 
-  constructor(private auth: Auth, private _http: HttpClient) {
+  constructor(private auth: Auth, private _http: HttpClient, private _usuarioService: UsuarioService) {
     this.auth.onAuthStateChanged(
       (user: User | null) => {
         console.log("authStateChange", user);
         this.firstRun = false;
 
         if (user != null) {
-          this.setDatosUsuario(user);
+          this.setUsuarioActual(user);
+          console.log(this.usuarioActual);
           this.logueado.next(true);
         } else {
           this.logueado.next(false);
@@ -28,15 +30,18 @@ export class AuthService {
     );
   }
 
-  setDatosUsuario(datos: any) {
-    /* this.usuarioActual = {
-      id: datos.uid,
-      email: datos.email || '',
-      nombre: datos.displayName || ''
-    }; */
-
-    this.usuarioActual = datos.uid;
-    //console.log("setCurrentUser", this.usuarioActual);
+  async setUsuarioActual(_user: User) {
+    this._usuarioService.usuarios.subscribe(
+      async (usuarios: Usuario[]) => {
+        for (let usuario of usuarios) {
+          if (usuario.id == _user.uid) {
+            this.usuarioActual = usuario;
+            console.log("set usuario", this.usuarioActual);
+            break;
+          }
+        }
+      }
+    );
   }
 
   async LogInEmail(email: string, password: string) {
@@ -75,7 +80,7 @@ export class AuthService {
     //return Promise.reject('Error desconocido');
   }
 
-  async RegistrarOtroConEmail(email: string, password: string) {
+  async RegistrarOtroConEmail(email: string, password: string): Promise<string> {
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `key=${this.auth.app.options.apiKey}`
@@ -104,6 +109,53 @@ export class AuthService {
         return Promise.reject(this.errorParser(error.code));
       }
     );
+  }
+
+  async RegistrarUsuarioConEmail(usuario: Usuario): Promise<Usuario> {
+    if (this.logueado.value == true) {
+      usuario.id = await this.RegistrarOtroConEmail(usuario.email, usuario.clave).then(
+        async (user_id: string) => {
+          usuario.id = user_id;
+          console.log("crear otro usuario", usuario);
+          return usuario.id;
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+          throw new Error(error);
+        }
+      );
+    } else {
+      usuario.id = await this.RegistrarConEmail(usuario.email, usuario.clave).then(
+        async (userCredential: UserCredential) => {
+          console.log("registrar userCredential", userCredential);
+          usuario.id = userCredential.user.uid;
+          console.log("crear mi usuario", usuario);
+          return usuario.id;
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+          throw new Error(error);
+        }
+      );
+    }
+
+    if (usuario.id != undefined && usuario.id != null && usuario.id != "" && usuario.id != "new") {
+      return this._usuarioService.AgregarUsuario(usuario).then(
+        () => {
+          console.log('Usuario agregado');
+          return usuario;
+        }
+      ).catch(
+        (error) => {
+          console.log("agregar usuario", error);
+          throw new Error(error);
+        }
+      );
+    }
+
+    throw new Error("Error al registrar usuario");
   }
 
   async OlvideClave(email: string) {

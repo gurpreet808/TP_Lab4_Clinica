@@ -139,7 +139,6 @@ export class AltaUsuarioComponent implements OnInit {
           break;
 
         case "paciente":
-          (usuario as Paciente).url_foto_2 = this.getControlValue('url_foto_2');
           (usuario as Paciente).obra_social = this.getControlValue('obra_social').id;
           break;
 
@@ -147,60 +146,64 @@ export class AltaUsuarioComponent implements OnInit {
           break;
       }
 
-      await this.servUsuario.AgregarUsuario(usuario).then(
-        async (user_id: string) => {
-          const images_path = `images/usuarios/${user_id}/`;
+      await this.servAuth.RegistrarUsuarioConEmail(usuario).then(
+        async (_usuario: Usuario) => {
+          console.log("usuario creado", _usuario);
+
+          const images_path = `images/usuarios/${_usuario.id}/`;
 
           if (this.file_1 != undefined) {
             this.servSpinner.showWithMessage('registrar-usuario', 'Subiendo imagen 1...');
             let path_1 = `${images_path}${this.file_1.name}`;
 
-            await this.servFile.uploadFileAndGetURL(this.file_1, path_1).then(
-              (url: string) => {
-                console.log(url);
+            _usuario.url_foto_1 = await this.servFile.uploadFileAndGetURL(this.file_1, path_1).then(
+              async (url: string) => {
+                console.log("in await 1", url);
                 this.servSpinner.showWithMessage('registrar-usuario', 'Guardando datos de usuario...');
-                usuario.url_foto_1 = url;
+                return url;
               }
             ).catch(
               (error) => {
-                console.log(error);
+                console.log("subir img 1", error);
+                throw error;
               }
             );
           }
 
           if (this.file_2 != undefined) {
-            this.servSpinner.showWithMessage('registrar-usuario', 'Subiendo imagen 1...');
-            let path_1 = `${images_path}${this.file_2.name}`;
+            this.servSpinner.showWithMessage('registrar-usuario', 'Subiendo imagen 2...');
+            let path_2 = `${images_path}${this.file_2.name}`;
 
-            await this.servFile.uploadFileAndGetURL(this.file_2, path_1).then(
-              (url: string) => {
-                console.log(url);
+            (_usuario as Paciente).url_foto_2 = await this.servFile.uploadFileAndGetURL(this.file_2, path_2).then(
+              async (url: string) => {
+                console.log("in await 2", url);
                 this.servSpinner.showWithMessage('registrar-usuario', 'Guardando datos de usuario...');
-                usuario.url_foto_1 = url;
+                return url;
               }
             ).catch(
               (error) => {
-                console.log(error);
+                console.log("subir img 2", error);
+                throw error;
               }
             );
           }
+
+          console.log("pre mod", _usuario);
+
+          this.servUsuario.ModificarUsuario(_usuario).then(
+            () => {
+              console.log('Usuario modificado');
+              this.servSpinner.hideWithMessage('registrar-usuario');
+            }
+          ).catch(
+            (error) => {
+              console.log("mod after upload", error);
+            }
+          );
         }
       ).catch(
         (error) => {
-          console.log(error);
-        }
-      );
-
-      console.log("pre mod", usuario);
-
-      this.servUsuario.ModificarUsuario(usuario).then(
-        () => {
-          console.log('Usuario modificado');
-          this.servSpinner.hideWithMessage('registrar-usuario');
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
+          console.log("Agregar usuario", error);
         }
       );
     }

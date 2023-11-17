@@ -4,8 +4,6 @@ import { Usuario } from '../clases/usuario';
 import { Paciente } from '../clases/paciente';
 import { Especialista } from '../clases/especialista';
 import { CollectionReference, DocumentData, Firestore, QuerySnapshot, collection, onSnapshot, doc, setDoc, collectionData, Query, deleteDoc } from '@angular/fire/firestore';
-import { AuthService } from './auth.service';
-import { UserCredential } from '@angular/fire/auth';
 import { FileHandlerService } from './file-handler.service';
 
 @Injectable({
@@ -17,11 +15,12 @@ export class UsuarioService {
   admins: BehaviorSubject<Usuario[]> = new BehaviorSubject<Usuario[]>([]);
   pacientes: BehaviorSubject<Paciente[]> = new BehaviorSubject<Paciente[]>([]);
   especialistas: BehaviorSubject<Especialista[]> = new BehaviorSubject<Especialista[]>([]);
+  firstLoad: boolean = true;
 
   pathUrl: string = 'usuarios';
   dataRef: CollectionReference<DocumentData, DocumentData> = collection(this.firestore, this.pathUrl);
 
-  constructor(private firestore: Firestore, public servAuth: AuthService, public servFile: FileHandlerService) {
+  constructor(private firestore: Firestore, public servFile: FileHandlerService) {
     this.TraerUsuarios();
   }
 
@@ -49,6 +48,8 @@ export class UsuarioService {
           }
         );
 
+        this.firstLoad = false;
+
         this.especialistas.next(especialistas);
         this.pacientes.next(pacientes);
         this.admins.next(admins);
@@ -71,11 +72,11 @@ export class UsuarioService {
       return Promise.reject('DNI en uso');
     };
 
-    /* let docRef = doc(this.dataRef);
-      usuario.id = docRef.id;
-      return setDoc(docRef, usuario); */
+    let docRef = doc(this.dataRef);
+    usuario.id = docRef.id;
+    return setDoc(docRef, usuario);
 
-    let user_id: string = '';
+    /* let user_id: string = '';
 
     if (this.servAuth.logueado.value == true) {
       await this.servAuth.RegistrarOtroConEmail(usuario.email, usuario.clave).then(
@@ -109,7 +110,7 @@ export class UsuarioService {
       );
     }
 
-    return user_id;
+    return user_id; */
   }
 
   ModificarUsuario(usuario: Usuario) {
@@ -146,6 +147,22 @@ export class UsuarioService {
 
     let docRef = doc(this.dataRef, id);
     return deleteDoc(docRef);
+  }
+
+  async BuscarUsuarioPorId(id: string): Promise<Usuario> {
+    if (id === null) {
+      return Promise.reject('ID nulo');
+    };
+
+    let aux_usuarios: Usuario[] = JSON.parse(JSON.stringify(this.usuarios.value));
+
+    for (let i = 0; i < aux_usuarios.length; i++) {
+      if (aux_usuarios[i].id == id) {
+        return aux_usuarios[i];
+      }
+    }
+
+    throw new Error('Usuario no encontrado');
   }
 
   ExisteMail(mail: string): boolean {

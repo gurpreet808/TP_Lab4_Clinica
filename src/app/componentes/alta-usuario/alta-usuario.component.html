@@ -155,7 +155,7 @@
         <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'"
             [ngClass]="{'invalid-input': isValidControl('url_foto_2')}">
             <label for="url_foto_2">Imagen de perfil 2</label>
-            <input id="url_foto_2" type="file" formControlName="url_foto_2" />
+            <input id="url_foto_2" type="file" formControlName="url_foto_2" (change)="fileChange($event, 2)"/>
 
             <ng-container *ngIf='getControl("url_foto_2")?.hasError("required")'>
                 <small class="text-danger">
