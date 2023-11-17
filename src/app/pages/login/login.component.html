@@ -34,9 +34,14 @@
             Usuarios Test
         </div>
 
-        <div *ngFor="let jugador of jugadoresMock">
-            <button pButton pRipple label="{{jugador.mail}}" class="p-button-help w-full"
-                (click)="LoginMock(jugador.mail, jugador.clave)"></button>
+        <div *ngFor="let usuario of usuariosMock">
+            <!-- <button pButton pRipple label="{{usuario.mail}}" class="p-button-help w-full"
+                (click)="LoginMock(usuario.mail, usuario.clave)"></button> -->
+
+            <p-button pRipple class="p-button-help w-full" (click)="LoginMock(usuario.mail, usuario.clave)">
+                <img [alt]="usuario.mail" [src]="usuario.foto" style="width: 3rem" />
+                <span class="ml-2 font-bold">{{usuario.mail}}</span>
+            </p-button>
         </div>
     </div>
 </div>

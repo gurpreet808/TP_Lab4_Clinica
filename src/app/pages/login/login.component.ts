@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,15 @@ export class LoginComponent {
   email: string = "";
   clave: string = "";
 
-  jugadoresMock = [
+  usuariosMock = [
+    { mail: "esteban@cj.MintEmail.com", clave: "1q2w3e4r5t", foto: "https://firebasestorage.googleapis.com/v0/b/tpfinal-lab4-singh.appspot.com/o/images%2Fusuarios%2F1UfYiHuT6R3Ty9Qz4qdQ%2Fhombre2.jpg?alt=media&token=640024f7-65bb-4ac7-ba85-42542cbb53b2" },
+    { mail: "elsa@cj.MintEmail.com", clave: "1q2w3e4r5t", foto: "https://firebasestorage.googleapis.com/v0/b/tpfinal-lab4-singh.appspot.com/o/images%2Fusuarios%2FlPujIbfTFORdeCVMWE6I5eFE0nz2%2Fmujer1.jpg?alt=media&token=4b466048-2156-4aa9-ac4f-60aa0ab44b85" },
+    { mail: "armando@cj.MintEmail.com", clave: "1q2w3e4r5t", foto: "https://firebasestorage.googleapis.com/v0/b/tpfinal-lab4-singh.appspot.com/o/images%2Fusuarios%2FfxZjNPmfyaXvxz1m48V3ArUamdC3%2Fhombre1.jpg?alt=media&token=ad91e8f6-a9ed-4047-974a-ff840cf38128" },
     { mail: "admin@admin.com", clave: "admin1234" },
-    { mail: "paciente@paciente.com", clave: "paciente1234" },
     { mail: "especialista@especialista.com", clave: "especialista1234" }
   ]
 
-  constructor(public servAuth: AuthService, private router: Router, public messageService: MessageService) {
+  constructor(public servAuth: AuthService, private router: Router, public messageService: MessageService, public servSpinner: MessageService, public servUsuario: UsuarioService) {
     //console.log(servAuth.logueado);
   }
 
