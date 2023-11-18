@@ -3,7 +3,8 @@ import { ObraSocialService } from '../servicios/obra-social.service';
 import { ObraSocial } from '../clases/obra-social';
 
 @Pipe({
-  name: 'obraSocial'
+  name: 'obraSocial',
+  pure: false
 })
 export class ObraSocialPipe implements PipeTransform {
 
