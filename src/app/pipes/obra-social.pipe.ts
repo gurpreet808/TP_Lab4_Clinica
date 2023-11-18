@@ -9,18 +9,18 @@ import { ObraSocial } from '../clases/obra-social';
 export class ObraSocialPipe implements PipeTransform {
 
   constructor(private servObraSocial: ObraSocialService) {
-    
+
   }
 
   transform(value: unknown, ...args: unknown[]): unknown {
     if (value != undefined) {
-      let ya_existe = this.servObraSocial.obras_sociales.value.find((os: ObraSocial) => os.id === value);
+      let obra_social = this.servObraSocial.obras_sociales.value.find((os: ObraSocial) => os.id === value);
 
-      if (ya_existe) {
-        return ya_existe.nombre;
+      if (obra_social) {
+        return obra_social.nombre;
       }
     }
-
+    //return "Obra Social no encontrada";
     return value;
   }
 
