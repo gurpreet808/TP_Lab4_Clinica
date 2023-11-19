@@ -7,10 +7,30 @@ div#registro_container>form {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
+    align-items: last baseline;
 }
 
 div[name="registro_form_input"] {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+div#especialidad_panel {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+div#especialidad_panel>div>label {
+    font-weight: 500;
+}
+
+div#especialidad_panel>div {
+    //width: 100%;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -47,10 +67,52 @@ input[type="submit"] {
     //color: red;
 }
 
-div#edad_container {
+div#submit_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+div#clave_container,
+div#clave2_container,
+div#nombre_container,
+div#apellido_container,
+div#url_foto_1_container,
+div#url_foto_2_container,
+div#especialidades_container,
+div#agregar_especialidad_container {
     width: calc(50% - 0.5rem);
 }
 
+div#edad_container {
+    width: calc(30% - 0.5rem);
+}
+
 div#dni_container {
-    width: calc(50% - 0.5rem);
+    width: calc(30% - 0.5rem);
+}
+
+div#email_container {
+    width: calc(38% - 0.5rem);
+}
+
+@media (max-width: 768px) {
+
+    div#nombre_container,
+    div#apellido_container,
+    div#email_container,
+    div#url_foto_1_container,
+    div#url_foto_2_container,
+    div#especialidades_container,
+    div#agregar_especialidad_container {
+        width: 100%;
+    }
+
+    div#edad_container,
+    div#dni_container {
+        width: calc(50% - 0.5rem);
+    }
 }

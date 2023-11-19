@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AltaUsuarioComponent } from 'src/app/componentes/alta-usuario/alta-usuario.component';
-import { PrimeNGModule } from '../prime-ng/prime-ng.module';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AltaUsuarioComponent } from 'src/app/componentes/alta-usuario/alta-usuario.component';
+import { CardUsuarioComponent } from 'src/app/componentes/card-usuario/card-usuario.component';
+import { CardPacienteComponent } from 'src/app/componentes/card-paciente/card-paciente.component';
+import { CardEspecialistaComponent } from 'src/app/componentes/card-especialista/card-especialista.component';
+import { ObraSocialPipe } from 'src/app/pipes/obra-social.pipe';
+import { EspecialidadPipe } from 'src/app/pipes/especialidad.pipe';
+//import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { HttpClientModule } from '@angular/common/http';
-import { CardUsuarioComponent } from 'src/app/componentes/card-usuario/card-usuario.component';
-import { CardPacienteComponent } from 'src/app/componentes/card-paciente/card-paciente.component';
-import { CardEspecialistaComponent } from 'src/app/componentes/card-especialista/card-especialista.component';
-import { ObraSocialPipe } from 'src/app/pipes/obra-social.pipe';
-import { EspecialidadPipe } from 'src/app/pipes/especialidad.pipe';
+//import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { EspecialidadPipe } from 'src/app/pipes/especialidad.pipe';
     InputTextModule,
     PasswordModule,
     ButtonModule,
-    MultiSelectModule
+    MultiSelectModule,
+    //FileUploadModule
     //PrimeNGModule
   ],
   exports: [

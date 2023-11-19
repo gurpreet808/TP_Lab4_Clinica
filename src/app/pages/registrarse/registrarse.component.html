@@ -4,8 +4,11 @@
             <div id="registrarse_back_container" *ngIf="tipo_usuario" (click)='SeleccionarTipo("")'>
                 <i class="fa-solid fa-arrow-left"></i>
             </div>
+
             <div id="registrarse_title">
                 Registrarse
+
+                <button pButton class="p-button-secondary" routerLink="/login">Ya tengo una cuenta</button>
             </div>
         </div>
 
@@ -24,10 +27,6 @@
             <div id="registrarse_form_container" *ngIf="tipo_usuario">
                 <app-alta-usuario [tipo_usuario]="tipo_usuario"></app-alta-usuario>
             </div>
-        </div>
-
-        <div id="registrarse_footer">
-            <button routerLink="/login">Ya tengo una cuenta</button>
         </div>
     </div>
 </div>

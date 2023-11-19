@@ -42,6 +42,12 @@ div#registrarse_title_container {
 
 div#registrarse_title {
     flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }
 
 div[name="form_card_title"] {
