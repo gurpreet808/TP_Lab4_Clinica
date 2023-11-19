@@ -32,6 +32,8 @@ export class UsuarioService {
     let query: Query<Usuario, DocumentData> = this.dataRef as Query<Usuario, DocumentData>;
     collectionData<Usuario>(query, { idField: 'id' }).subscribe(
       (usuarios: Usuario[]) => {
+        //console.log("usuarios", usuarios);
+        
         usuarios.forEach(
           (usuario: Usuario) => {
             if (usuario.tipo == 'especialista') {
