@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { skip } from 'rxjs';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
@@ -16,13 +17,14 @@ export class EspecialidadesComponent implements OnInit {
   constructor(public servEspecialidades: EspecialidadService, public messageService: MessageService, public servSpinner: SpinnerService,) {
     this.servSpinner.showWithMessage('especialidades-init', 'Cargando especialidades...');
   }
-  
+
   ngOnInit(): void {
-    this.servEspecialidades.especialidades.subscribe(
-      (especialidades) => {
-        if (this.servEspecialidades.firstLoad == false) {
-          this.servSpinner.hideWithMessage('especialidades-init');
-        }
+    this.servEspecialidades.especialidades.pipe(
+      skip(1)
+    ).subscribe(
+      (especialidades: Especialidad[]) => {
+        console.log('especialidades', especialidades);
+        this.servSpinner.hideWithMessage('especialidades-init');
       }
     );
   }
