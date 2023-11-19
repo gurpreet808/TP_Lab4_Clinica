@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { skip } from 'rxjs';
 import { ObraSocial } from 'src/app/clases/obra-social';
 import { ObraSocialService } from 'src/app/servicios/obra-social.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 
 @Component({
   selector: 'app-obras-sociales',
@@ -15,11 +17,19 @@ export class ObrasSocialesComponent {
   };
   ClonesObrasSociales: { [s: string]: ObraSocial } = {};
 
-  constructor(public servObrasSociales: ObraSocialService, public messageService: MessageService) {
-
+  constructor(public servObrasSociales: ObraSocialService, public messageService: MessageService, public servSpinner: SpinnerService) {
+    this.servSpinner.showWithMessage('obras-sociales-init', 'Cargando obras sociales...');
   }
 
   ngOnInit(): void {
+    this.servObrasSociales.obras_sociales.pipe(
+      skip(1)
+    ).subscribe(
+      (obras_sociales: ObraSocial[]) => {
+        console.log('obras_sociales', obras_sociales);
+        this.servSpinner.hideWithMessage('obras-sociales-init');
+      }
+    );
   }
 
   AgregarObraSocial() {
