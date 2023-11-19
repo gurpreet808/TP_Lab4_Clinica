@@ -53,7 +53,7 @@
 
     <div id="especialista_especialidades_container" name="especialista_card_data">
         <div name="especialista_card_label">especialidades:</div>
-        <div *ngFor="let especialidad of especialista.especialidades">{{especialista.especialidades}}</div>
+        <div *ngFor="let especialidad of especialista.especialidades">{{especialidad | especialidad | async}}</div>
     </div>
 
     <div id="especialista_habilitado_container" name="especialista_card_data">
