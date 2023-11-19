@@ -16,6 +16,18 @@
             teléfono o computadora.
         </p>
 
+        <div id="not_verified_container" *ngIf="servAuth.logueado.value == true && servAuth.emailVerified == false">
+            <p>
+                Necesitas validar tu email, por favor revisa tu casilla de correo. Si no te llegó el mail, puedes
+                reenviarlo desde el siguiente botón.
+            </p>
+
+            <div>
+                <p-button [label]="resendLabel" [disabled]="cooldownResend > 0" severity="primary"
+                    (click)="EnviarMailVerificacion()"></p-button>
+            </div>
+        </div>
+
         <div id="botonera_auth" *ngIf="servAuth.logueado.value == false && servAuth.firstRun == false">
             <div>
                 <p-button label="Iniciar sesión" severity="primary" routerLink="/login"></p-button>

@@ -11,6 +11,7 @@ import { UsuarioService } from './usuario.service';
 export class AuthService {
   logueado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.auth.currentUser ? true : false);
   usuarioActual: Usuario | undefined;
+  emailVerified: boolean = false;
   firstRun: boolean = true;
 
   constructor(private auth: Auth, private _http: HttpClient, private _usuarioService: UsuarioService) {
@@ -20,8 +21,12 @@ export class AuthService {
         this.firstRun = false;
 
         if (user != null) {
+          this.emailVerified = user.emailVerified;
+          //console.log("emailVerified", this.emailVerified);
+
           this.setUsuarioActual(user);
-          console.log(this.usuarioActual);
+          //console.log("usuario actual", this.usuarioActual);
+
           this.logueado.next(true);
         } else {
           this.logueado.next(false);
@@ -33,13 +38,21 @@ export class AuthService {
   async setUsuarioActual(_user: User) {
     this._usuarioService.usuarios.subscribe(
       async (usuarios: Usuario[]) => {
-        for (let usuario of usuarios) {
-          if (usuario.id == _user.uid) {
-            this.usuarioActual = usuario;
-            console.log("set usuario", this.usuarioActual);
+        for (let u = 0; u < usuarios.length; u++) {
+          if (usuarios[u].id == _user.uid) {
+            this.usuarioActual = usuarios[u];
+            //console.log("set usuario", this.usuarioActual);
             break;
           }
         }
+
+        /* for (let usuario of usuarios) {
+          if (usuario.id == _user.uid) {
+            this.usuarioActual = usuario;
+            //console.log("set usuario", this.usuarioActual);
+            break;
+          }
+        } */
       }
     );
   }
@@ -78,6 +91,24 @@ export class AuthService {
     );
 
     //return Promise.reject('Error desconocido');
+  }
+
+  async EnviarVerificacionEmail(): Promise<string> {
+    if (this.auth.currentUser) {
+      return await sendEmailVerification(this.auth.currentUser).then(
+        (datos) => {
+          console.log(datos);
+          return Promise.resolve("Se envió el mail de verificación");
+        }
+      ).catch(
+        (error) => {
+          //console.log(error.code);
+          return Promise.reject(this.errorParser(error.code));
+        }
+      );
+    } else {
+      return Promise.reject("No hay usuario logueado");
+    }
   }
 
   async RegistrarOtroConEmail(email: string, password: string): Promise<string> {
