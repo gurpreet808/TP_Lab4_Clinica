@@ -64,6 +64,12 @@
                     Su DNI deben ser 8 dígitos.
                 </small>
             </ng-container>
+
+            <ng-container *ngIf='getControl("dni")?.hasError("existeDNI")'>
+                <small class="text-danger">
+                    Ese DNI ya está registrado.
+                </small>
+            </ng-container>
         </div>
 
         <div name="registro_form_input" *ngIf="tipo_usuario == 'paciente'"
