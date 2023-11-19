@@ -14,6 +14,7 @@ import { CardUsuarioComponent } from 'src/app/componentes/card-usuario/card-usua
 import { CardPacienteComponent } from 'src/app/componentes/card-paciente/card-paciente.component';
 import { CardEspecialistaComponent } from 'src/app/componentes/card-especialista/card-especialista.component';
 import { ObraSocialPipe } from 'src/app/pipes/obra-social.pipe';
+import { EspecialidadPipe } from 'src/app/pipes/especialidad.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ObraSocialPipe } from 'src/app/pipes/obra-social.pipe';
     CardUsuarioComponent,
     CardPacienteComponent,
     CardEspecialistaComponent,
-    ObraSocialPipe
+    ObraSocialPipe,
+    EspecialidadPipe
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { ObraSocialPipe } from 'src/app/pipes/obra-social.pipe';
     CardUsuarioComponent,
     CardPacienteComponent,
     CardEspecialistaComponent,
-    ObraSocialPipe
+    ObraSocialPipe,
+    EspecialidadPipe
   ]
 })
 export class SharedModule { }
