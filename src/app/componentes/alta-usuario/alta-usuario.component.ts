@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UploadTaskSnapshot } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { DisponibilidadEspecialidad } from 'src/app/clases/disponibilidad-especialidad';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
@@ -37,13 +37,21 @@ export class AltaUsuarioComponent implements OnInit {
   file_2: File | undefined;
 
   new_disponibilidad: DisponibilidadEspecialidad = {
-    dia: 0,
+    dia: -1,
     hora_fin: 0,
     hora_inicio: 0,
     especialidad: '',
   }
 
-  disponibilidades: DisponibilidadEspecialidad[] = [];
+  dias: SelectItem[] = [
+    { label: 'Lunes', value: 1, title: "1" },
+    { label: 'Martes', value: 2, title: "2" },
+    { label: 'Miércoles', value: 3, title: "3" },
+    { label: 'Jueves', value: 4, title: "4" },
+    { label: 'Viernes', value: 5, title: "5" },
+    { label: 'Sábado', value: 6, title: "6" },
+    { label: 'Domingo', value: 0, title: "0" }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -317,7 +325,7 @@ export class AltaUsuarioComponent implements OnInit {
     this.getControl('disponibilidades')?.setValue([...this.getControlValue('disponibilidades'), this.new_disponibilidad]);
 
     this.new_disponibilidad = {
-      dia: 0,
+      dia: -1,
       hora_fin: 0,
       hora_inicio: 0,
       especialidad: '',
