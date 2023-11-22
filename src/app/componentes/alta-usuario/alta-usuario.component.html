@@ -197,6 +197,76 @@
             </div>
         </div>
 
+        <div *ngIf="getControl('especialidades')!.value">
+            <label>Detallenos su disponibilidad horaria:</label>
+            <!-- <div *ngFor="let especialidad of getControl('especialidades')!.value">
+                <div>
+                    {{especialidad.nombre}}
+                </div>
+            </div> -->
+
+            <div class="flex flex-row">
+                <div>
+                    <label for="nueva_disp_dia">Día</label>
+                    <select id="nueva_disp_dia" [(ngModel)]="new_disponibilidad.dia"
+                        [ngModelOptions]="{standalone: true}">
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miércoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <option value="6">Sábado</option>
+                        <option value="0">Domingo</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="nueva_disp_hora_inicio">Hora Inicio</label>
+                    <input id="nueva_disp_hora_inicio" type="number" [(ngModel)]="new_disponibilidad.hora_inicio"
+                        [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <div>
+                    <label for="nueva_disp_hora_fin">Hora Fin</label>
+                    <input id="nueva_disp_hora_fin" type="number" [(ngModel)]="new_disponibilidad.hora_fin"
+                        [min]="new_disponibilidad.hora_inicio" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <div>
+                    <label for="nueva_disp_especialidad">Especialidad</label>
+                    <select id="nueva_disp_especialidad" [(ngModel)]="new_disponibilidad.especialidad"
+                        [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let especialidad of getControl('especialidades')!.value"
+                            [value]="especialidad.id">
+                            {{especialidad.nombre}}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <button type="button" pButton pRipple label="Agregar" (click)="AgregarDisponibilidad()"
+                        [disabled]="new_disponibilidad.dia && new_disponibilidad.hora_inicio && new_disponibilidad.hora_fin && new_disponibilidad.especialidad"></button>
+                </div>
+            </div>
+
+            <div *ngIf="getControl('disponibilidades')!.value">
+                <div *ngFor="let disponibilidad of getControl('disponibilidades')!.value" class="flex flex-row">
+                    <div>
+                        <!-- {{disponibilidad | json}} -->
+                        <div>Dia: {{disponibilidad.dia}}</div>
+                        <div>Hora inicio: {{disponibilidad.hora_inicio}}</div>
+                        <div>Hora fin: {{disponibilidad.hora_fin}}</div>
+                        <div>Especialidad: {{disponibilidad.especialidad | especialidad | async}}</div>
+                    </div>
+                    <div>
+                        <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger"
+                            (click)="BorrarDisponibilidad(disponibilidad)"></button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
 
         <div id="submit_container">
             <button pButton type="submit" class="btn btn-primary" [disabled]="!this.userForm.valid"

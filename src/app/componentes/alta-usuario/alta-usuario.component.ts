@@ -3,6 +3,7 @@ import { UploadTaskSnapshot } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DisponibilidadEspecialidad } from 'src/app/clases/disponibilidad-especialidad';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
 import { ObraSocial } from 'src/app/clases/obra-social';
@@ -34,6 +35,15 @@ export class AltaUsuarioComponent implements OnInit {
   userForm: FormGroup;
   file_1: File | undefined;
   file_2: File | undefined;
+
+  new_disponibilidad: DisponibilidadEspecialidad = {
+    dia: 0,
+    hora_fin: 0,
+    hora_inicio: 0,
+    especialidad: '',
+  }
+
+  disponibilidades: DisponibilidadEspecialidad[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,6 +83,7 @@ export class AltaUsuarioComponent implements OnInit {
         url_foto_2: ['',],
         obra_social: ['',],
         especialidades: ['',],
+        disponibilidades: ['',],
       }
     );
 
@@ -82,6 +93,7 @@ export class AltaUsuarioComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.tipo_usuario);
     this.userForm.get('especialidades')?.setValidators(especialistaRequiredValidator(this.tipo_usuario));
+    this.userForm.get('disponibilidades')?.setValidators(especialistaRequiredValidator(this.tipo_usuario));
     this.userForm.get('obra_social')?.setValidators(pacienteRequiredValidator(this.tipo_usuario));
     this.userForm.get('url_foto_2')?.setValidators(pacienteRequiredValidator(this.tipo_usuario));
     this.userForm.markAllAsTouched();
@@ -264,5 +276,58 @@ export class AltaUsuarioComponent implements OnInit {
 
     console.log(this.file_1);
     console.log(this.file_2);
+  }
+
+  AgregarDisponibilidad() {
+    console.log(this.new_disponibilidad);
+
+    if (this.new_disponibilidad.hora_fin <= this.new_disponibilidad.hora_inicio) {
+      this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'La hora de fin debe ser mayor a la de inicio' });
+      return;
+    }
+
+    let disponibilidades: DisponibilidadEspecialidad[] = this.getControlValue('disponibilidades');
+    let overlap = false;
+    for (let d = 0; d < disponibilidades.length; d++) {
+      if (disponibilidades[d].dia == this.new_disponibilidad.dia) {
+        if (disponibilidades[d].hora_inicio < this.new_disponibilidad.hora_inicio && this.new_disponibilidad.hora_inicio < disponibilidades[d].hora_fin) {
+          overlap = true;
+          break;
+        }
+        if (disponibilidades[d].hora_inicio < this.new_disponibilidad.hora_fin && this.new_disponibilidad.hora_fin < disponibilidades[d].hora_fin) {
+          overlap = true;
+          break;
+        }
+        if (this.new_disponibilidad.hora_inicio < disponibilidades[d].hora_inicio && disponibilidades[d].hora_inicio < this.new_disponibilidad.hora_fin) {
+          overlap = true;
+          break;
+        }
+        if (this.new_disponibilidad.hora_inicio < disponibilidades[d].hora_fin && disponibilidades[d].hora_fin < this.new_disponibilidad.hora_fin) {
+          overlap = true;
+          break;
+        }
+      }
+    }
+
+    if (overlap) {
+      this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'Los horarios elegidos se superponen en ese día' });
+      return;
+    }
+
+    this.getControl('disponibilidades')?.setValue([...this.getControlValue('disponibilidades'), this.new_disponibilidad]);
+
+    this.new_disponibilidad = {
+      dia: 0,
+      hora_fin: 0,
+      hora_inicio: 0,
+      especialidad: '',
+    }
+  }
+
+  BorrarDisponibilidad(disponibilidad: DisponibilidadEspecialidad) {
+    let disponibilidades: DisponibilidadEspecialidad[] = this.getControlValue('disponibilidades');
+    let index = disponibilidades.indexOf(disponibilidad);
+    disponibilidades.splice(index, 1);
+    this.getControl('disponibilidades')?.setValue(disponibilidades);
   }
 }

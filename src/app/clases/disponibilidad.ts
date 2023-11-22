@@ -1,5 +1,5 @@
 export interface Disponibilidad {
     dia: number;
-    hora_inicio: string;
-    hora_fin: string;
+    hora_inicio: number;
+    hora_fin: number;
 }
