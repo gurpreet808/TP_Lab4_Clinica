@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UploadTaskSnapshot } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
@@ -42,7 +43,8 @@ export class AltaUsuarioComponent implements OnInit {
     public servAuth: AuthService,
     public servFile: FileHandlerService,
     public servSpinner: SpinnerService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    public router: Router,
   ) {
     this.servSpinner.showWithMessage('alta-usuario-init', 'Cargando datos...');
 
@@ -195,6 +197,8 @@ export class AltaUsuarioComponent implements OnInit {
             () => {
               console.log('Usuario modificado');
               this.servSpinner.hideWithMessage('registrar-usuario');
+              this.messageService.add({ severity: 'success', life: 10000, summary: 'Bien', detail: 'Se registró su usuario. Recuerde verificar su mail para usar la aplicación.' });
+              this.router.navigate(['/']);
             }
           ).catch(
             (error) => {
