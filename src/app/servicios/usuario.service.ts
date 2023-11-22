@@ -37,6 +37,10 @@ export class UsuarioService {
         usuarios.forEach(
           (usuario: Usuario) => {
             if (usuario.tipo == 'especialista') {
+              if ((usuario as Especialista).disponibilidades == undefined) {
+                (usuario as Especialista).disponibilidades = [];
+              }
+              
               especialistas.push(usuario as Especialista);
             }
 

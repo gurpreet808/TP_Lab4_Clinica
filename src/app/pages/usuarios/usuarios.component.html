@@ -1,7 +1,3 @@
-<button (click)="AgregarAdmin()">Agregar Admin</button>
-<button (click)="AgregarPaciente()">Agregar Paciente</button>
-<button (click)="AgregarEspecialista()">Agregar Especialista</button>
-
 <div *ngFor="let usuario of this.servUsuario.usuarios.value" name="usuario_card">
     <div name="usuario_card_content">
         <app-card-usuario [usuario]="usuario" *ngIf="usuario.tipo == 'admin'"></app-card-usuario>
