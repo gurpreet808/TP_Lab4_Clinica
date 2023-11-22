@@ -5,6 +5,7 @@ import { Paciente } from '../clases/paciente';
 import { Especialista } from '../clases/especialista';
 import { CollectionReference, DocumentData, Firestore, QuerySnapshot, collection, onSnapshot, doc, setDoc, collectionData, Query, deleteDoc } from '@angular/fire/firestore';
 import { FileHandlerService } from './file-handler.service';
+import { DisponibilidadEspecialidad } from '../clases/disponibilidad-especialidad';
 
 @Injectable({
   providedIn: 'root'
@@ -184,4 +185,5 @@ export class UsuarioService {
 
     return rta;
   }
+
 }
