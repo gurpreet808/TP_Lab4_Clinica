@@ -19,6 +19,9 @@ export class ObrasSocialesComponent {
 
   constructor(public servObrasSociales: ObraSocialService, public messageService: MessageService, public servSpinner: SpinnerService) {
     this.servSpinner.showWithMessage('obras-sociales-init', 'Cargando obras sociales...');
+    if (this.servObrasSociales.obras_sociales.value.length > 0) {
+      this.servSpinner.hideWithMessage('obras-sociales-init');
+    }
   }
 
   ngOnInit(): void {

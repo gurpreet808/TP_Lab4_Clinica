@@ -16,6 +16,9 @@ export class EspecialidadesComponent implements OnInit {
 
   constructor(public servEspecialidades: EspecialidadService, public messageService: MessageService, public servSpinner: SpinnerService,) {
     this.servSpinner.showWithMessage('especialidades-init', 'Cargando especialidades...');
+    if (this.servEspecialidades.especialidades.value.length > 0) {
+      this.servSpinner.hideWithMessage('especialidades-init');
+    }
   }
 
   ngOnInit(): void {
