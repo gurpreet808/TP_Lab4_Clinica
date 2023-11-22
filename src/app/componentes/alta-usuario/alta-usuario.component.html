@@ -244,7 +244,7 @@
                 <div *ngFor="let disponibilidad of getControl('disponibilidades')!.value" name="disponibilidad_item">
                     <div name="disponibilidad_content">
                         <!-- {{disponibilidad | json}} -->
-                        <div name="disponibilidad_dia">Dia: {{disponibilidad.dia}}</div>
+                        <div name="disponibilidad_dia">Dia: {{disponibilidad.dia | dia}}</div>
                         <div name="disponibilidad_horario">Horario: {{disponibilidad.hora_inicio}} a
                             {{disponibilidad.hora_fin}}</div>
                         <div name="disponibilidad_especialidad">Especialidad: {{disponibilidad.especialidad |

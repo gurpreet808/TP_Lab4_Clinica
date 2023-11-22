@@ -15,6 +15,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DiaPipe } from 'src/app/pipes/dia.pipe';
 //import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     CardPacienteComponent,
     CardEspecialistaComponent,
     ObraSocialPipe,
-    EspecialidadPipe
+    EspecialidadPipe,
+    DiaPipe
   ],
   imports: [
     CommonModule,
