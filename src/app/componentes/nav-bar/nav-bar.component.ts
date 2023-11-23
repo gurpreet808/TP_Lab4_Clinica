@@ -44,6 +44,14 @@ export class NavBarComponent implements OnInit {
               break;
 
             default:
+              console.log("default");
+              this.items = [
+                {
+                  label: 'Home',
+                  icon: 'fa-solid fa-house',
+                  routerLink: '/'
+                }
+              ];
               break;
           }
         }
