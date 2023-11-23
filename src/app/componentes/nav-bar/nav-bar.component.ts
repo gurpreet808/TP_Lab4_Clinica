@@ -19,36 +19,36 @@ export class NavBarComponent implements OnInit {
   ];
 
   constructor(public servAuth: AuthService, private router: Router) {
-    this.AdminItems();
-    /* this.servAuth.logueado.pipe(
-      skip(1)
+    //this.AdminItems();
+    this.servAuth.logueado.pipe(
+      //skip(1)
     ).subscribe(
       (logueado: boolean) => {
-        //console.log("logueado", this.servAuth.usuarioActual);
-  
+        console.log("logueado", this.servAuth.usuarioActual);
+
         if (logueado == true) {
           switch (this.servAuth.usuarioActual?.tipo) {
             case 'admin':
               console.log("admin");
               this.AdminItems();
               break;
-  
+
             case 'paciente':
               console.log("paciente");
               this.PacienteItems();
               break;
-  
+
             case 'especialista':
               console.log("especialista");
               this.EspecialistaItems();
               break;
-  
+
             default:
               break;
           }
         }
       }
-    ); */
+    );
   }
 
   ngOnInit(): void {

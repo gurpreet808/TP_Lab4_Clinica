@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, User, UserCredential, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Usuario } from '../clases/usuario';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, skip } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioService } from './usuario.service';
 
@@ -24,7 +24,7 @@ export class AuthService {
           this.emailVerified = user.emailVerified;
           console.log("emailVerified", this.emailVerified);
 
-          this.setUsuarioActual(user);
+          await this.setUsuarioActual(user);
           console.log("usuario actual", this.usuarioActual);
 
           this.logueado.next(true);
@@ -35,18 +35,18 @@ export class AuthService {
     );
   }
 
-  setUsuarioActual(_user: User) {
-    const unsubscribe = this._usuarioService.usuarios.subscribe(
-      (usuarios: Usuario[]) => {
-        for (let u = 0; u < usuarios.length; u++) {
-          if (usuarios[u].id == _user.uid) {
-            this.usuarioActual = usuarios[u];
-            unsubscribe.unsubscribe(); // Unsubscribe from the observable once the user is found
-            break;
-          }
-        }
+  async setUsuarioActual(_user: User) {
+    //console.log("enter setUsuarioActual");
+    const usuario = await firstValueFrom(this._usuarioService.usuarios.pipe(skip(1)));
+    //console.log("usuarios", usuario);
+    for (let u = 0; u < usuario.length; u++) {
+      //console.log("usuario for", usuario[u]);
+      if (usuario[u].id == _user.uid) {
+        this.usuarioActual = usuario[u];
+        //console.log("usuario actual", this.usuarioActual);
+        break;
       }
-    );
+    }
   }
 
   async LogInEmail(email: string, password: string) {
