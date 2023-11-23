@@ -162,6 +162,7 @@ export class AltaUsuarioComponent implements OnInit {
           for (let e = 0; e < especialidades.length; e++) {
             (usuario as Especialista).especialidades.push(especialidades[e].id);
           }
+          (usuario as Especialista).disponibilidades = this.getControlValue('disponibilidades');
           break;
 
         case "paciente":
