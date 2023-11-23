@@ -153,6 +153,9 @@ export class AltaUsuarioComponent implements OnInit {
       switch (usuario.tipo) {
         case "especialista":
           (usuario as Especialista).habilitado = false;
+          if (this.servAuth.usuarioActual && this.servAuth.usuarioActual.tipo == 'admin') {
+            (usuario as Especialista).habilitado = true;
+          }
           let especialidades: Especialidad[] = this.getControlValue('especialidades');
           (usuario as Especialista).especialidades = [];
           //(usuario as Especialista).especialidades = this.getControlValue('especialidades').id;
