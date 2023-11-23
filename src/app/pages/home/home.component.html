@@ -7,7 +7,7 @@
         </div>
 
         <h2 *ngIf="servAuth.logueado.value == true">
-            ¡Te damos la bienvenida {{this.servAuth.usuarioActual?.nombre}}!
+            ¡Te damos la bienvenida {{this.servAuth.usuarioActual?.tipo}} {{this.servAuth.usuarioActual?.nombre}}!
         </h2>
 
         <p>
