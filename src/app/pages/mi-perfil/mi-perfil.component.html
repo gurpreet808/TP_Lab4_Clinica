@@ -1,0 +1,6 @@
+<app-card-usuario [usuario]="servAuth.usuarioActual"
+    *ngIf="servAuth.usuarioActual && servAuth.usuarioActual.tipo == 'admin'"></app-card-usuario>
+<app-card-paciente [usuario]="servAuth.usuarioActual"
+    *ngIf="servAuth.usuarioActual && servAuth.usuarioActual.tipo == 'paciente'"></app-card-paciente>
+<app-card-especialista [usuario]="servAuth.usuarioActual"
+    *ngIf="servAuth.usuarioActual && servAuth.usuarioActual.tipo == 'especialista'"></app-card-especialista>

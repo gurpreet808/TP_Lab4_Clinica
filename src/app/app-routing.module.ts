@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'obras-sociales', canActivate: [adminGuard], loadChildren: () => import('./pages/obras-sociales/obras-sociales.module').then(m => m.ObrasSocialesModule) },
   { path: 'especialidades', canActivate: [adminGuard], loadChildren: () => import('./pages/especialidades/especialidades.module').then(m => m.EspecialidadesModule) },
   { path: 'solicitar-turno', component: SolicitarTurnoComponent },
+  { path: 'mi-perfil', loadChildren: () => import('./pages/mi-perfil/mi-perfil.module').then(m => m.MiPerfilModule) },
   { path: '**', loadChildren: () => import('./pages/error404/error404.module').then(m => m.Error404Module) }
 ];
 

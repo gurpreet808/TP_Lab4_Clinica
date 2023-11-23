@@ -1,58 +1,53 @@
 <div id="especialista_card" *ngIf="especialista">
+    <div id="especialista_foto_1_container" name="especialista_card_data">
+        <div name="especialista_card_label">Foto 1:</div>
+        <div name="especialista_img_container">
+            <img [src]="especialista.url_foto_1" alt="">
+        </div>
+    </div>
+
     <div id="especialista_nombre_container" name="especialista_card_data">
         <div name="especialista_card_label">Nombre:</div>
         <div>{{especialista.nombre}}</div>
     </div>
 
     <div id="especialista_apellido_container" name="especialista_card_data">
-        <div name="especialista_card_label">apellido:</div>
+        <div name="especialista_card_label">Apellido:</div>
         <div>{{especialista.apellido}}</div>
     </div>
 
     <div id="especialista_email_container" name="especialista_card_data">
-        <div name="especialista_card_label">email:</div>
+        <div name="especialista_card_label">E-Mail:</div>
         <div>{{especialista.email}}</div>
     </div>
 
     <div id="especialista_tipo_container" name="especialista_card_data">
-        <div name="especialista_card_label">tipo:</div>
+        <div name="especialista_card_label">Tipo:</div>
         <div>{{especialista.tipo}}</div>
     </div>
 
     <div id="especialista_dni_container" name="especialista_card_data">
-        <div name="especialista_card_label">dni:</div>
+        <div name="especialista_card_label">DNI:</div>
         <div>{{especialista.dni}}</div>
     </div>
 
     <div id="especialista_edad_container" name="especialista_card_data">
-        <div name="especialista_card_label">edad:</div>
+        <div name="especialista_card_label">Edad:</div>
         <div>{{especialista.edad}}</div>
     </div>
 
     <div id="especialista_fecha_alta_container" name="especialista_card_data">
-        <div name="especialista_card_label">fecha_alta:</div>
+        <div name="especialista_card_label">Fecha alta:</div>
         <div>{{especialista.fecha_alta | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
     </div>
 
-    <div id="especialista_url_foto_1_container" name="especialista_card_data">
-        <div name="especialista_card_label">url_foto_1:</div>
-        <div>{{especialista.url_foto_1}}</div>
-    </div>
-
-    <div id="especialista_foto_1_container" name="especialista_card_data">
-        <div name="especialista_card_label">foto_1:</div>
-        <div>
-            <img [src]="especialista.url_foto_1" height="100" alt="">
-        </div>
-    </div>
-
     <div id="especialista_especialidades_container" name="especialista_card_data">
-        <div name="especialista_card_label">especialidades:</div>
+        <div name="especialista_card_label">Especialidades:</div>
         <div *ngFor="let especialidad of especialista.especialidades">{{especialidad | especialidad | async}}</div>
     </div>
 
     <div id="especialista_habilitado_container" name="especialista_card_data">
-        <div name="especialista_card_label">habilitado:</div>
+        <div name="especialista_card_label">Habilitado:</div>
         <div>{{especialista.habilitado}}</div>
     </div>
 </div>
