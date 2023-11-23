@@ -80,6 +80,16 @@ export class NavBarComponent implements OnInit {
         routerLink: '/usuarios'
       },
       {
+        label: 'Turnos',
+        icon: 'fa-solid fa-calendar-days',
+        routerLink: '/turnos'
+      },
+      {
+        label: 'Solicitar turno',
+        icon: 'fa-solid fa-calendar-plus',
+        routerLink: '/solicitar-turno'
+      },
+      /* {
         label: 'Especialistas',
         icon: 'fa-solid fa-user-doctor',
         routerLink: '/especialistas'
@@ -88,7 +98,7 @@ export class NavBarComponent implements OnInit {
         label: 'Pacientes',
         icon: 'fa-solid fa-users',
         routerLink: '/pacientes'
-      },
+      }, */
       {
         label: 'Especialidades',
         icon: 'fa-solid fa-stethoscope',
@@ -98,6 +108,11 @@ export class NavBarComponent implements OnInit {
         label: 'Obras sociales',
         icon: 'fa-solid fa-briefcase-medical',
         routerLink: '/obras-sociales'
+      },
+      {
+        label: 'Mi perfil',
+        icon: 'fa-solid fa-address-card',
+        routerLink: '/mi-perfil'
       }
     ];
   }
@@ -111,18 +126,18 @@ export class NavBarComponent implements OnInit {
       },
       {
         label: 'Mis turnos',
-        icon: 'fa-solid fa-users-gear',
-        routerLink: '/usuarios'
+        icon: 'fa-solid fa-calendar-days',
+        routerLink: '/mis-turnos'
       },
       {
-        label: 'Histora clínica',
-        icon: 'fa-solid fa-user-doctor',
-        routerLink: '/especialistas'
+        label: 'Solicitar turno',
+        icon: 'fa-solid fa-calendar-plus',
+        routerLink: '/solicitar-turno'
       },
       {
-        label: 'Mis datos',
-        icon: 'fa-solid fa-users',
-        routerLink: '/pacientes'
+        label: 'Mi perfil',
+        icon: 'fa-solid fa-address-card',
+        routerLink: '/mi-perfil'
       }
     ];
   }
@@ -136,18 +151,13 @@ export class NavBarComponent implements OnInit {
       },
       {
         label: 'Mis turnos',
-        icon: 'fa-solid fa-users-gear',
+        icon: 'fa-solid fa-calendar-days',
         routerLink: '/usuarios'
       },
       {
-        label: 'Histora clínica',
-        icon: 'fa-solid fa-user-doctor',
-        routerLink: '/especialistas'
-      },
-      {
-        label: 'Mis datos',
-        icon: 'fa-solid fa-users',
-        routerLink: '/pacientes'
+        label: 'Mi perfil',
+        icon: 'fa-solid fa-address-card',
+        routerLink: '/mi-perfil'
       }
     ];
   }
