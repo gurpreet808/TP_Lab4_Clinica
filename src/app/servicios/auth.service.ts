@@ -16,16 +16,16 @@ export class AuthService {
 
   constructor(private auth: Auth, private _http: HttpClient, private _usuarioService: UsuarioService) {
     this.auth.onAuthStateChanged(
-      (user: User | null) => {
+      async (user: User | null) => {
         console.log("authStateChange", user);
         this.firstRun = false;
 
         if (user != null) {
           this.emailVerified = user.emailVerified;
-          //console.log("emailVerified", this.emailVerified);
+          console.log("emailVerified", this.emailVerified);
 
           this.setUsuarioActual(user);
-          //console.log("usuario actual", this.usuarioActual);
+          console.log("usuario actual", this.usuarioActual);
 
           this.logueado.next(true);
         } else {
@@ -35,24 +35,16 @@ export class AuthService {
     );
   }
 
-  async setUsuarioActual(_user: User) {
-    this._usuarioService.usuarios.subscribe(
-      async (usuarios: Usuario[]) => {
+  setUsuarioActual(_user: User) {
+    const unsubscribe = this._usuarioService.usuarios.subscribe(
+      (usuarios: Usuario[]) => {
         for (let u = 0; u < usuarios.length; u++) {
           if (usuarios[u].id == _user.uid) {
             this.usuarioActual = usuarios[u];
-            //console.log("set usuario", this.usuarioActual);
+            unsubscribe.unsubscribe(); // Unsubscribe from the observable once the user is found
             break;
           }
         }
-
-        /* for (let usuario of usuarios) {
-          if (usuario.id == _user.uid) {
-            this.usuarioActual = usuario;
-            //console.log("set usuario", this.usuarioActual);
-            break;
-          }
-        } */
       }
     );
   }
@@ -159,7 +151,7 @@ export class AuthService {
     } else {
       usuario.id = await this.RegistrarConEmail(usuario.email, usuario.clave).then(
         async (userCredential: UserCredential) => {
-          console.log("registrar userCredential", userCredential);
+          console.log("registrar user credential", userCredential);
           usuario.id = userCredential.user.uid;
           console.log("crear mi usuario", usuario);
           return usuario.id;
@@ -172,8 +164,10 @@ export class AuthService {
       );
     }
 
+    //console.log("usuario ya creado", usuario);
+
     if (usuario.id != undefined && usuario.id != null && usuario.id != "" && usuario.id != "new") {
-      return this._usuarioService.AgregarUsuario(usuario).then(
+      return this._usuarioService.ModificarUsuario(usuario).then(
         () => {
           console.log('Usuario agregado');
           return usuario;

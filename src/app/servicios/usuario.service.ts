@@ -34,14 +34,14 @@ export class UsuarioService {
     collectionData<Usuario>(query, { idField: 'id' }).subscribe(
       (usuarios: Usuario[]) => {
         //console.log("usuarios", usuarios);
-        
+
         usuarios.forEach(
           (usuario: Usuario) => {
             if (usuario.tipo == 'especialista') {
               if ((usuario as Especialista).disponibilidades == undefined) {
                 (usuario as Especialista).disponibilidades = [];
               }
-              
+
               especialistas.push(usuario as Especialista);
             }
 
@@ -82,42 +82,6 @@ export class UsuarioService {
     let docRef = doc(this.dataRef);
     usuario.id = docRef.id;
     return setDoc(docRef, usuario);
-
-    /* let user_id: string = '';
-
-    if (this.servAuth.logueado.value == true) {
-      await this.servAuth.RegistrarOtroConEmail(usuario.email, usuario.clave).then(
-        async (user_id: string) => {
-          user_id = user_id;
-          usuario.id = user_id;
-          console.log("crear otro usuario", usuario);
-          let docRef = doc(this.dataRef, usuario.id);
-          await setDoc(docRef, usuario);
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
-          throw new Error(error);
-        }
-      );
-    } else {
-      await this.servAuth.RegistrarConEmail(usuario.email, usuario.clave).then(
-        async (userCredential: UserCredential) => {
-          user_id = userCredential.user.uid;
-          usuario.id = user_id;
-          console.log("crear mi usuario", usuario);
-          let docRef = doc(this.dataRef, usuario.id);
-          await setDoc(docRef, usuario);
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
-          throw new Error(error);
-        }
-      );
-    }
-
-    return user_id; */
   }
 
   ModificarUsuario(usuario: Usuario) {

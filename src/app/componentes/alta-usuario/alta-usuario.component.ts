@@ -171,7 +171,8 @@ export class AltaUsuarioComponent implements OnInit {
 
       await this.servAuth.RegistrarUsuarioConEmail(usuario).then(
         async (_usuario: Usuario) => {
-          console.log("usuario creado", _usuario);
+          //console.log("usuario creado", _usuario);
+          //console.log("usuario anterior", usuario);
 
           const images_path = `images/usuarios/${_usuario.id}/`;
 
@@ -270,10 +271,34 @@ export class AltaUsuarioComponent implements OnInit {
     if (files.length > 0) {
       switch (file_number) {
         case 1:
+          if (files[0].type.split('/')[0] != 'image') {
+            this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'El archivo debe ser una imagen' });
+            this.userForm.get('url_foto_1')?.setValue('');
+            return;
+          }
+
+          if (files[0].size > 2097152) {
+            this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'El archivo no debe pesar más de 2MB' });
+            this.userForm.get('url_foto_1')?.setValue('');
+            return;
+          }
+
           this.file_1 = files[0];
           break;
 
         case 2:
+          if (files[0].type.split('/')[0] != 'image') {
+            this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'El archivo debe ser una imagen' });
+            this.userForm.get('url_foto_2')?.setValue('');
+            return;
+          }
+
+          if (files[0].size > 2097152) {
+            this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'El archivo no debe pesar más de 2MB' });
+            this.userForm.get('url_foto_2')?.setValue('');
+            return;
+          }
+
           this.file_2 = files[0];
           break;
 

@@ -137,7 +137,8 @@
         <div id="url_foto_1_container" name="registro_form_input"
             [ngClass]="{'invalid-input': isValidControl('url_foto_1')}">
             <label for="url_foto_1">Imagen de perfil 1</label>
-            <input id="url_foto_1" type="file" formControlName="url_foto_1" (change)="fileChange($event, 1)" />
+            <input id="url_foto_1" type="file" formControlName="url_foto_1" accept="image/*" max="2097152"
+                (change)="fileChange($event, 1)" />
 
             <ng-container *ngIf='getControl("url_foto_1")?.hasError("required")'>
                 <small class="text-danger">
