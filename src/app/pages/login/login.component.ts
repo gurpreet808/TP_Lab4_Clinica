@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
@@ -20,8 +21,22 @@ export class LoginComponent {
     { nombre: "Armando Paredes", mail: "admin@cj.MintEmail.com", tipo: "admin", clave: "1q2w3e4r5t", foto: "https://firebasestorage.googleapis.com/v0/b/tpfinal-lab4-singh.appspot.com/o/images%2Fusuarios%2FYYk4sbb0nOXhPf2f4xFHUr35B6b2%2Fadmin.jpg?alt=media&token=fac36d7c-63d1-4a47-ae96-db7e4853ecbc" },
   ]
 
-  constructor(public servAuth: AuthService, private router: Router, public messageService: MessageService, public servSpinner: MessageService, public servUsuario: UsuarioService) {
+  constructor(public servAuth: AuthService, private router: Router, public messageService: MessageService, public servSpinner: SpinnerService, public servUsuario: UsuarioService) {
     //console.log(servAuth.logueado);
+    this.servUsuario.usuarios.subscribe(
+      (usuarios) => {
+        //console.log(usuarios);
+        if (usuarios.length > 0) {
+          for (let m = 0; m < this.usuariosMock.length; m++) {
+            for (let u = 0; u < usuarios.length; u++) {
+              if (this.usuariosMock[m].mail == usuarios[u].email) {
+                this.usuariosMock[m].foto = usuarios[u].url_foto_1;
+              }
+            }
+          }
+        }
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -33,6 +48,7 @@ export class LoginComponent {
       (res) => {
         //console.log(res);
         this.messageService.add({ severity: 'success', life: 10000, summary: 'Bienvenido', detail: "Iniciaste sesión" });
+        this.servSpinner.showWithMessage("login", "Iniciando sesión...");
         this.router.navigate(['/']);
       }
     ).catch(
