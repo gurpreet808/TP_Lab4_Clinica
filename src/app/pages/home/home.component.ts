@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +13,21 @@ export class HomeComponent implements OnInit {
   cooldownResend: number = 0;
   resendLabel: string = 'Reenviar mail de verificación';
 
-  constructor(public servAuth: AuthService, public messageService: MessageService) {
+  constructor(public servAuth: AuthService, public messageService: MessageService, public servSpinner: SpinnerService) {
   }
 
   ngOnInit(): void {
+    this.servAuth.logueado.subscribe(
+      (logueado) => {
+        if (logueado) {
+          this.servSpinner.showWithMessage('login', 'Iniciando sesión...');
+        }
+        
+        if (this.servSpinner.messages['login']) {
+          this.servSpinner.hideWithMessage('login');
+        }
+      }
+    );
   }
 
   EnviarMailVerificacion() {
