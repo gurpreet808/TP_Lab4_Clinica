@@ -21,11 +21,11 @@ export class HomeComponent implements OnInit {
       (logueado) => {
         if (logueado) {
           this.servSpinner.showWithMessage('login', 'Iniciando sesión...');
+          if (this.servSpinner.messages['login']) {
+            this.servSpinner.hideWithMessage('login');
+          }
         }
-        
-        if (this.servSpinner.messages['login']) {
-          this.servSpinner.hideWithMessage('login');
-        }
+
       }
     );
   }
