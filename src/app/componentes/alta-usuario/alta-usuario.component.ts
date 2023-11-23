@@ -145,7 +145,6 @@ export class AltaUsuarioComponent implements OnInit {
         dni: this.getControlValue('dni'),
         edad: this.getControlValue('edad'),
         url_foto_1: this.getControlValue('url_foto_1'),
-        email_verificado: false,
         fecha_alta: Date.now(),
         fecha_modificacion: Date.now(),
       }
