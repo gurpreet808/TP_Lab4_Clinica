@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { filter, map } from 'rxjs';
 import { Especialista } from 'src/app/clases/especialista';
 import { DisponibilidadService } from 'src/app/servicios/disponibilidad.service';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
@@ -12,6 +13,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 })
 export class SolicitarTurnoComponent implements OnInit {
 
+  especialistas: Especialista[] = [];
   especialista: Especialista | undefined;
   especialidad: string = '';
 
@@ -20,7 +22,18 @@ export class SolicitarTurnoComponent implements OnInit {
     public servEspecialidad: EspecialidadService,
     public servDisponibilidad: DisponibilidadService,
     public servTurno: TurnoService
-  ) { }
+  ) {
+    //suscribe to this.servUsuario.especialistas and set this.especialistas, but only if they are habilitado == true
+    this.servUsuario.especialistas.subscribe(
+      (especialistas) => {
+        this.especialistas = especialistas.filter(
+          (especialista) => {
+            return especialista.habilitado;
+          }
+        );
+      }
+    );
+  }
 
   ngOnInit(): void {
   }

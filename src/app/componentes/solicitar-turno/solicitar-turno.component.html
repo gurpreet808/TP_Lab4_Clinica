@@ -1,6 +1,6 @@
 <div id="nuevo_turno_container">
     <div id="seleccionar_especialista">
-        <div *ngFor="let especialista of servUsuario.especialistas.value" name="especialista_item"
+        <div *ngFor="let especialista of especialistas" name="especialista_item"
             (click)="ElegirEspecialista(especialista)">
             <div name="especialista_nombre">
                 {{especialista.nombre + ", " + especialista.apellido}}
