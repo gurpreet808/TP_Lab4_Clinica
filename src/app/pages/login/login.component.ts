@@ -18,7 +18,7 @@ export class LoginComponent {
     { mail: "elsa@cj.MintEmail.com", clave: "1q2w3e4r5t", foto: "https://firebasestorage.googleapis.com/v0/b/tpfinal-lab4-singh.appspot.com/o/images%2Fusuarios%2FlPujIbfTFORdeCVMWE6I5eFE0nz2%2Fmujer1.jpg?alt=media&token=4b466048-2156-4aa9-ac4f-60aa0ab44b85" },
     { mail: "armando@cj.MintEmail.com", clave: "1q2w3e4r5t", foto: "https://firebasestorage.googleapis.com/v0/b/tpfinal-lab4-singh.appspot.com/o/images%2Fusuarios%2FfxZjNPmfyaXvxz1m48V3ArUamdC3%2Fhombre1.jpg?alt=media&token=ad91e8f6-a9ed-4047-974a-ff840cf38128" },
     { mail: "admin@cj.MintEmail.com", clave: "1q2w3e4r5t", foto: "https://firebasestorage.googleapis.com/v0/b/tpfinal-lab4-singh.appspot.com/o/images%2Fusuarios%2FYYk4sbb0nOXhPf2f4xFHUr35B6b2%2Fadmin.jpg?alt=media&token=fac36d7c-63d1-4a47-ae96-db7e4853ecbc" },
-    { mail: "especialista@especialista.com", clave: "especialista1234" }
+    { mail: "elvis@cj.MintEmail.com", clave: "1q2w3e4r5t" }
   ]
 
   constructor(public servAuth: AuthService, private router: Router, public messageService: MessageService, public servSpinner: MessageService, public servUsuario: UsuarioService) {
