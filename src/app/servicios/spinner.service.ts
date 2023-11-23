@@ -28,7 +28,7 @@ export class SpinnerService {
 
   hideWithMessage(key: string) {
     if (!(key in this.messages)) {
-      console.error(`No se encuentra la key: "${key}".`);
+      //console.error(`No se encuentra la key: "${key}".`);
       return;
     }
     delete this.messages[key];

@@ -10,33 +10,33 @@ export class DisponibilidadService {
   disponibilidadesClinica: Disponibilidad[] = [
     {
       dia: 1,
-      hora_inicio: "08:00",
-      hora_fin: "19:00"
+      hora_inicio: 8,
+      hora_fin: 19
     },
     {
       dia: 2,
-      hora_inicio: "08:00",
-      hora_fin: "19:00"
+      hora_inicio: 8,
+      hora_fin: 19
     },
     {
       dia: 3,
-      hora_inicio: "08:00",
-      hora_fin: "19:00"
+      hora_inicio: 8,
+      hora_fin: 19
     },
     {
       dia: 4,
-      hora_inicio: "08:00",
-      hora_fin: "19:00"
+      hora_inicio: 8,
+      hora_fin: 19
     },
     {
       dia: 5,
-      hora_inicio: "08:00",
-      hora_fin: "19:00"
+      hora_inicio: 8,
+      hora_fin: 19
     },
     {
       dia: 6,
-      hora_inicio: "08:00",
-      hora_fin: "14:00"
+      hora_inicio: 8,
+      hora_fin: 14
     }
   ];
 

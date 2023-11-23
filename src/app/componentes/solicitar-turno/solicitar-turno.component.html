@@ -1,0 +1,27 @@
+<div id="nuevo_turno_container">
+    <div id="seleccionar_especialista">
+        <div *ngFor="let especialista of servUsuario.especialistas.value" name="especialista_item"
+            (click)="ElegirEspecialista(especialista)">
+            <div name="especialista_nombre">
+                {{especialista.nombre + ", " + especialista.apellido}}
+            </div>
+
+            <div name="especialista_imagen_container">
+                <img name="especialista_imagen" [src]="especialista.url_foto_1"
+                    [alt]='especialista.nombre + ", " + especialista.apellido'>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="especialista">
+        <p-button pRipple styleClass="p-button-help" *ngFor="let especialidad of especialista.especialidades"
+            (click)="ElegirEspecialidad(especialidad)">
+            <!-- <img [alt]="especialidad.nombre" [src]="usuario.foto" style="width: 3rem" /> -->
+            <span class="ml-2 font-bold">{{especialidad | especialidad | async}}</span>
+        </p-button>
+    </div>
+
+    <div *ngIf="especialidad">
+        {{especialista?.disponibilidades | json}}
+    </div>
+</div>

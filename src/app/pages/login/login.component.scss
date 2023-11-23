@@ -7,7 +7,7 @@ div#login_container {
     justify-content: center;
 }
 
-div[name="form_card"]{
+div[name="form_card"] {
     background-color: rgb(255 255 255 / 20%);
     border: 1px solid #ccc;
     padding: 20px;
@@ -45,6 +45,7 @@ div#login_buttons_container {
 div#login_mockbuttons_container {
     margin-top: 2rem;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     gap: 0.25rem;
 }

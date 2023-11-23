@@ -16,6 +16,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DiaPipe } from 'src/app/pipes/dia.pipe';
+import { SolicitarTurnoComponent } from 'src/app/componentes/solicitar-turno/solicitar-turno.component';
 //import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { DiaPipe } from 'src/app/pipes/dia.pipe';
     CardUsuarioComponent,
     CardPacienteComponent,
     CardEspecialistaComponent,
+    SolicitarTurnoComponent,
     ObraSocialPipe,
     EspecialidadPipe,
     DiaPipe
@@ -47,6 +49,7 @@ import { DiaPipe } from 'src/app/pipes/dia.pipe';
     CardUsuarioComponent,
     CardPacienteComponent,
     CardEspecialistaComponent,
+    SolicitarTurnoComponent,
     ObraSocialPipe,
     EspecialidadPipe
   ]
