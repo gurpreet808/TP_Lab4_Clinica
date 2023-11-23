@@ -27,33 +27,38 @@ export class NavBarComponent implements OnInit {
         console.log("logueado", this.servAuth.usuarioActual);
 
         if (logueado == true) {
-          switch (this.servAuth.usuarioActual?.tipo) {
-            case 'admin':
-              console.log("admin");
-              this.AdminItems();
-              break;
 
-            case 'paciente':
-              console.log("paciente");
-              this.PacienteItems();
-              break;
+          if (servAuth.emailVerified == false) {
+            this.items = [
+              {
+                label: 'Home',
+                icon: 'fa-solid fa-house',
+                routerLink: '/'
+              }
+            ];
+          } else {
+            switch (this.servAuth.usuarioActual?.tipo) {
+              case 'admin':
+                console.log("admin");
+                this.AdminItems();
+                break;
 
-            case 'especialista':
-              console.log("especialista");
-              this.EspecialistaItems();
-              break;
+              case 'paciente':
+                console.log("paciente");
+                this.PacienteItems();
+                break;
 
-            default:
-              console.log("default");
-              this.items = [
-                {
-                  label: 'Home',
-                  icon: 'fa-solid fa-house',
-                  routerLink: '/'
-                }
-              ];
-              break;
+              case 'especialista':
+                console.log("especialista");
+                this.EspecialistaItems();
+                break;
+
+              default:
+                console.log("default");
+                break;
+            }
           }
+
         }
       }
     );
