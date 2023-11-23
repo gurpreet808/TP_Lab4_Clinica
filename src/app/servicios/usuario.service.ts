@@ -26,14 +26,15 @@ export class UsuarioService {
   }
 
   TraerUsuarios() {
-    let especialistas: Especialista[] = [];
-    let pacientes: Paciente[] = [];
-    let admins: Usuario[] = [];
 
     let query: Query<Usuario, DocumentData> = this.dataRef as Query<Usuario, DocumentData>;
     collectionData<Usuario>(query, { idField: 'id' }).subscribe(
       (usuarios: Usuario[]) => {
         //console.log("usuarios", usuarios);
+
+        let especialistas: Especialista[] = [];
+        let pacientes: Paciente[] = [];
+        let admins: Usuario[] = [];
 
         usuarios.forEach(
           (usuario: Usuario) => {
