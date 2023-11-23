@@ -1,3 +1,9 @@
+<div>
+    <button (click)='UsuarioNuevo("admin")'>Nuevo Admin</button>
+    <button (click)='UsuarioNuevo("especialista")'>Nuevo Especialista</button>
+    <button (click)='UsuarioNuevo("paciente")'>Nuevo Paciente</button>
+</div>
+
 <div *ngFor="let usuario of this.servUsuario.usuarios.value" name="usuario_card">
     <div name="usuario_card_content">
         <app-card-usuario [usuario]="usuario" *ngIf="usuario.tipo == 'admin'"></app-card-usuario>
@@ -10,3 +16,10 @@
         <button (click)="HabilitarEspecialista(usuario)" *ngIf="usuario.tipo == 'especialista'">Habilitar</button>
     </div>
 </div>
+
+<p-dialog [(visible)]="usuarioDialog" [header]='"Nuevo usuario " + nuevoUsuarioTipo' [modal]="true"
+    styleClass="p-fluid w-full md:w-11">
+    <ng-template pTemplate="content">
+        <app-alta-usuario [tipo_usuario]="nuevoUsuarioTipo" (closeModal)="Cancelar()"></app-alta-usuario>
+    </ng-template>
+</p-dialog>

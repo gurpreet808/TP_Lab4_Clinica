@@ -11,6 +11,10 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   styleUrls: ['./usuarios.component.scss']
 })
 export class UsuariosComponent implements OnInit {
+
+  usuarioDialog: boolean = false;
+  nuevoUsuarioTipo: string = '';
+
   constructor(public servUsuario: UsuarioService, public servSpinner: SpinnerService) {
     this.servSpinner.showWithMessage('usuarios-init', 'Cargando usuarios...');
   }
@@ -33,5 +37,15 @@ export class UsuariosComponent implements OnInit {
     let especialista = usuario as Especialista;
     especialista.habilitado = !especialista.habilitado;
     this.servUsuario.ModificarUsuario(usuario);
+  }
+
+  UsuarioNuevo(tipo: string) {
+    this.nuevoUsuarioTipo = tipo;
+    this.usuarioDialog = true;
+  }
+
+  Cancelar() {
+    this.usuarioDialog = false;
+    this.nuevoUsuarioTipo = '';
   }
 }

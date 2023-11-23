@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UploadTaskSnapshot } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,6 +28,7 @@ import { confirmarCalveValidator } from 'src/app/validators/repetir-clave.valida
 })
 export class AltaUsuarioComponent implements OnInit {
 
+  @Output() closeModal = new EventEmitter();
   @Input() tipo_usuario: string = '';
   especialidades: Especialidad[] = [];
   obras_sociales: ObraSocial[] = [];
@@ -221,7 +222,12 @@ export class AltaUsuarioComponent implements OnInit {
               console.log('Usuario modificado');
               this.servSpinner.hideWithMessage('registrar-usuario');
               this.messageService.add({ severity: 'success', life: 10000, summary: 'Bien', detail: 'Se registró su usuario. Recuerde verificar su mail para usar la aplicación.' });
-              this.router.navigate(['/']);
+
+              if (this.servAuth.usuarioActual && this.servAuth.usuarioActual.tipo != 'admin') {
+                this.router.navigate(['/']);
+              } else {
+                this.closeModal.emit();
+              }
             }
           ).catch(
             (error) => {
