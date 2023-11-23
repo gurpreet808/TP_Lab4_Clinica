@@ -207,7 +207,7 @@
                     <label for="disponibilidad_dia">Día</label>
                     <p-dropdown id="disponibilidad_dia" [options]="dias" [(ngModel)]="new_disponibilidad.dia"
                         [ngModelOptions]="{standalone: true}" styleClass="w-full" placeholder="Elija un día"
-                        optionValue="value" optionLabel="label"></p-dropdown>
+                        optionValue="value" optionLabel="label" appendTo="body"></p-dropdown>
                 </div>
 
                 <div id="disponibilidad_hora_inicio_container" name="disponibilidad_input">
@@ -230,8 +230,8 @@
                     <label for="disponibilidad_especialidad">Especialidad</label>
                     <p-dropdown id="disponibilidad_especialidad" [options]="getControl('especialidades')!.value"
                         [(ngModel)]="new_disponibilidad.especialidad" [ngModelOptions]="{standalone: true}"
-                        styleClass="w-full" placeholder="Elija una especialidad" optionValue="id"
-                        optionLabel="nombre"></p-dropdown>
+                        styleClass="w-full" placeholder="Elija una especialidad" optionValue="id" optionLabel="nombre"
+                        appendTo="body"></p-dropdown>
                 </div>
 
                 <div id="disponibilidad_agregar_container">
