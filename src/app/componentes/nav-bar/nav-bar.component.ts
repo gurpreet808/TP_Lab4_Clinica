@@ -157,7 +157,7 @@ export class NavBarComponent implements OnInit {
       {
         label: 'Mis turnos',
         icon: 'fa-solid fa-calendar-days',
-        routerLink: '/usuarios'
+        routerLink: '/mis-turnos'
       },
       {
         label: 'Mi perfil',
