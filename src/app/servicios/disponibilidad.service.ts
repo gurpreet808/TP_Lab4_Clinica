@@ -58,10 +58,10 @@ export class DisponibilidadService {
     return disponibilidad;
   }
 
-  async DisponibilidadEspecialidadDeEspecialistaPorDia(dia: number, especialidad: string, disponibilidades: DisponibilidadEspecialidad[]): Promise<Disponibilidad[]> {
+  async DisponibilidadEspecialidadDeEspecialistaPorDia(dia: number, id_especialidad: string, disponibilidades: DisponibilidadEspecialidad[]): Promise<Disponibilidad[]> {
     let disponibilidad: Disponibilidad[] = [];
     for (let i = 0; i < disponibilidades.length; i++) {
-      if (disponibilidades[i].dia == dia && disponibilidades[i].especialidad == especialidad) {
+      if (disponibilidades[i].dia == dia && disponibilidades[i].especialidad == id_especialidad) {
         disponibilidad.push(disponibilidades[i]);
       }
     }
