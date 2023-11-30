@@ -22,6 +22,15 @@ export class SolicitarTurnoComponent implements OnInit {
   especialista: Especialista | undefined;
   especialidades: Especialidad[] = [];
   especialidad_id: string = '';
+  ready: {
+    pacientes: boolean,
+    especialistas: boolean,
+    especialidades: boolean
+  } = {
+      pacientes: false,
+      especialistas: false,
+      especialidades: false
+    };
 
   constructor(
     public servAuth: AuthService,
@@ -32,55 +41,42 @@ export class SolicitarTurnoComponent implements OnInit {
     public servSpinner: SpinnerService
   ) {
 
+    this.servSpinner.showWithMessage('st-data-loading', "Cargando datos...");
+
     this.servAuth.logueado.subscribe(
       (logueado) => {
         if (this.servAuth.usuarioActual && this.servAuth.usuarioActual.tipo === 'paciente') {
           this.paciente = this.servAuth.usuarioActual as Paciente;
-          console.log(this.paciente);
+          //console.log(this.paciente);
         }
       }
     );
 
-    //Hacer como lista de precios 2 suscribes con el Merge() que en este caso filtraría los especiaistas si sus especialidades son válidas y si hay diponibilidad para esa especialidades
-    this.servEspecialidad.especialidades.subscribe(
-      (especialidades) => {
-        this.especialidades = especialidades.filter((especialidad) => especialidad.valida);
-      }
-    );
-
-    this.servUsuario.especialistas.subscribe(
-      (especialistas) => {
-        for (let i = 0; i < especialistas.length; i++) {
-          if (especialistas[i].habilitado) {
-
-            this.especialistas.push(especialistas[i]);
-
-            /* let especialidades: Especialidad[] = [];
-            especialistas[i].especialidades.forEach((id) => {
-              let especialidad = this.servEspecialidad.especialidades.value.find((especialidad) => especialidad.id === id);
-              if (especialidad && especialidad.valida) {
-                especialidades.push(especialidad);
-              }
-            });
-
-            console.log(especialidades);
-
-            if (especialidades.length > 0) {
-              especialistas[i].especialidades = especialidades.map((especialidad) => especialidad.id);
-              this.especialistas.push(especialistas[i]);
-            } */
-          }
-        }
-      }
-    );
+    this.suscripciones();
   }
 
   ngOnInit(): void {
   }
 
+  suscripciones() {
+    this.servEspecialidad.especialidades.subscribe(
+      (_especialidades) => {
+        this.ready.especialidades = true;
+        this.FiltrarEspecialistas();
+      }
+    );
+
+    this.servUsuario.especialistas.subscribe(
+      (_especialistas) => {
+        this.ready.especialistas = true;
+        this.FiltrarEspecialistas();
+      }
+    );
+  }
+
   ElegirPaciente(_paciente: Paciente) {
     this.paciente = _paciente;
-    console.log(this.paciente);
+    //console.log(this.paciente);
     this.especialista = undefined;
     this.especialidad_id = '';
   }
@@ -104,7 +100,7 @@ export class SolicitarTurnoComponent implements OnInit {
 
   ElegirEspecialidad(_especialidad_id: string) {
     this.especialidad_id = _especialidad_id;
-    console.log(this.especialidad_id);
+    //console.log(this.especialidad_id);
 
     if (this.especialista && this.especialista.disponibilidades && this.especialista.disponibilidades.length > 0 && this.especialidad_id) {
 
@@ -119,6 +115,40 @@ export class SolicitarTurnoComponent implements OnInit {
   }
 
   FiltrarEspecialistas() {
-    //check if 
+    this.servSpinner.showWithMessage('st-data-loading', "Cargando datos...");
+    let especialistas: Especialista[] = [];
+    let aux_especialistas: Especialista[] = JSON.parse(JSON.stringify(this.servUsuario.especialistas.value));
+    let aux_especialidades: Especialidad[] = JSON.parse(JSON.stringify(this.servEspecialidad.especialidades.value));
+
+    for (const especialista of aux_especialistas) {
+      if (especialista.habilitado == true) {
+        if (especialista.especialidades && especialista.especialidades.length > 0) {
+          let especialidades: string[] = [];
+
+          for (const especialidad_id of especialista.especialidades) {
+
+            for (const especialidad of aux_especialidades) {
+              if (especialidad.id === especialidad_id) {
+                if (especialidad.valida === true) {
+                  especialidades.push(especialidad.id);
+                  break;
+                }
+              }
+            }
+          }
+
+          if (especialidades.length > 0) {
+            especialista.especialidades = especialidades;
+            especialistas.push(especialista);
+          }
+        }
+      }
+    }
+
+    this.especialistas = especialistas;
+
+    if (this.ready.especialistas && this.ready.especialidades) {
+      this.servSpinner.hideWithMessage('st-data-loading');
+    }
   }
 }

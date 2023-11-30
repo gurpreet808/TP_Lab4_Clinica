@@ -17,7 +17,7 @@ export class AuthService {
   constructor(private auth: Auth, private _http: HttpClient, private _usuarioService: UsuarioService) {
     this.auth.onAuthStateChanged(
       async (user: User | null) => {
-        console.log("authStateChange", user);
+        //console.log("authStateChange", user);
         this.firstRun = false;
 
         if (user != null) {

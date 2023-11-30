@@ -112,8 +112,8 @@ export class EspecialidadesComponent implements OnInit {
     //console.log(this.ClonesEspecialidades);
   }
 
-  ValidarEspecialidad(especialidad: Especialidad) {
-    especialidad.valida = true;
+  ToogleValidarEspecialidad(especialidad: Especialidad) {
+    especialidad.valida = !especialidad.valida;
 
     this.servEspecialidades.ModificarEspecialidad(especialidad).then(
       (rdo) => {
