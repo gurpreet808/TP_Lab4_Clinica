@@ -147,7 +147,7 @@ export class TurnoService {
     //console.log(_fecha_inicio.getDay());
 
     for (let _date = 0; _date < cant_dias + 1; _date++) {
-      console.log(_fecha_iteracion.getDate(), _fecha_iteracion.getDay());
+      //console.log(_fecha_iteracion.getDate(), _fecha_iteracion.getDay());
 
       for (const disponibilidad of disponibilidades_especialista) {
         if (disponibilidad.dia == _fecha_iteracion.getDay()) {
@@ -160,7 +160,7 @@ export class TurnoService {
               id_especialista: id_especialista,
               id_paciente: id_paciente,
               estado: 1,
-              fecha: _fecha_iteracion.getMilliseconds(),
+              fecha: _fecha_iteracion.getTime(),
               hora: hora.toString() + ':00',
               especialidad: id_especialidad,
               comentario: {
