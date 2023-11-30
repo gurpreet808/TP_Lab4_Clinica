@@ -1,9 +1,10 @@
 <div id="nuevo_turno_container">
+    <button (click)="GenerarTurnos()">Test gen</button>
     <div id="seleccionados_container">
-        <div id="paciente_selecccionado_container" *ngIf="paciente && servAuth.usuarioActual?.tipo == 'admin'">
+        <div id="paciente_seleccionado_container" *ngIf="paciente && servAuth.usuarioActual?.tipo == 'admin'">
             <h1>Paciente:</h1>
 
-            <div id="paciente_selecccionado" name="paciente_item">
+            <div id="paciente_seleccionado" name="paciente_item">
                 <div name="paciente_nombre">
                     {{paciente.nombre + ", " + paciente.apellido}}
                 </div>
@@ -19,10 +20,10 @@
             </div>
         </div>
 
-        <div id="especialista_selecccionado_container" *ngIf="especialista">
+        <div id="especialista_seleccionado_container" *ngIf="especialista">
             <h1>Especialista:</h1>
 
-            <div id="especialista_selecccionado" name="especialista_item">
+            <div id="especialista_seleccionado" name="especialista_item">
                 <div name="especialista_nombre">
                     {{especialista.nombre + ", " + especialista.apellido}}
                 </div>
@@ -36,6 +37,23 @@
             <div>
                 <p-button icon="pi pi-times" [rounded]="true" severity="danger"
                     (click)="CancelarEspecialista()"></p-button>
+            </div>
+        </div>
+
+        <div id="especialidad_seleccionado_container" *ngIf="especialidad_id">
+            <h1>Especialidad:</h1>
+
+            <div id="especialidad_seleccionado" name="especialidad_item">
+                <p-button pRipple styleClass="p-button-help">
+                    <i class="fa-solid fa-stethoscope"></i>
+                    <!-- <img [alt]="especialidad.nombre" [src]="especialidad.url_foto" style="width: 3rem" /> -->
+                    <span class="ml-2 font-bold">{{especialidad_id | especialidad | async}}</span>
+                </p-button>
+            </div>
+
+            <div>
+                <p-button icon="pi pi-times" [rounded]="true" severity="danger"
+                    (click)="CancelarEspecialidad()"></p-button>
             </div>
         </div>
     </div>
@@ -68,7 +86,7 @@
         </div>
     </div>
 
-    <div *ngIf="especialista">
+    <div id="seleccionar_especialidad" *ngIf="paciente && especialista && !especialidad_id">
         <p-button pRipple styleClass="p-button-help" *ngFor="let especialidad of especialista.especialidades"
             (click)="ElegirEspecialidad(especialidad)">
             <i class="fa-solid fa-stethoscope"></i>

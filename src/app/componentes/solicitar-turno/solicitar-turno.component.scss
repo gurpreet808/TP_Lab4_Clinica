@@ -49,7 +49,7 @@ img[name="especialista_imagen"] {
     object-fit: contain;
 }
 
-div#especialista_selecccionado_container {
+div#especialista_seleccionado_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -98,9 +98,25 @@ img[name="paciente_imagen"] {
     object-fit: contain;
 }
 
-div#paciente_selecccionado_container {
+div#paciente_seleccionado_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+div#especialidad_seleccionado_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+div#seleccionados_container>div {
+    background-color: #ffffff93;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }

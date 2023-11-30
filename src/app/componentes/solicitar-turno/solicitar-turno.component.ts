@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, map } from 'rxjs';
+import { DisponibilidadEspecialidad } from 'src/app/clases/disponibilidad-especialidad';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
 import { Paciente } from 'src/app/clases/paciente';
+import { Turno } from 'src/app/clases/turno';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { DisponibilidadService } from 'src/app/servicios/disponibilidad.service';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
@@ -98,22 +99,6 @@ export class SolicitarTurnoComponent implements OnInit {
     this.especialidad_id = '';
   }
 
-  ElegirEspecialidad(_especialidad_id: string) {
-    this.especialidad_id = _especialidad_id;
-    //console.log(this.especialidad_id);
-
-    if (this.especialista && this.especialista.disponibilidades && this.especialista.disponibilidades.length > 0 && this.especialidad_id) {
-
-      this.servDisponibilidad.DisponibilidadEspecialidadDeEspecialistaPorDia(1, this.especialidad_id, this.especialista.disponibilidades).then((disponibilidades) => {
-        console.log(disponibilidades);
-      }
-      ).catch((error) => {
-        console.log(error);
-      });
-
-    }
-  }
-
   FiltrarEspecialistas() {
     this.servSpinner.showWithMessage('st-data-loading', "Cargando datos...");
     let especialistas: Especialista[] = [];
@@ -150,5 +135,31 @@ export class SolicitarTurnoComponent implements OnInit {
     if (this.ready.especialistas && this.ready.especialidades) {
       this.servSpinner.hideWithMessage('st-data-loading');
     }
+  }
+
+  ElegirEspecialidad(_especialidad_id: string) {
+    this.especialidad_id = _especialidad_id;
+    //console.log(this.especialidad_id);
+    if (this.especialista && this.paciente && this.especialidad_id) {
+      this.servTurno.GenerarTurnos(this.paciente.id, this.especialista.id, this.especialidad_id, this.especialista.disponibilidades, 15).then(
+        (_turnos: Turno[]) => {
+          console.log(_turnos);
+        }
+      ).catch(
+        (err) => {
+          console.log(err)
+        }
+      );
+    } else {
+      console.log('No hay especialista');
+    }
+  }
+
+  GenerarTurnos() {
+    //this.servTurno.GenerarTurnos([], 15);
+  }
+
+  CancelarEspecialidad() {
+    this.especialidad_id = '';
   }
 }
