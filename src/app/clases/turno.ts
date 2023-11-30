@@ -1,7 +1,7 @@
 export interface Turno {
     id: string;
-    id_paciente: number;
-    id_especialista: number;
+    id_paciente: string;
+    id_especialista: string;
     estado: EstadoTurno;
     fecha: number;//aqui debería estar embebido la fecha y la hora para poder ordenar desde Firebase
     hora: string;
