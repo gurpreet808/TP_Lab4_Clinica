@@ -67,7 +67,7 @@ export class SolicitarTurnoComponent implements OnInit {
     );
 
     this.servUsuario.especialistas.subscribe(
-      (especialistas) => {
+      (_especialistas) => {
         this.ready.especialistas = true;
         this.FiltrarEspecialistas();
       }
