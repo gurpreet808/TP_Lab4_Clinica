@@ -1,3 +1,12 @@
+div#seleccionados_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
 div#seleccionar_especialista {
     display: flex;
     flex-direction: row;
