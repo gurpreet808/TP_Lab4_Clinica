@@ -1,22 +1,16 @@
 export interface Turno {
-    id: number;
+    id: string;
     id_paciente: number;
     id_especialista: number;
     estado: EstadoTurno;
-    fecha: string;
+    fecha: number;//aqui debería estar embebido la fecha y la hora para poder ordenar desde Firebase
     hora: string;
-    especialidad: string; //aqui no se si conviene poner el id o el nombre de la especialidad
+    especialidad: string; //aqui se guarda el id de la especialidad, el nombre se trae con pipe
     comentario: {
         autor: string;
         texto: string;
     };
-    historia_clinica: {
-        altura: number;
-        peso: number;
-        temperatura: number;
-        presion: number;
-        [key: string]: string | number;
-    }
+    historia_clinica: HistoriaClinica;
 }
 
 enum EstadoTurno {
@@ -25,4 +19,12 @@ enum EstadoTurno {
     Rechazado = 3,
     Aceptado = 4,
     Realizado = 5
+}
+
+export interface HistoriaClinica {
+    altura: number;
+    peso: number;
+    temperatura: number;
+    presion: number;
+    [key: string]: string | number;
 }
