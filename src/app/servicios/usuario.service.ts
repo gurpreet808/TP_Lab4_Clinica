@@ -36,6 +36,12 @@ export class UsuarioService {
         let pacientes: Paciente[] = [];
         let admins: Usuario[] = [];
 
+        usuarios.sort(
+          (a: Usuario, b: Usuario) => {
+            return a.apellido.localeCompare(b.apellido);
+          }
+        )
+
         usuarios.forEach(
           (usuario: Usuario) => {
             if (usuario.tipo == 'especialista') {
