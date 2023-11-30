@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit {
       //skip(1)
     ).subscribe(
       (logueado: boolean) => {
-        console.log("logueado", this.servAuth.usuarioActual);
+        //console.log("logueado", this.servAuth.usuarioActual);
 
         if (logueado == true) {
 
@@ -39,22 +39,22 @@ export class NavBarComponent implements OnInit {
           } else {
             switch (this.servAuth.usuarioActual?.tipo) {
               case 'admin':
-                console.log("admin");
+                //console.log("admin");
                 this.AdminItems();
                 break;
 
               case 'paciente':
-                console.log("paciente");
+                //console.log("paciente");
                 this.PacienteItems();
                 break;
 
               case 'especialista':
-                console.log("especialista");
+                //console.log("especialista");
                 this.EspecialistaItems();
                 break;
 
               default:
-                console.log("default");
+                //console.log("default");
                 break;
             }
           }
