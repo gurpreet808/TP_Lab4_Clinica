@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DisponibilidadEspecialidad } from 'src/app/clases/disponibilidad-especialidad';
+import { MessageService } from 'primeng/api';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
 import { Paciente } from 'src/app/clases/paciente';
@@ -23,6 +23,8 @@ export class SolicitarTurnoComponent implements OnInit {
   especialista: Especialista | undefined;
   especialidades: Especialidad[] = [];
   especialidad_id: string = '';
+  turnos: Turno[] = [];
+  turno: Turno | undefined;
   ready: {
     pacientes: boolean,
     especialistas: boolean,
@@ -33,13 +35,15 @@ export class SolicitarTurnoComponent implements OnInit {
       especialidades: false
     };
 
+
   constructor(
     public servAuth: AuthService,
     public servUsuario: UsuarioService,
     public servEspecialidad: EspecialidadService,
     public servDisponibilidad: DisponibilidadService,
     public servTurno: TurnoService,
-    public servSpinner: SpinnerService
+    public servSpinner: SpinnerService,
+    public messageService: MessageService,
   ) {
 
     this.servSpinner.showWithMessage('st-data-loading', "Cargando datos...");
@@ -143,11 +147,13 @@ export class SolicitarTurnoComponent implements OnInit {
     if (this.especialista && this.paciente && this.especialidad_id) {
       this.servTurno.GenerarTurnos(this.paciente.id, this.especialista.id, this.especialidad_id, this.especialista.disponibilidades, 15).then(
         (_turnos: Turno[]) => {
-          console.log(_turnos);
+          this.turnos = _turnos;
+          //console.log(this.turnos);
         }
       ).catch(
         (err) => {
-          console.log(err)
+          console.log(err);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron generar los turnos' });
         }
       );
     } else {
@@ -155,11 +161,16 @@ export class SolicitarTurnoComponent implements OnInit {
     }
   }
 
-  GenerarTurnos() {
-    //this.servTurno.GenerarTurnos([], 15);
-  }
-
   CancelarEspecialidad() {
     this.especialidad_id = '';
+  }
+
+  ElegirTurno(_turno: Turno) {
+    console.log(_turno);
+    this.turno = _turno;
+  }
+
+  CancelarTurno() {
+    this.turno = undefined;
   }
 }

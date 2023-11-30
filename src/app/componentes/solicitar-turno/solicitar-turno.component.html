@@ -1,5 +1,4 @@
 <div id="nuevo_turno_container">
-    <button (click)="GenerarTurnos()">Test gen</button>
     <div id="seleccionados_container">
         <div id="paciente_seleccionado_container" *ngIf="paciente && servAuth.usuarioActual?.tipo == 'admin'">
             <h1>Paciente:</h1>
@@ -56,6 +55,23 @@
                     (click)="CancelarEspecialidad()"></p-button>
             </div>
         </div>
+
+        <div id="especialidad_seleccionado_container" *ngIf="turno">
+            <h1>Turno:</h1>
+
+            <div id="turno_seleccionado" name="especialidad_item">
+                <p-button pRipple styleClass="p-button-secondary">
+                    <!-- <img [alt]="turno.nombre" [src]="turno.url_foto" style="width: 3rem" /> -->
+                    <span class="ml-2 font-bold">{{turno.fecha | date : 'dd/MM/yyyy' }}</span>
+                    <span class="ml-2 font-bold">{{turno.hora}}</span>
+                </p-button>
+            </div>
+
+            <div>
+                <p-button icon="pi pi-times" [rounded]="true" severity="danger"
+                    (click)="CancelarEspecialidad()"></p-button>
+            </div>
+        </div>
     </div>
 
     <div id="seleccionar_paciente" *ngIf="!paciente && servAuth.usuarioActual?.tipo == 'admin'">
@@ -95,7 +111,11 @@
         </p-button>
     </div>
 
-    <div *ngIf="especialidad_id">
-        {{especialista?.disponibilidades | json}}
+    <div id="seleccionar_turno" *ngIf="paciente && especialista && especialidad_id && !turno">
+        <p-button pRipple styleClass="p-button-secondary" *ngFor="let turno of turnos" (click)="ElegirTurno(turno)">
+            <!-- <img [alt]="turno.nombre" [src]="turno.url_foto" style="width: 3rem" /> -->
+            <span class="ml-2 font-bold">{{turno.fecha | date : 'dd/MM/yyyy' }}</span>
+            <span class="ml-2 font-bold">{{turno.hora}}</span>
+        </p-button>
     </div>
 </div>
