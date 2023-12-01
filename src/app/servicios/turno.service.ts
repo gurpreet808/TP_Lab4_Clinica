@@ -4,6 +4,7 @@ import { Turno } from '../clases/turno';
 import { CollectionReference, DocumentData, Firestore, Query, collection, collectionData, deleteDoc, doc, setDoc } from '@angular/fire/firestore';
 import { DisponibilidadService } from './disponibilidad.service';
 import { DisponibilidadEspecialidad } from '../clases/disponibilidad-especialidad';
+import { Disponibilidad } from '../clases/disponibilidad';
 
 
 @Injectable({
@@ -151,38 +152,48 @@ export class TurnoService {
 
       for (const disponibilidad of disponibilidades_especialista) {
         if (disponibilidad.dia == _fecha_iteracion.getDay()) {
-          let hora_inicio: number = disponibilidad.hora_inicio;
-          let hora_fin: number = disponibilidad.hora_fin;
+          let disponibilidades_clinica_dia: Disponibilidad[] = await this.servDisponibilidad.DisponibilidadClinicaPorDia(_fecha_iteracion.getDay());
 
-          for (let hora = hora_inicio; hora < hora_fin; hora++) {
-            let _turno: Turno = {
-              id: "new",
-              id_especialista: id_especialista,
-              id_paciente: id_paciente,
-              estado: 1,
-              fecha: _fecha_iteracion.getTime(),
-              hora: hora.toString() + ':00',
-              especialidad: id_especialidad,
-              comentario: {
-                autor: "",
-                texto: ""
-              },
-              historia_clinica: {
-                altura: 0,
-                peso: 0,
-                temperatura: 0,
-                presion: 0
+          if (disponibilidades_clinica_dia.length > 0) {
+            let hora_inicio: number = disponibilidad.hora_inicio;
+            let hora_fin: number = disponibilidad.hora_fin;
+
+            for (let hora = hora_inicio; hora < hora_fin; hora++) {
+              let _turno_model: Turno = {
+                id: "new",
+                id_especialista: id_especialista,
+                id_paciente: id_paciente,
+                estado: 1,
+                fecha: _fecha_iteracion.getTime(),
+                hora: hora.toString() + ':00',
+                especialidad: id_especialidad,
+                comentario: {
+                  autor: "",
+                  texto: ""
+                },
+                historia_clinica: {
+                  altura: 0,
+                  peso: 0,
+                  temperatura: 0,
+                  presion: 0
+                }
+              };
+
+              //console.log(disponibilidades_clinica_dia);
+
+              for (const disponibilidad_clinica of disponibilidades_clinica_dia) {
+                if (hora >= disponibilidad_clinica.hora_inicio && hora < disponibilidad_clinica.hora_fin) {
+                  _turnos.push(_turno_model);
+
+                  let _turno: Turno = this.ClonarTurno(_turno_model);
+                  _turno.hora = hora.toString() + ':30'
+                  _turnos.push(_turno);
+                  break;
+                }
               }
-            };
 
-            _turnos.push(
-              _turno
-            );
 
-            _turno.hora = hora.toString() + ':30'
-            _turnos.push(
-              _turno
-            );
+            }
           }
         }
       }
