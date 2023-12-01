@@ -60,16 +60,16 @@ export class DisponibilidadService {
 
   async DisponibilidadEspecialidadDeEspecialistaPorDia(_dia: number, _especialidad_id: string, _disponibilidades: DisponibilidadEspecialidad[]): Promise<DisponibilidadEspecialidad[]> {
     let disponibilidad: DisponibilidadEspecialidad[] = [];
-    
+
     for (let i = 0; i < _disponibilidades.length; i++) {
       if (_disponibilidades[i].dia == _dia) {
         disponibilidad.push(_disponibilidades[i]);
       }
     }
 
-    if (disponibilidad.length == 0) {
+    /* if (disponibilidad.length == 0) {
       throw new Error('No hay disponibilidad para ese día');
-    }
+    } */
 
     return disponibilidad;
   }
