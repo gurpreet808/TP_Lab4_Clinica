@@ -90,17 +90,23 @@ export class SolicitarTurnoComponent implements OnInit {
     this.paciente = undefined;
     this.especialista = undefined;
     this.especialidad_id = '';
+    this.turnos = [];
+    this.turno = undefined;
   }
 
   ElegirEspecialista(_especialista: Especialista) {
     this.especialista = _especialista;
     console.log(this.especialista);
     this.especialidad_id = '';
+    this.turnos = [];
+    this.turno = undefined;
   }
 
   CancelarEspecialista() {
     this.especialista = undefined;
     this.especialidad_id = '';
+    this.turnos = [];
+    this.turno = undefined;
   }
 
   FiltrarEspecialistas() {
@@ -144,6 +150,9 @@ export class SolicitarTurnoComponent implements OnInit {
   ElegirEspecialidad(_especialidad_id: string) {
     this.especialidad_id = _especialidad_id;
     //console.log(this.especialidad_id);
+    this.turnos = [];
+    this.turno = undefined;
+
     if (this.especialista && this.paciente && this.especialidad_id) {
       this.servTurno.GenerarTurnos(this.paciente.id, this.especialista.id, this.especialidad_id, this.especialista.disponibilidades, 15).then(
         (_turnos: Turno[]) => {
@@ -163,6 +172,8 @@ export class SolicitarTurnoComponent implements OnInit {
 
   CancelarEspecialidad() {
     this.especialidad_id = '';
+    this.turnos = [];
+    this.turno = undefined;
   }
 
   ElegirTurno(_turno: Turno) {
