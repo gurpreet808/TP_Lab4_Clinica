@@ -139,8 +139,15 @@ export class TurnoService {
     let _turnos: Turno[] = [];
 
     let _fecha_inicio: Date = new Date();
-    let _fecha_fin: Date = new Date();
-    let _fecha_iteracion: Date = new Date();
+    //_fecha_inicio = new Date("11/30/2023 10:50:00");
+    
+    if (_fecha_inicio.getMinutes() > 30) {
+      _fecha_inicio.setHours(_fecha_inicio.getHours() + 1, 0, 0, 0);
+    }
+    _fecha_inicio.setHours(_fecha_inicio.getHours() + 1, 0, 0, 0);
+
+    let _fecha_fin: Date = new Date(_fecha_inicio);
+    let _fecha_iteracion: Date = new Date(_fecha_inicio);
     _fecha_fin.setDate(_fecha_inicio.getDate() + cant_dias);
 
     console.log(_fecha_fin);
@@ -158,7 +165,14 @@ export class TurnoService {
             let hora_inicio: number = disponibilidad.hora_inicio;
             let hora_fin: number = disponibilidad.hora_fin;
 
+            if (_fecha_iteracion.getDate() === _fecha_inicio.getDate()) {
+              if (_fecha_inicio.getHours() > hora_inicio) {
+                hora_inicio = _fecha_inicio.getHours();
+              }
+            }
+
             for (let hora = hora_inicio; hora < hora_fin; hora++) {
+              _fecha_iteracion.setHours(hora, 0, 0, 0);
               let _turno_model: Turno = {
                 id: "new",
                 id_especialista: id_especialista,
@@ -186,6 +200,8 @@ export class TurnoService {
                   _turnos.push(_turno_model);
 
                   let _turno: Turno = this.ClonarTurno(_turno_model);
+                  _fecha_iteracion.setHours(hora, 30, 0, 0);
+                  _turno.fecha = _fecha_iteracion.getTime();
                   _turno.hora = hora.toString() + ':30'
                   _turnos.push(_turno);
                   break;
