@@ -140,7 +140,7 @@ export class TurnoService {
 
     let _fecha_inicio: Date = new Date();
     //_fecha_inicio = new Date("11/30/2023 10:50:00");
-    
+
     if (_fecha_inicio.getMinutes() > 30) {
       _fecha_inicio.setHours(_fecha_inicio.getHours() + 1, 0, 0, 0);
     }
@@ -158,57 +158,58 @@ export class TurnoService {
       //console.log(_fecha_iteracion.getDate(), _fecha_iteracion.getDay());
 
       for (const disponibilidad of disponibilidades_especialista) {
-        if (disponibilidad.dia == _fecha_iteracion.getDay()) {
-          let disponibilidades_clinica_dia: Disponibilidad[] = await this.servDisponibilidad.DisponibilidadClinicaPorDia(_fecha_iteracion.getDay());
+        if (disponibilidad.especialidad == id_especialidad) {
+          if (disponibilidad.dia == _fecha_iteracion.getDay()) {
+            let disponibilidades_clinica_dia: Disponibilidad[] = await this.servDisponibilidad.DisponibilidadClinicaPorDia(_fecha_iteracion.getDay());
 
-          if (disponibilidades_clinica_dia.length > 0) {
-            let hora_inicio: number = disponibilidad.hora_inicio;
-            let hora_fin: number = disponibilidad.hora_fin;
+            if (disponibilidades_clinica_dia.length > 0) {
+              let hora_inicio: number = disponibilidad.hora_inicio;
+              let hora_fin: number = disponibilidad.hora_fin;
 
-            if (_fecha_iteracion.getDate() === _fecha_inicio.getDate()) {
-              if (_fecha_inicio.getHours() > hora_inicio) {
-                hora_inicio = _fecha_inicio.getHours();
-              }
-            }
-
-            for (let hora = hora_inicio; hora < hora_fin; hora++) {
-              _fecha_iteracion.setHours(hora, 0, 0, 0);
-              let _turno_model: Turno = {
-                id: "new",
-                id_especialista: id_especialista,
-                id_paciente: id_paciente,
-                estado: 1,
-                fecha: _fecha_iteracion.getTime(),
-                hora: hora.toString() + ':00',
-                especialidad: id_especialidad,
-                comentario: {
-                  autor: "",
-                  texto: ""
-                },
-                historia_clinica: {
-                  altura: 0,
-                  peso: 0,
-                  temperatura: 0,
-                  presion: 0
-                }
-              };
-
-              //console.log(disponibilidades_clinica_dia);
-
-              for (const disponibilidad_clinica of disponibilidades_clinica_dia) {
-                if (hora >= disponibilidad_clinica.hora_inicio && hora < disponibilidad_clinica.hora_fin) {
-                  _turnos.push(_turno_model);
-
-                  let _turno: Turno = this.ClonarTurno(_turno_model);
-                  _fecha_iteracion.setHours(hora, 30, 0, 0);
-                  _turno.fecha = _fecha_iteracion.getTime();
-                  _turno.hora = hora.toString() + ':30'
-                  _turnos.push(_turno);
-                  break;
+              if (_fecha_iteracion.getDate() === _fecha_inicio.getDate()) {
+                if (_fecha_inicio.getHours() > hora_inicio) {
+                  hora_inicio = _fecha_inicio.getHours();
                 }
               }
 
+              for (let hora = hora_inicio; hora < hora_fin; hora++) {
+                _fecha_iteracion.setHours(hora, 0, 0, 0);
+                let _turno_model: Turno = {
+                  id: "new",
+                  id_especialista: id_especialista,
+                  id_paciente: id_paciente,
+                  estado: 1,
+                  fecha: _fecha_iteracion.getTime(),
+                  hora: hora.toString() + ':00',
+                  especialidad: id_especialidad,
+                  comentario: {
+                    autor: "",
+                    texto: ""
+                  },
+                  historia_clinica: {
+                    altura: 0,
+                    peso: 0,
+                    temperatura: 0,
+                    presion: 0
+                  }
+                };
 
+                //console.log(disponibilidades_clinica_dia);
+
+                for (const disponibilidad_clinica of disponibilidades_clinica_dia) {
+                  if (hora >= disponibilidad_clinica.hora_inicio && hora < disponibilidad_clinica.hora_fin) {
+                    _turnos.push(_turno_model);
+
+                    let _turno: Turno = this.ClonarTurno(_turno_model);
+                    _fecha_iteracion.setHours(hora, 30, 0, 0);
+                    _turno.fecha = _fecha_iteracion.getTime();
+                    _turno.hora = hora.toString() + ':30'
+                    _turnos.push(_turno);
+                    break;
+                  }
+                }
+
+              }
             }
           }
         }
