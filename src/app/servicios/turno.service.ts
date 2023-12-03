@@ -160,7 +160,7 @@ export class TurnoService {
       for (const disponibilidad of disponibilidades_especialista) {
         if (disponibilidad.especialidad == id_especialidad) {
           if (disponibilidad.dia == _fecha_iteracion.getDay()) {
-            let disponibilidades_clinica_dia: Disponibilidad[] = await this.servDisponibilidad.DisponibilidadClinicaPorDia(_fecha_iteracion.getDay());
+            let disponibilidades_clinica_dia: Disponibilidad[] = await this.servDisponibilidad.DisponibilidadesClinicaPorDia(_fecha_iteracion.getDay());
 
             if (disponibilidades_clinica_dia.length > 0) {
               let hora_inicio: number = disponibilidad.hora_inicio;

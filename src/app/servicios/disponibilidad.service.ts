@@ -43,17 +43,45 @@ export class DisponibilidadService {
   constructor() {
   }
 
-  async DisponibilidadClinicaPorDia(dia: number): Promise<Disponibilidad[]> {
-    let disponibilidad: Disponibilidad[] = [];
+  async DisponibilidadesClinicaPorDia(dia: number): Promise<Disponibilidad[]> {
+    let disponibilidades: Disponibilidad[] = [];
     for (let i = 0; i < this.disponibilidadesClinica.length; i++) {
       if (this.disponibilidadesClinica[i].dia == dia) {
-        disponibilidad.push(this.disponibilidadesClinica[i]);
+        disponibilidades.push(this.disponibilidadesClinica[i]);
       }
     }
 
-    if (disponibilidad.length == 0) {
+    if (disponibilidades.length == 0) {
       throw new Error('No hay disponibilidad para ese día');
     }
+
+    return disponibilidades;
+  }
+
+  async DisponibilidadTotalClinicaPorDia(dia: number): Promise<Disponibilidad> {
+    let disponibilidades: Disponibilidad[] = await this.DisponibilidadesClinicaPorDia(dia);
+    if (disponibilidades.length == 0) {
+      throw new Error('No hay disponibilidad para ese día');
+    }
+
+    let min_hora_inicio: number = disponibilidades[0].hora_inicio;
+    let max_hora_fin: number = disponibilidades[0].hora_fin;
+
+    for (let x = 0; x < disponibilidades.length; x++) {
+      if (disponibilidades[x].hora_inicio < min_hora_inicio) {
+        min_hora_inicio = disponibilidades[x].hora_inicio;
+      }
+
+      if (disponibilidades[x].hora_fin > max_hora_fin) {
+        max_hora_fin = disponibilidades[x].hora_fin;
+      }
+    }
+
+    let disponibilidad: Disponibilidad = {
+      dia: dia,
+      hora_inicio: min_hora_inicio,
+      hora_fin: max_hora_fin
+    };
 
     return disponibilidad;
   }
