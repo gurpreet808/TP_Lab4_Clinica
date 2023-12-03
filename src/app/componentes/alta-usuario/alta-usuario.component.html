@@ -205,15 +205,16 @@
             <div id="disponibilidad_input_container">
                 <div id="disponibilidad_dia_container" name="disponibilidad_input">
                     <label for="disponibilidad_dia">Día</label>
-                    <p-dropdown id="disponibilidad_dia" [options]="dias" [(ngModel)]="new_disponibilidad.dia"
+                    <p-dropdown id="disponibilidad_dia" [options]="dias"
+                        (onChange)="SetMaxMinHoraFinDisponibilidadDia()" [(ngModel)]="new_disponibilidad.dia"
                         [ngModelOptions]="{standalone: true}" styleClass="w-full" placeholder="Elija un día"
-                        optionValue="value" optionLabel="label" appendTo="body"></p-dropdown>
+                        optionValue="value" optionLabel="label" appendTo="sub_container"></p-dropdown>
                 </div>
 
                 <div id="disponibilidad_hora_inicio_container" name="disponibilidad_input">
                     <label for="disponibilidad_hora_inicio">Hora Inicio</label>
-                    <p-inputNumber inputId="disponibilidad_hora_inicio" [min]="0" [max]="23" [maxlength]="2"
-                        [useGrouping]="false" [(ngModel)]="new_disponibilidad.hora_inicio"
+                    <p-inputNumber inputId="disponibilidad_hora_inicio" [min]="min_hora_inicio" [max]="max_hora_fin"
+                        [maxlength]="2" [useGrouping]="false" [(ngModel)]="new_disponibilidad.hora_inicio"
                         [ngModelOptions]="{standalone: true}" inputStyleClass="w-full"
                         styleClass="w-full"></p-inputNumber>
                 </div>
@@ -221,9 +222,9 @@
                 <div id="disponibilidad_hora_fin_container" name="disponibilidad_input">
                     <label for="disponibilidad_hora_fin">Hora Fin</label>
                     <p-inputNumber inputId="disponibilidad_hora_fin" [min]="new_disponibilidad.hora_inicio + 1"
-                        [max]="24" [maxlength]="2" [useGrouping]="false" [(ngModel)]="new_disponibilidad.hora_fin"
-                        [ngModelOptions]="{standalone: true}" inputStyleClass="w-full"
-                        styleClass="w-full"></p-inputNumber>
+                        [max]="max_hora_fin" [maxlength]="2" [useGrouping]="false"
+                        [(ngModel)]="new_disponibilidad.hora_fin" [ngModelOptions]="{standalone: true}"
+                        inputStyleClass="w-full" styleClass="w-full"></p-inputNumber>
                 </div>
 
                 <div id="disponibilidad_especialidad_container" name="disponibilidad_input">
@@ -231,7 +232,7 @@
                     <p-dropdown id="disponibilidad_especialidad" [options]="getControl('especialidades')!.value"
                         [(ngModel)]="new_disponibilidad.especialidad" [ngModelOptions]="{standalone: true}"
                         styleClass="w-full" placeholder="Elija una especialidad" optionValue="id" optionLabel="nombre"
-                        appendTo="body"></p-dropdown>
+                        appendTo="sub_container"></p-dropdown>
                 </div>
 
                 <div id="disponibilidad_agregar_container">

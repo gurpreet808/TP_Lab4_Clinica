@@ -3,6 +3,7 @@ import { UploadTaskSnapshot } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
+import { Disponibilidad } from 'src/app/clases/disponibilidad';
 import { DisponibilidadEspecialidad } from 'src/app/clases/disponibilidad-especialidad';
 import { Especialidad } from 'src/app/clases/especialidad';
 import { Especialista } from 'src/app/clases/especialista';
@@ -10,6 +11,7 @@ import { ObraSocial } from 'src/app/clases/obra-social';
 import { Paciente } from 'src/app/clases/paciente';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthService } from 'src/app/servicios/auth.service';
+import { DisponibilidadService } from 'src/app/servicios/disponibilidad.service';
 import { EspecialidadService } from 'src/app/servicios/especialidad.service';
 import { FileHandlerService } from 'src/app/servicios/file-handler.service';
 import { ObraSocialService } from 'src/app/servicios/obra-social.service';
@@ -43,6 +45,9 @@ export class AltaUsuarioComponent implements OnInit {
     hora_inicio: 0,
     especialidad: '',
   }
+  
+  min_hora_inicio: number = 0;
+  max_hora_fin: number = 23;
 
   dias: SelectItem[] = [
     { label: 'Lunes', value: 1, title: "1" },
@@ -61,6 +66,7 @@ export class AltaUsuarioComponent implements OnInit {
     public servUsuario: UsuarioService,
     public servAuth: AuthService,
     public servFile: FileHandlerService,
+    public servDisponibilidad: DisponibilidadService,
     public servSpinner: SpinnerService,
     public messageService: MessageService,
     public router: Router,
@@ -328,6 +334,26 @@ export class AltaUsuarioComponent implements OnInit {
       return;
     }
 
+    if (this.new_disponibilidad.dia == -1) {
+      this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'Debe elegir un día' });
+      return;
+    }
+
+    if (this.new_disponibilidad.especialidad == '') {
+      this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: 'Debe elegir una especialidad' });
+      return;      
+    }
+
+    if (this.new_disponibilidad.hora_inicio < this.min_hora_inicio) {
+      this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: `La clínica está disponible desde las ${this.min_hora_inicio}:00 en ese día`});
+      return;
+    }
+
+    if (this.new_disponibilidad.hora_fin > this.max_hora_fin) {
+      this.messageService.add({ severity: 'error', life: 10000, summary: 'Error', detail: `La clínica está disponible hasta las ${this.max_hora_fin}:00 en ese día`});
+      return;
+    }
+
     let disponibilidades: DisponibilidadEspecialidad[] = this.getControlValue('disponibilidades');
     let overlap = false;
     for (let d = 0; d < disponibilidades.length; d++) {
@@ -371,5 +397,27 @@ export class AltaUsuarioComponent implements OnInit {
     let index = disponibilidades.indexOf(disponibilidad);
     disponibilidades.splice(index, 1);
     this.getControl('disponibilidades')?.setValue(disponibilidades);
+  }
+
+  async SetMaxMinHoraFinDisponibilidadDia() {
+    if (this.new_disponibilidad.dia) {
+      await this.servDisponibilidad.DisponibilidadTotalClinicaPorDia(this.new_disponibilidad.dia).then(
+        (disponibilidad: Disponibilidad) => {
+          console.log(disponibilidad);
+          this.min_hora_inicio = disponibilidad.hora_inicio;
+          this.max_hora_fin = disponibilidad.hora_fin;
+        }
+      ).catch(
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.min_hora_inicio = 0;
+      this.max_hora_fin = 23;
+    }
+
+    this.new_disponibilidad.hora_inicio = this.min_hora_inicio;
+    this.new_disponibilidad.hora_fin = this.max_hora_fin;
   }
 }
