@@ -17,6 +17,7 @@ import { ButtonModule } from 'primeng/button';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DiaPipe } from 'src/app/pipes/dia.pipe';
 import { SolicitarTurnoComponent } from 'src/app/componentes/solicitar-turno/solicitar-turno.component';
+import { VerDisponibilidadComponent } from 'src/app/componentes/ver-disponibilidad/ver-disponibilidad.component';
 //import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { SolicitarTurnoComponent } from 'src/app/componentes/solicitar-turno/sol
     CardPacienteComponent,
     CardEspecialistaComponent,
     SolicitarTurnoComponent,
+    VerDisponibilidadComponent,
     ObraSocialPipe,
     EspecialidadPipe,
     DiaPipe
@@ -50,6 +52,7 @@ import { SolicitarTurnoComponent } from 'src/app/componentes/solicitar-turno/sol
     CardPacienteComponent,
     CardEspecialistaComponent,
     SolicitarTurnoComponent,
+    VerDisponibilidadComponent,
     ObraSocialPipe,
     EspecialidadPipe
   ]

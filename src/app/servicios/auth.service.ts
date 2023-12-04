@@ -4,6 +4,8 @@ import { Usuario } from '../clases/usuario';
 import { BehaviorSubject, firstValueFrom, skip } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioService } from './usuario.service';
+import { Paciente } from '../clases/paciente';
+import { Especialista } from '../clases/especialista';
 
 @Injectable({
   providedIn: 'root'
@@ -221,6 +223,20 @@ export class AuthService {
         return Promise.reject(this.errorParser(error.code));
       }
     );
+  }
+
+  GetUsuarioAsPaciente(): Paciente | undefined {
+    if (this.usuarioActual != undefined) {
+      return this.usuarioActual as Paciente;
+    }
+    return undefined;
+  }
+
+  GetUsuarioAsEspecialista(): Especialista | undefined {
+    if (this.usuarioActual != undefined) {
+      return this.usuarioActual as Especialista;
+    }
+    return undefined;
   }
 
   errorParser(error: string): string {

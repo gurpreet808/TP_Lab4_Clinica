@@ -1,0 +1,18 @@
+<div name="disponibilidad_container">
+    <div *ngFor="let dia of dias" name="dia_container">
+        <div name="dia_number_container">
+            {{dia | dia}}
+        </div>
+    
+        <div name="dias_detalle_container">
+            <div name="dia_detalle_container" *ngFor="let disponibilidad of displayDisponibilidad[dia]">
+                <div name="horario_container">
+                    De {{disponibilidad.hora_inicio}} a {{disponibilidad.hora_fin}}
+                </div>
+                <div name="especialidad_detalle_container">
+                    {{disponibilidad.especialidad | especialidad | async }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
