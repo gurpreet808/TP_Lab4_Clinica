@@ -1,4 +1,2 @@
-<div>
-    <canvas #captchaCanvas width="150" height="50"></canvas>
-    <button class="refresh-button" (click)="refreshCaptcha()">Refresh Captcha</button>
-</div>
+<div appCaptcha [disabled]="false" [captchaValue]="userInput" (captchaResolved)="handleCaptchaResolved($event)"></div>
+<input type="text" [(ngModel)]="userInput" placeholder="Ingrese el captcha">

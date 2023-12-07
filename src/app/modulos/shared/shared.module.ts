@@ -18,6 +18,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DiaPipe } from 'src/app/pipes/dia.pipe';
 import { SolicitarTurnoComponent } from 'src/app/componentes/solicitar-turno/solicitar-turno.component';
 import { VerDisponibilidadComponent } from 'src/app/componentes/ver-disponibilidad/ver-disponibilidad.component';
+import { CaptchaComponent } from 'src/app/componentes/captcha/captcha.component';
+import { CaptchaDirective } from 'src/app/directivas/captcha.directive';
 //import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
@@ -30,7 +32,9 @@ import { VerDisponibilidadComponent } from 'src/app/componentes/ver-disponibilid
     VerDisponibilidadComponent,
     ObraSocialPipe,
     EspecialidadPipe,
-    DiaPipe
+    DiaPipe,
+    CaptchaComponent,
+    CaptchaDirective
   ],
   imports: [
     CommonModule,
@@ -54,7 +58,10 @@ import { VerDisponibilidadComponent } from 'src/app/componentes/ver-disponibilid
     SolicitarTurnoComponent,
     VerDisponibilidadComponent,
     ObraSocialPipe,
-    EspecialidadPipe
+    EspecialidadPipe,
+    DiaPipe,
+    CaptchaComponent,
+    CaptchaDirective
   ]
 })
 export class SharedModule { }
